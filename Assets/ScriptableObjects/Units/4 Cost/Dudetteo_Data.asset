@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25f45e41a3607b841a9bb0497a18fd10, type: 3}
+  m_Name: Dudetteo_Data
+  m_EditorClassIdentifier: 
+  Name: Dudetteo
+  Cost: 4
+  Portrait: {fileID: 21300000, guid: c50a47e230406b74e9751371ec349a87, type: 3}
+  UnitPrefab: {fileID: 0}
+  Traits:
+  - {fileID: 11400000, guid: b91259f7a90a3b849b97b59c73be965c, type: 2}
+  AttackDamage: 55
+  AttackSpeed: 0.7
+  AbilityPower: 100
+  AttackRange: 1
+  BaseHealth: 500
+  MovementSpeed: 1
