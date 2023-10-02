@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -9,8 +10,10 @@ public class ShopHandler : MonoBehaviour
 
     private UnitShop[] shops;
 
-    private void Start()
+    private async void Start()
     {
+        await UniTask.WaitUntil(() => GameManager.Instance != null);
+
         shops = GetComponentsInChildren<UnitShop>();
 
         for (int i = 0; i < shops.Length; i++)

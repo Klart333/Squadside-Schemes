@@ -72,7 +72,12 @@ public class Battle
     {
         for (int i = 0; i < units.Count; i++)
         {
-            units[i].UpdateBattle(this);
+            if (AlliedUnits.Count == 0 || EnemyUnits.Count == 0)
+            {
+                return;
+            }
+
+            units[i]?.UpdateBattle(this);
         }
     }
 

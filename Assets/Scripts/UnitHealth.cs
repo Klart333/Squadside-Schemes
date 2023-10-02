@@ -23,7 +23,7 @@ public class UnitHealth : MonoBehaviour
 
     private void OnDisable()
     {
-        if (unit != null)
+        if (unit != null && unit.IsOwner)
         {
             unit.OnCombatStart -= MaxCurrentHealth;
 

@@ -42,7 +42,7 @@ public class InteractSystem : NetworkBehaviour
             }
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && PlayerHandler.CanInteract)
         {
             if (holding)
             {
@@ -59,18 +59,13 @@ public class InteractSystem : NetworkBehaviour
     {
         holding = false;
 
-        currentInteractable?.Place();
+        CurrentInteractable?.Place();
     }
 
     private void Pickup()
     {
-        if (currentInteractable == null)
-        {
-            return;
-        }
-
         holding = true;
-        currentInteractable.Pickup();
+        CurrentInteractable?.Pickup();
     }
 
     private void HandleInteract()

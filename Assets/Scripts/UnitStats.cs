@@ -8,10 +8,12 @@ public class UnitStats
 {
     [Title("Combat")]
     public Stat AttackDamage;
-    public Stat AbilityPower;
     public Stat AttackSpeed;
-
     public Stat AttackRange;
+
+    public Stat AbilityPower;
+    public Stat Mana;
+    public Stat MaxMana;
 
     [Title("Traits")]
     public HashSet<int> Traits;
@@ -94,6 +96,29 @@ public class Stat
         modifiers.Add(mod);
 
         modifiers.Sort((x, y) => x.Type.CompareTo(y.Type));
+
+        OnValueChanged?.Invoke();
+    }
+
+    public void AddModifier(float additiveValue)
+    {
+        bool added = false;
+        for (int i = 0; i < modifiers.Count; i++)
+        {
+            if (modifiers[i].Type == Modifier.ModifierType.Additive)
+            {
+                modifiers[i].Value += additiveValue;
+
+                added = true;
+                break;
+            }
+        }
+
+        if (!added)
+        {
+            AddModifier(new Modifier { Value = additiveValue, Type = Modifier.ModifierType.Additive });
+            return;
+        }
 
         OnValueChanged?.Invoke();
     }

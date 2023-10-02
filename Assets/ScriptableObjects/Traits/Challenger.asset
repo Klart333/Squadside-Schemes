@@ -21,9 +21,21 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
+    - Name: TraitBreakpoints
+      Entry: 7
+      Data: 0|TraitEffects[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 1|TraitEffects, Assembly-CSharp
+    - Name: UnitCount
+      Entry: 3
+      Data: 1
     - Name: OnBoardEffects
       Entry: 7
-      Data: 0|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+      Data: 2|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
@@ -36,14 +48,14 @@ MonoBehaviour:
       Data: 
     - Name: OnAttackEffects
       Entry: 7
-      Data: 1|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+      Data: 3|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 7
-      Data: 2|Effects.GainAttackSpeedEffect, Assembly-CSharp
+      Data: 4|Effects.GainAttackSpeedEffect, Assembly-CSharp
     - Name: AttackSpeedGain
       Entry: 4
       Data: 1.1
@@ -58,11 +70,77 @@ MonoBehaviour:
       Data: 
     - Name: OnTakeDamageEffects
       Entry: 7
-      Data: 3|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+      Data: 5|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 6|TraitEffects, Assembly-CSharp
+    - Name: UnitCount
+      Entry: 3
+      Data: 2
+    - Name: OnBoardEffects
+      Entry: 7
+      Data: 7|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnAttackEffects
+      Entry: 7
+      Data: 8|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 9|Effects.GainAttackSpeedEffect, Assembly-CSharp
+    - Name: AttackSpeedGain
+      Entry: 4
+      Data: 1.15
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnTakeDamageEffects
+      Entry: 7
+      Data: 10|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 

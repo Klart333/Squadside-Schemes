@@ -429,21 +429,21 @@ public class BoardSystem : NetworkBehaviour
 
     private async void CheckForUpgrade(Unit unit)
     {
-        int key = unit.UnitData.GetInstanceID() + unit.StarLevel;
-        List<Unit> units = new List<Unit>();
+        (int, int) key = (unit.UnitData.GetInstanceID(), unit.StarLevel);
+        List<Unit> matchingUnits = new List<Unit>();
 
         for (int i = 0; i < Units.Count; i++)
         {
-            int unitKey = Units[i].UnitData.GetInstanceID() + Units[i].StarLevel;
+            (int, int) unitKey = (Units[i].UnitData.GetInstanceID(), Units[i].StarLevel);
             if (unitKey == key)
             {
-                units.Add(Units[i]);
+                matchingUnits.Add(Units[i]);
             }
         }
 
-        if (units.Count == 3)
+        if (matchingUnits.Count == 3) // Mat is Mad
         {
-            Unit upgraded = await CombineUnits(units);
+            Unit upgraded = await CombineUnits(matchingUnits);
             if (upgraded != null)
             {
                 await UniTask.WaitUntil(() => upgraded.StarLevel > unit.StarLevel);

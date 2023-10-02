@@ -17,6 +17,8 @@ public class PlayerUI : MonoBehaviour
     [SerializeField]
     private UIPlayerHealthHandler playerHealthHandler;
 
+    public UITimerDisplay TimerDisplay => timerDisplay;
+
     public void StartRound()
     {
         timerDisplay.StartTimer(GameManager.RoundLength);

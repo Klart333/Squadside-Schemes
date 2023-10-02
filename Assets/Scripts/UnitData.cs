@@ -15,15 +15,18 @@ public class UnitData : ScriptableObject
 
     public Unit UnitPrefab;
 
-    [Title("Unit")]
+    [Title("Traits")]
     public Trait[] Traits;
 
     [Title("Combat")]
     public float AttackDamage = 50;
     public float AttackSpeed = 0.7f;
-    public float AbilityPower = 100;
-
     public int AttackRange = 1;
+
+    public float AbilityPower = 100;
+    public float Mana = 10;
+    public float MaxMana = 100;
+
 
     [Title("Health")]
     public int BaseHealth = 500;

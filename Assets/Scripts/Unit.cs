@@ -15,13 +15,17 @@ public class Unit : NetworkBehaviour, IInteractable
     [SerializeField]
     private UnitData unitData;
 
+    public List<(Trait, int)> AppliedBoardTraits = new List<(Trait, int)>();
+
     private List<(Trait, int)> cachedTraits;
 
     private UnitBattleController battleController;
     private MeshRenderer meshRenderer;
     private UnitHealth unitHealth;
+    private UnitManaBar unitMana;
 
     public UnitHealth UnitHealth => unitHealth;
+    public UnitManaBar UnitMana => unitMana;
     public UnitData UnitData => unitData;
     public int StarLevel { get; set; } = 0;
     public bool IsOnBoard { get; set; } = false;
@@ -44,7 +48,6 @@ public class Unit : NetworkBehaviour, IInteractable
             interactable = value;
         }
     }
-    public List<(Trait, int)> AppliedBoardTraits = new List<(Trait, int)>();
 
     private void Start()
     {
@@ -65,6 +68,8 @@ public class Unit : NetworkBehaviour, IInteractable
             AttackRange = new Stat(unitData.AttackRange),
             MaxHealth = new Stat(unitData.BaseHealth),
             MovementSpeed = new Stat(unitData.MovementSpeed),
+            Mana = new Stat(0),
+            MaxMana = new Stat(unitData.MaxMana),
 
             Traits = indexHashSet
         };
@@ -75,9 +80,37 @@ public class Unit : NetworkBehaviour, IInteractable
         }
 
         unitHealth = GetComponent<UnitHealth>();
+        unitMana = GetComponentInChildren<UnitManaBar>();
         meshRenderer = GetComponentInChildren<MeshRenderer>();
 
-        PlayerHandler.BoardSystem.OnBoardedUnitsChanged += UpdateCachedTraits;
+        if (unitMana)
+        {
+            UnitStats.Mana.OnValueChanged += UpdateManaBar;
+            UnitStats.Mana.AddModifier(new Modifier { Value = UnitData.Mana, Type = Modifier.ModifierType.Additive });
+        }
+
+        if (IsOwner)
+        {
+            PlayerHandler.BoardSystem.OnBoardedUnitsChanged += UpdateCachedTraits;
+        }
+    }
+
+    private void OnDisable()
+    {
+        UnitStats.Mana.OnValueChanged -= UpdateManaBar;
+
+        if (IsOwner)
+        {
+            PlayerHandler.BoardSystem.OnBoardedUnitsChanged -= UpdateCachedTraits;
+        }
+    }
+
+    private void UpdateManaBar()
+    {
+        if (unitMana)
+        {
+            unitMana.SetMana(UnitStats.Mana.Value / UnitStats.MaxMana.Value);
+        }
     }
 
     private void UpdateCachedTraits(List<Unit> units)
@@ -278,6 +311,8 @@ public class Unit : NetworkBehaviour, IInteractable
 
     public void OnAttack()
     {
+        UnitStats.Mana.AddModifier(10);
+
         for (int i = 0; i < cachedTraits.Count; i++)
         {
             cachedTraits[i].Item1.OnAttack(this, cachedTraits[i].Item2);

@@ -115,7 +115,7 @@ public class UnitShop : MonoBehaviour
 
     public void BuyUnit()
     {
-        if (bought)
+        if (bought || !PlayerUI.PlayerHandler.CanInteract)
         {
             return;
         }

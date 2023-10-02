@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,6 +15,8 @@ public class UITimerDisplay : MonoBehaviour
 
     private float timer = 0;
 
+    public float Percent => !going ? 1.0f : (total - timer) / total;
+
     private void Update()
     {
         if (!going)
@@ -27,7 +26,8 @@ public class UITimerDisplay : MonoBehaviour
 
         timer += Time.deltaTime;
 
-        float percent = (total - timer) / total;
+        float percent = (total - (timer + 1.0f)) / total;
+        percent = Mathf.Clamp01(percent);
 
         SliderFill.fillAmount = percent;
         timerText.text = Mathf.RoundToInt(percent * total).ToString();

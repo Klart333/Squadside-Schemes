@@ -40,6 +40,8 @@ public class PlayerHandler : NetworkBehaviour
 
     public NetworkVariable<int> Playerhealth = new NetworkVariable<int>(writePerm: NetworkVariableWritePermission.Owner);
 
+    public bool CanInteract => PlayerUI.TimerDisplay.Percent < 0.95f;
+
     private void Start()
     {
         Vector3 offset = Vector3.left * 10 * OwnerClientId;
@@ -83,8 +85,6 @@ public class PlayerHandler : NetworkBehaviour
         PlayerUI = Instantiate(playerUIPrefab);
         PlayerUI.PlayerHandler = this;
 
-        GameManager.Instance.StartBattle += StartBattle;
-
         Playerhealth.Value = HealthSystem.StartingHealth;
         HealthSystem.OnHealthChanged += HealthSystem_OnHealthChanged;
     }
@@ -100,8 +100,6 @@ public class PlayerHandler : NetworkBehaviour
         {
             HealthSystem.OnHealthChanged -= HealthSystem_OnHealthChanged;
         }
-
-        GameManager.Instance.StartBattle -= StartBattle;
     }
 
     private void HealthSystem_OnHealthChanged()
@@ -112,7 +110,7 @@ public class PlayerHandler : NetworkBehaviour
     #region Spawn Board
 
     [ServerRpc]
-    private void SpawnBoardSystemServerRPC(ServerRpcParams serverRpcParams)
+    private void SpawnBoardSystemServerRPC(ServerRpcParams serverRpcParams) // Think a bit about this, boardsystem isn't being set for other clients, maybe remove the TargetClientIds? 
     {
         BoardSystem = Instantiate(boardSystemPrefab, transform);
 
@@ -133,9 +131,39 @@ public class PlayerHandler : NetworkBehaviour
 
     #region Battle
 
-    private void StartBattle(BoardSystem board1, BoardSystem board2, int activeIndex)
+    [ClientRpc]
+    public void StartBattleClientRPC(ulong id1, ulong id2, ClientRpcParams clientParams)
     {
-        //Debug.Log("Starting battle at: " + OwnerClientId);
+        if (!IsOwner)
+        {
+            return;
+        }
+
+        Debug.Log("StartBattleClientRPC");
+
+        BoardSystem[] boardSystems = FindObjectsOfType<BoardSystem>();
+
+        BoardSystem board1 = null;
+        BoardSystem board2 = null;
+
+        for (int i = 0; i < boardSystems.Length; i++)
+        {
+            if (boardSystems[i].OwnerClientId == id1)
+            {
+                board1 = boardSystems[i];
+            }
+
+            if (boardSystems[i].OwnerClientId == id2)
+            {
+                board2 = boardSystems[i];
+            }
+        }
+
+        if (!board1 || !board2)
+        {
+            Debug.LogError("Could not find enemy playerhandler or board: " + board1 + ", " + board2);
+            return;
+        }
 
         BoardSystem enemyBoard = board1 == this.BoardSystem ? board2 : board1;
 
@@ -151,7 +179,7 @@ public class PlayerHandler : NetworkBehaviour
             return;
         }
 
-        //Debug.Log("Won Battle! " + OwnerClientId);
+        Debug.Log("Won Battle! " + OwnerClientId);
 
         this.MoneySystem.LoseStreak = 0;
         this.MoneySystem.WinStreak += 1;
@@ -172,7 +200,7 @@ public class PlayerHandler : NetworkBehaviour
 
         HealthSystem.LoseHealth(damage);
 
-        //Debug.Log("Lost Battle! " + OwnerClientId);
+        Debug.Log("Lost Battle! " + OwnerClientId);
 
         //MoneySystem.AddMoney(-1000);
     }
@@ -198,6 +226,13 @@ public class PlayerHandler : NetworkBehaviour
         {
             return;
         }
+
+        StartPlanningPhaseWAITCAUSEIMSTUPIDANDLAZY();
+    }
+
+    private async void StartPlanningPhaseWAITCAUSEIMSTUPIDANDLAZY()
+    {
+        await UniTask.WaitUntil(() => GameManager.Instance != null);
 
         PlayerUI.StartRound();
         LevelSystem.StartRound();

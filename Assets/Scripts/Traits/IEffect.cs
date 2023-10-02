@@ -96,5 +96,47 @@ namespace Effects
     }
 
     #endregion
+
+    #region Gain Attack Damage
+
+    public class GainAttackDamageEffect : IEffect
+    {
+        public float AttackDamage = 20f;
+
+        private Dictionary<Unit, Modifier> ModifierDictionary;
+
+        public void Perform(Unit unit)
+        {
+            if (ModifierDictionary == null)
+            {
+                ModifierDictionary = new Dictionary<Unit, Modifier>();
+            }
+
+            if (!ModifierDictionary.ContainsKey(unit))
+            {
+                ModifierDictionary.Add(unit, new Modifier { Type = Modifier.ModifierType.Additive, Value = AttackDamage });
+                unit.UnitStats.AttackDamage.AddModifier(ModifierDictionary[unit]);
+            }
+            else
+            {
+                ModifierDictionary[unit].Value += AttackDamage;
+            }
+        }
+
+        public void Revert(Unit unit)
+        {
+            if (ModifierDictionary == null || !ModifierDictionary.ContainsKey(unit))
+            {
+                return;
+            }
+
+            unit.UnitStats.AttackDamage.RemoveModifier(ModifierDictionary[unit]);
+
+            ModifierDictionary.Remove(unit);
+        }
+    }
+
+    #endregion
+
 }
 

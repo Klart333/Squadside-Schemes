@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25f45e41a3607b841a9bb0497a18fd10, type: 3}
   m_Name: Frank_Data
   m_EditorClassIdentifier: 
-  Name: Dudette
+  Name: Frank
   Cost: 3
   Portrait: {fileID: 21300000, guid: b58eb18cb4aa4e144ac6c7c1a0210f5b, type: 3}
   UnitPrefab: {fileID: 8185428160034821881, guid: 0ccac24686807d14fa58b2c1d440ef16,
