@@ -9,6 +9,7 @@ public class UnitBattleController
 
     public UnitMoveState UnitMoveState;
     public UnitAttackState UnitAttackState;
+    public UnitUltimateState UnitUltimateState;
 
     public void Update(Battle battle)
     {
@@ -34,6 +35,12 @@ public class UnitBattleController
         if (GetDistance(enemyUnits[0].CurrentTile) > Unit.UnitData.AttackRange)
         {
             return UnitMoveState;
+        }
+
+        if (Unit.UnitStats.Mana.Value >= Unit.UnitStats.MaxMana.Value)
+        {
+            Unit.UnitStats.Mana.RemoveAllModifiers();
+            return UnitUltimateState;
         }
 
         return UnitAttackState;

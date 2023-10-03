@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,15 +14,24 @@ public class GameManager : NetworkBehaviour
 
     public const float RoundLength = 20;
 
+    [Title("PVE")]
+    public PVEData PVEData;
+
+    [Title("Utility")]
     public UnitDataUtility UnitDataUtility;
     public TraitUtility TraitUtility;
+    public ItemDataUtility ItemDataUtility;
 
     private PlayerHandler[] playerHandlers;
 
     private ServerBattleData[] battlePairings;
 
     private float roundTimer = 0;
+    private int roundCount = 1;
     private bool inPlanningPhase = false;
+
+    public int RoundCount => roundCount;
+    public bool IsPVERound => RoundCount % 2 != 0;
 
     public static GameManager Instance { get; private set; }
 
@@ -78,7 +88,7 @@ public class GameManager : NetworkBehaviour
 
         for (int i = 0; i < playerHandlers.Length; i++)
         {
-            if ((int)playerHandlers[i].OwnerClientId != i)
+            if ((int)playerHandlers[i].OwnerClientId + 1 != i)
             {
                 Debug.LogError("Oh noes!");
             }
@@ -109,7 +119,14 @@ public class GameManager : NetworkBehaviour
                 inPlanningPhase = false;
                 roundTimer = 0;
 
-                StartBattles();
+                if (IsPVERound) // Pvp round
+                {
+                    StartPVEBattles();
+                }
+                else // Pve round
+                {
+                    StartBattles();
+                }
             }
         }
     }
@@ -178,6 +195,41 @@ public class GameManager : NetworkBehaviour
         EvaluateBattleResults();
     }
 
+    private async void StartPVEBattles()
+    {
+        Debug.Log("StartPVEBattles");
+
+        UpdateClientsBoard();
+
+        await Task.Delay(100);
+
+        for (int i = 0; i < playerHandlers.Length; i++)
+        {
+            await UniTask.WaitUntil(() => playerHandlers[i].BoardSystem.HasUpdatedUnitsOnBoard.Value);
+        }
+
+        battlePairings = new ServerBattleData[playerHandlers.Length];
+        int battleIndex = 0;
+        int pveIndex = Mathf.Min(PVEData.MobData.Count, Mathf.FloorToInt(roundCount / 2.0f));
+        int mobCount = PVEData.MobData[pveIndex].Count;
+
+        for (int i = 0; i < playerHandlers.Length; i += 1)
+        {
+            ulong player1ID = playerHandlers[i].OwnerClientId;
+            battlePairings[battleIndex++] = new ServerBattleData() { Player1Id = player1ID, Player2Id = 99, Player2Reported = true, Player2UnitCount = mobCount };
+
+            ClientRpcParams clientParams = new ClientRpcParams() { Send = new ClientRpcSendParams { TargetClientIds = new ulong[] { player1ID } } };
+            Debug.Log("Starting PVE Battles on Clients from Server");
+
+            for (int g = 0; g < playerHandlers.Length; g++)
+            {
+                playerHandlers[g].StartPVEBattleClientRPC(pveIndex, clientParams);
+            }
+        }
+
+        EvaluateBattleResults();
+    }
+
     private async void EvaluateBattleResults()
     {
         Debug.Log("EvaluateBattleResults");
@@ -188,10 +240,17 @@ public class GameManager : NetworkBehaviour
             amountDone = 0;
             for (int i = 0; i < battlePairings.Length; i++)
             {
+                if (battlePairings[i].BattleSettled)
+                {
+                    continue;
+                }
+
                 if (!battlePairings[i].Player1Reported || !battlePairings[i].Player2Reported)
                 {
                     continue;
                 }
+
+                battlePairings[i].BattleSettled = true;
 
                 amountDone++;
                 ulong winner = battlePairings[i].EvaluateWinner();
@@ -207,13 +266,13 @@ public class GameManager : NetworkBehaviour
 
                 for (int g = 0; g < playerHandlers.Length; g++)
                 {
-                    if (playerHandlers[g].OwnerClientId == winner)
+                    if (winner != 99 && playerHandlers[g].OwnerClientId == winner)
                     {
-                        playerHandlers[g].WinBattleClientRPC(winnerParam);
+                        playerHandlers[g].WinBattleClientRPC(IsPVERound, winnerParam);
                     }
-                    else if (playerHandlers[g].OwnerClientId == loser)
+                    else if (loser != 99 && playerHandlers[g].OwnerClientId == loser)
                     {
-                        playerHandlers[g].LoseBattleClientRPC(damage, loserParam);
+                        playerHandlers[g].LoseBattleClientRPC(damage, IsPVERound, loserParam);
                     }
                 }
             }
@@ -231,6 +290,8 @@ public class GameManager : NetworkBehaviour
         {
             playerHandlers[i].EndBattleClientRPC();
         }
+
+        roundCount++;
 
         // Start new round
         StartNewRound();
@@ -315,6 +376,8 @@ public struct ServerBattleData
 
     public int Player1UnitCount;
     public int Player2UnitCount;
+
+    public bool BattleSettled;
 
     public ulong EvaluateWinner()
     {

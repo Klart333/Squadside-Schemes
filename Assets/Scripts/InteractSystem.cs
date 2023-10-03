@@ -2,7 +2,7 @@ using Sirenix.OdinInspector;
 using Unity.Netcode;
 using UnityEngine;
 
-public class InteractSystem : NetworkBehaviour
+public class InteractSystem : MonoBehaviour
 {
     [TitleGroup("Raycast")]
     [SerializeField]
@@ -64,8 +64,18 @@ public class InteractSystem : NetworkBehaviour
 
     private void Pickup()
     {
+        if (CurrentInteractable == null)
+        {
+            return;
+        }
+
         holding = true;
-        CurrentInteractable?.Pickup();
+
+        if (CurrentInteractable.Pickup())
+        {
+            currentInteractable = null;
+            holding = false;
+        }
     }
 
     private void HandleInteract()

@@ -56,6 +56,7 @@ public class Unit : NetworkBehaviour, IInteractable
             Unit = this,
             UnitMoveState = new UnitMoveState(this),
             UnitAttackState = new UnitAttackState(this),
+            UnitUltimateState = new UnitUltimateState(this),
         };
 
         HashSet<int> indexHashSet = GameManager.Instance.TraitUtility.GetIndices(unitData.Traits).ToHashSet();
@@ -184,9 +185,10 @@ public class Unit : NetworkBehaviour, IInteractable
         meshRenderer.gameObject.layer = LayerMask.NameToLayer("Unit");
     }
 
-    public void Pickup()
+    public bool Pickup()
     {
         PlayerHandler.BoardSystem.PlacingUnit(this);
+        return false;
     }
 
     public void Place()
@@ -249,14 +251,23 @@ public class Unit : NetworkBehaviour, IInteractable
     {
         OnDeath?.Invoke(this);
 
+        if (CurrentTile != null)
+        {
+            CurrentTile.CurrentUnit = null;
+        }
+
         RevertTrait();
         GameManager.Instance.DestroyServerRPC(NetworkObjectId);
     }
 
-
     public void LocalDeath()
     {
         OnDeath?.Invoke(this);
+
+        if (CurrentTile != null)
+        {
+            CurrentTile.CurrentUnit = null;
+        }
 
         RevertTrait();
         Destroy(gameObject);

@@ -146,3 +146,56 @@ public class UnitAttackState : UnitBaseState
         }
     }
 }
+
+public class UnitUltimateState : UnitBaseState
+{
+    private bool attacking = false;
+
+    public UnitUltimateState(Unit unit) : base(unit)
+    {
+    }
+
+    public override bool IsPerformingAction()
+    {
+        return attacking;
+    }
+
+    public override async void TakeAction(Battle battle)
+    {
+        attacking = true;
+
+        List<Unit> enemies = battle.GetEnemyUnits(Unit);
+        if (!enemies[0].TakeDamage(Unit.UnitStats.AttackDamage.Value * 10)) // if the unit didn't die
+        {
+            RotateTowardTarget(enemies[0].CurrentTile);
+        }
+
+        Unit.OnAttack();
+
+        await UniTask.Delay(TimeSpan.FromSeconds(1.0f / Unit.UnitStats.AttackSpeed.Value));
+
+        attacking = false;
+    }
+
+    private async void RotateTowardTarget(Tile targetTile)
+    {
+        Vector3 dir = (targetTile.WorldPosition - Unit.CurrentTile.WorldPosition).normalized;
+        Quaternion targetRotation = Quaternion.LookRotation(dir, Vector3.up);
+        float t = 0;
+
+        while (t <= 0.5f)
+        {
+            if (Unit == null)
+            {
+                return;
+            }
+
+            t += Time.deltaTime * Unit.UnitStats.MovementSpeed.Value;
+
+            Unit.transform.rotation = Quaternion.Slerp(Unit.transform.rotation, targetRotation, t);
+
+            await UniTask.Yield();
+        }
+    }
+}
+

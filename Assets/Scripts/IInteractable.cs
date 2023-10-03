@@ -8,6 +8,10 @@ public interface IInteractable
 
     public void StartInteract();
     public void EndInteract();
-    public void Pickup();
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns>If it's a click</returns>
+    public bool Pickup();
     public void Place();
 }

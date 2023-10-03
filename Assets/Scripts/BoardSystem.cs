@@ -496,6 +496,7 @@ public class BoardSystem : NetworkBehaviour
         }
 
         List<Unit> units = UnitsOnBoard;
+        
         int max = Mathf.Max(UnitsOnBoardNetwork.Count, units.Count);
         for (int i = 0; i < max; i++)
         {

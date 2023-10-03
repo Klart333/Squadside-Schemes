@@ -148,6 +148,11 @@ public class Stat
             }
         }
     }
+
+    public void RemoveAllModifiers()
+    {
+        modifiers.Clear();
+    }
 }
 
 [Serializable]

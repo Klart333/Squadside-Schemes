@@ -30,6 +30,14 @@ public class ServerLobbyManager : Singleton<ServerLobbyManager>
 #endif
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            NetworkManager.Singleton.Shutdown();
+        }
+    }
+
     private async void InitializeUnityAuthentication()
     {
         if (UnityServices.State != ServicesInitializationState.Initialized)
@@ -152,7 +160,6 @@ public class ServerLobbyManager : Singleton<ServerLobbyManager>
     private async void StartServerForPlayers()
     {
         Debug.Log("DEDICATED_SERVER StartServerForPlayers");
-
         Debug.Log("ReadyServerForPlayersAsync");
         await MultiplayService.Instance.ReadyServerForPlayersAsync();
 
@@ -163,6 +170,7 @@ public class ServerLobbyManager : Singleton<ServerLobbyManager>
     {
         if (++playersJoined == 2)
         {
+            MultiplayService.Instance.UnreadyServerAsync();
             SpawnGameManager();
         }
     }

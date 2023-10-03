@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   layerMask:
     serializedVersion: 2
-    m_Bits: 503
+    m_Bits: 1015
   placingLayerMask:
     serializedVersion: 2
     m_Bits: 64

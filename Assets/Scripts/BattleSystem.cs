@@ -22,7 +22,7 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
-    public async void StartBattle(NetworkList<UnitNetworkData> unitsNetworkData, ulong opponentClientId)
+    public async void StartBattle(IEnumerable<UnitNetworkData> unitsNetworkData, bool PVEEnemies, ulong opponentClientId)
     {
         // Spawn the enemy units locally
 
@@ -38,14 +38,14 @@ public class BattleSystem : MonoBehaviour
             alliedUnits.Add(PlayerHandler.BoardSystem.SpawnUnitLocal(PlayerHandler.BoardSystem.UnitsOnBoardNetwork[i], false));
         }
 
-        foreach (var item in unitsNetworkData)
+        foreach (var unitNetworkData in unitsNetworkData)
         {
-            if (item.UnitDataIndex == -1)
+            if (unitNetworkData.UnitDataIndex == -1)
             {
                 Debug.LogError("Unit is null");
                 continue;
             }
-            Unit unit = PlayerHandler.BoardSystem.SpawnUnitLocal(item, true);
+            Unit unit = PlayerHandler.BoardSystem.SpawnUnitLocal(unitNetworkData, true);
             enemyUnits.Add(unit);
         }
 
@@ -59,7 +59,8 @@ public class BattleSystem : MonoBehaviour
             ActiveBoardSystem = this.PlayerHandler.BoardSystem,
 
             OwnerClientID = PlayerHandler.OwnerClientId,
-            IsAlliesFirst = PlayerHandler.OwnerClientId < opponentClientId
+            IsAlliesFirst = PlayerHandler.OwnerClientId < opponentClientId,
+            EnemyHasCandy = PVEEnemies
         };
 
         battle.StartBattle();
@@ -78,12 +79,14 @@ public class BattleSystem : MonoBehaviour
 
         for (int i = 0; i < battle.AlliedUnits.Count; i++)
         {
-            Destroy(battle.AlliedUnits[i].gameObject);
+            battle.AlliedUnits[i].OnDeath -= battle.Ally_OnDeath;
+            battle.AlliedUnits[i].LocalDeath();
         }
 
         for (int i = 0; i < battle.EnemyUnits.Count; i++)
         {
-            Destroy(battle.EnemyUnits[i].gameObject);
+            battle.EnemyUnits[i].OnDeath -= battle.Enemy_OnDeath;
+            battle.EnemyUnits[i].LocalDeath();
         }
 
         for (int i = 0; i < battle.HiddenGuys.Count; i++)

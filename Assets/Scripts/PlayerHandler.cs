@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
@@ -26,6 +27,9 @@ public class PlayerHandler : NetworkBehaviour
     [SerializeField]
     private HealthSystem healthSystemPrefab;
 
+    [SerializeField]
+    private LootSystem lootSystemPrefab;
+
     [TitleGroup("UI")]
     [SerializeField]
     private PlayerUI playerUIPrefab;
@@ -36,6 +40,7 @@ public class PlayerHandler : NetworkBehaviour
     public MoneySystem MoneySystem { get; private set; }
     public BattleSystem BattleSystem { get; private set; }
     public HealthSystem HealthSystem { get; private set; }
+    public LootSystem LootSystem { get; private set; }
     public PlayerUI PlayerUI { get; private set; }
 
     public NetworkVariable<int> Playerhealth = new NetworkVariable<int>(writePerm: NetworkVariableWritePermission.Owner);
@@ -81,6 +86,9 @@ public class PlayerHandler : NetworkBehaviour
 
         HealthSystem = Instantiate(healthSystemPrefab, transform);
         HealthSystem.PlayerHandler = this;
+
+        LootSystem = Instantiate(lootSystemPrefab, transform);
+        LootSystem.PlayerHandler = this;
 
         PlayerUI = Instantiate(playerUIPrefab);
         PlayerUI.PlayerHandler = this;
@@ -167,12 +175,32 @@ public class PlayerHandler : NetworkBehaviour
 
         BoardSystem enemyBoard = board1 == this.BoardSystem ? board2 : board1;
 
-        this.BattleSystem.StartBattle(enemyBoard.UnitsOnBoardNetwork, enemyBoard.OwnerClientId);
+        List<UnitNetworkData> networkList = new List<UnitNetworkData>(enemyBoard.UnitsOnBoardNetwork.Count);
+        for (int i = 0; i < enemyBoard.UnitsOnBoardNetwork.Count; i++)
+        {
+            networkList.Add(enemyBoard.UnitsOnBoardNetwork[i]);
+        }
+
+        this.BattleSystem.StartBattle(networkList, false, enemyBoard.OwnerClientId);
+    }
+
+    [ClientRpc]
+    public void StartPVEBattleClientRPC(int mobUnitsIndex, ClientRpcParams clientParams)
+    {
+        if (!IsOwner)
+        {
+            return;
+        }
+
+        Debug.Log("StartPVEBattleClientRPC");
+
+        mobUnitsIndex = Mathf.Clamp(mobUnitsIndex, 0, GameManager.Instance.PVEData.MobData.Count - 1);
+        this.BattleSystem.StartBattle(GameManager.Instance.PVEData.MobData[mobUnitsIndex], true, 1000); // 1000 to always go first
     }
 
 
     [ClientRpc]
-    public void WinBattleClientRPC(ClientRpcParams param)
+    public void WinBattleClientRPC(bool isPVE, ClientRpcParams param)
     {
         if (!IsOwner)
         {
@@ -181,22 +209,28 @@ public class PlayerHandler : NetworkBehaviour
 
         Debug.Log("Won Battle! " + OwnerClientId);
 
-        this.MoneySystem.LoseStreak = 0;
-        this.MoneySystem.WinStreak += 1;
+        if (!isPVE)
+        {
+            this.MoneySystem.LoseStreak = 0;
+            this.MoneySystem.WinStreak += 1;
+        }
 
         MoneySystem.AddMoney(1);
     }
 
     [ClientRpc]
-    public void LoseBattleClientRPC(int damage, ClientRpcParams param)
+    public void LoseBattleClientRPC(int damage, bool isPVE, ClientRpcParams param)
     {
         if (!IsOwner)
         {
             return;
         }
 
-        this.MoneySystem.LoseStreak += 1;
-        this.MoneySystem.WinStreak = 0;
+        if (!isPVE)
+        {
+            this.MoneySystem.LoseStreak += 1;
+            this.MoneySystem.WinStreak = 0;
+        }
 
         HealthSystem.LoseHealth(damage);
 

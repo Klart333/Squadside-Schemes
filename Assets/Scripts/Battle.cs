@@ -15,6 +15,10 @@ public class Battle
     public ulong OwnerClientID;
     public ulong OpponentClientID;
 
+    public bool EnemyHasCandy;
+
+    private bool reported = false;
+
     public void StartBattle()
     {
         for (int i = 0; i < AlliedUnits.Count; i++)
@@ -30,13 +34,18 @@ public class Battle
         }
     }
 
-    private void Enemy_OnDeath(Unit unit)
+    public void Enemy_OnDeath(Unit unit)
     {
         unit.OnDeath -= Enemy_OnDeath;
         EnemyUnits.Remove(unit);
+
+        if (EnemyHasCandy)
+        {
+            ActiveBoardSystem.PlayerHandler.LootSystem.MaybeSpawnLoot(unit.CurrentTile.WorldPosition);
+        }
     }
 
-    private void Ally_OnDeath(Unit unit)
+    public void Ally_OnDeath(Unit unit)
     {
         unit.OnDeath -= Ally_OnDeath;
         AlliedUnits.Remove(unit);
@@ -44,15 +53,24 @@ public class Battle
 
     public void Update()
     {
+        if (reported)
+        {
+            return;
+        }
+
         if (EnemyUnits.Count == 0)
         {
             Win();
+            reported = true;
+
             return;
         }
 
         if (AlliedUnits.Count == 0)
         {
             Lose();
+            reported = true;
+
             return;
         }
 
