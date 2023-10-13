@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class UnitHealth : MonoBehaviour
@@ -11,6 +12,10 @@ public class UnitHealth : MonoBehaviour
     private Unit unit;
 
     private float currentHealth;
+
+    public float CurrentHealth => currentHealth;
+    public float HealthPercentage => CurrentHealth / unit.UnitStats.MaxHealth.Value;
+    public DamageInstance LastDamageTaken { get; private set; }
 
     private void OnEnable()
     {
@@ -55,15 +60,22 @@ public class UnitHealth : MonoBehaviour
         healthBar.SetMaxHealth((int)unit.UnitStats.MaxHealth.Value);
     }
 
-    public bool TakeDamage(float damage)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="damage"></param>
+    /// <returns>If the unit died</returns>
+    public bool TakeDamage(DamageInstance damageInstance, out DamageInstance damageDone)
     {
         if (!unit.PlayerHandler.BattleSystem.IsInBattle)
         {
             MaxCurrentHealth();
+            damageDone = new DamageInstance();
             return false;
         }
 
-        currentHealth -= damage;
+        damageDone = EvaluateDamage(damageInstance);
+        currentHealth -= damageDone.GetTotal();
 
         healthBar.UpdateHealthBar(currentHealth);
 
@@ -76,6 +88,26 @@ public class UnitHealth : MonoBehaviour
         return false;
     }
 
+    private DamageInstance EvaluateDamage(DamageInstance damageInstance)
+    {
+        float critMult = UnityEngine.Random.value < damageInstance.CritChance ? damageInstance.CritMultiplier : 1;
+        damageInstance.AttackDamage *= critMult;
+        damageInstance.AbilityDamage *= critMult;
+        damageInstance.TrueDamage *= critMult;
+
+        float trueDamage = damageInstance.TrueDamage;
+        float attackDamage = damageInstance.AttackDamage * (1.0f - (unit.UnitStats.Armor.Value / (100.0f + unit.UnitStats.Armor.Value)));
+        float abilityDamage = damageInstance.AbilityDamage * (1.0f - (unit.UnitStats.MagicResist.Value / (100.0f + unit.UnitStats.MagicResist.Value)));
+
+        damageInstance.TrueDamage = trueDamage;
+        damageInstance.AttackDamage = attackDamage;
+        damageInstance.AbilityDamage = abilityDamage;
+
+        LastDamageTaken = damageInstance;
+
+        return damageInstance;
+    }
+
     public void AddHealth(float amount)
     {
         if (!unit.PlayerHandler.BattleSystem.IsInBattle)
@@ -84,8 +116,49 @@ public class UnitHealth : MonoBehaviour
             return;
         }
 
+        if (amount <= 0)
+        {
+            return;
+        }
+
         currentHealth += amount;
 
         healthBar.UpdateHealthBar(currentHealth);
+    }
+}
+
+public class DamageInstance
+{
+    public Unit UnitSource;
+    public Unit UnitTarget;
+
+    public float AttackDamage;
+    public float AbilityDamage;
+    public float TrueDamage;
+    public float CritChance;
+    public float CritMultiplier;
+
+    private HashSet<int> specialEffectSet;
+
+    public HashSet<int> SpecialEffectSet
+    {
+        get
+        {
+            if (specialEffectSet == null)
+            {
+                specialEffectSet = new HashSet<int>();
+            }
+
+            return specialEffectSet;
+        }
+        set
+        {
+            specialEffectSet = value;
+        }
+    }
+
+    public float GetTotal()
+    {
+        return AttackDamage + AbilityDamage + TrueDamage;
     }
 }

@@ -51,6 +51,8 @@ public class UIHealthBar : MonoBehaviour
 
     public void UpdateHealthBar(float health)
     {
+        if (!fill) return;
+
         float percent = health / (float)maxHealth;
 
         fill.fillAmount = 1.0f - percent;

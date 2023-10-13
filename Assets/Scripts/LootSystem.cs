@@ -29,6 +29,7 @@ public class LootSystem : MonoBehaviour
 
     private Camera cam;
     private Net highlightedNet;
+    private Unit currentHighlightedUnit;
 
     private bool netVisible = false;
 
@@ -68,6 +69,26 @@ public class LootSystem : MonoBehaviour
             Vector3 pos = hit.point;
             ItemTile tile = GetClosestTile(pos);
             Net net = nets[tile.Index];
+
+            if (hit.transform.gameObject.TryGetComponent(out Unit unit))
+            {
+                if (highlightedNet != null)
+                {
+                    highlightedNet.ResetNet();
+                }
+
+                unit.StartInteract();
+                currentHighlightedUnit = unit;
+
+                return;
+            }
+
+            if (currentHighlightedUnit != null)
+            {
+                currentHighlightedUnit.EndInteract();
+            }
+
+            currentHighlightedUnit = null;
 
             if (net != highlightedNet)
             {
@@ -126,18 +147,13 @@ public class LootSystem : MonoBehaviour
             }
 
             Item item = Instantiate(itemPrefab, tiles[i].WorldPosition, tiles[i].Rotation);
-            item.ItemData = itemData;
+            item.SetItemData(itemData);
             item.PlayerHandler = this.PlayerHandler;
 
             SetItemToTile(item, tiles[i]);
 
             break;
         }
-    }
-
-    public void PlaceItem()
-    {
-
     }
 
     public void PlacingItem(Item item)
@@ -150,11 +166,28 @@ public class LootSystem : MonoBehaviour
         ToggleNet(false);
 
         // Check first if its on a unit
+        if (currentHighlightedUnit != null)
+        {
+            currentHighlightedUnit.EndInteract();
+
+            if (!currentHighlightedUnit.ApplyItem(item.ItemData))
+            {
+                SetItemToTile(item, item.CurrentTile);
+                currentHighlightedUnit = null;
+                return;
+            }
+
+            currentHighlightedUnit = null;
+            item.CurrentTile.CurrentItem = null;
+
+            Destroy(item.gameObject);
+            return;
+        }
 
         // If not
-        ItemTile closestTIle = GetClosestTile(item.transform.position);
+        ItemTile closestTIle = tiles[nets.IndexOf(highlightedNet)];
 
-        if (Vector3.Distance(closestTIle.WorldPosition, item.transform.position) > 2)
+        if (Vector3.Distance(closestTIle.WorldPosition, item.transform.position) > 3)
         {
             SetItemToTile(item, item.CurrentTile);
             return;
@@ -187,7 +220,7 @@ public class LootSystem : MonoBehaviour
         int index = 0;
         for (int i = 0; i < tiles.Count; i++)
         {
-            float dist = Vector3.Distance(position, tiles[i].WorldPosition);
+            float dist = (position - tiles[i].WorldPosition).sqrMagnitude;
             if (dist < minDist)
             {
                 minDist = dist;
@@ -203,6 +236,7 @@ public class LootSystem : MonoBehaviour
         netVisible = enabled;
         for (int i = 0; i < nets.Count; i++)
         {
+            nets[i].ResetNet();
             nets[i].gameObject.SetActive(enabled);
         }
     }

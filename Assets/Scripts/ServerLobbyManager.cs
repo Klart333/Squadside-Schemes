@@ -26,16 +26,9 @@ public class ServerLobbyManager : Singleton<ServerLobbyManager>
         InitializeUnityAuthentication();
 
 #if DEDICATED_SERVER
-        NetworkManager.Singleton.OnClientConnectedCallback += Singleton_OnClientConnectedCallback;   
+        NetworkManager.Singleton.OnClientConnectedCallback += Singleton_OnClientConnectedCallback;
+        NetworkManager.Singleton.OnClientDisconnectCallback += Singleton_OnClientDisconnectCallback;
 #endif
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            NetworkManager.Singleton.Shutdown();
-        }
     }
 
     private async void InitializeUnityAuthentication()
@@ -88,10 +81,11 @@ public class ServerLobbyManager : Singleton<ServerLobbyManager>
 #endif
         }
     }
-#if DEDICATED_SERVER
 
     private void Update()
     {
+#if DEDICATED_SERVER
+
         autoAllocateTimer -= Time.deltaTime;
         if (autoAllocateTimer <= 0f)
         {
@@ -108,7 +102,11 @@ public class ServerLobbyManager : Singleton<ServerLobbyManager>
 
             serverQueryHandler.UpdateServerCheck();
         }
+#endif
+
     }
+
+#if DEDICATED_SERVER
 
     private void MultiplayEventCallbacks_SubscriptionStateChanged(MultiplayServerSubscriptionState obj)
     {
@@ -172,6 +170,18 @@ public class ServerLobbyManager : Singleton<ServerLobbyManager>
         {
             MultiplayService.Instance.UnreadyServerAsync();
             SpawnGameManager();
+        }
+    }
+
+    
+    private void Singleton_OnClientDisconnectCallback(ulong obj)
+    {
+        playersJoined--;
+        if (playersJoined <= 0)
+        {
+            NetworkManager.Singleton.Shutdown();
+            serverQueryHandler.Dispose();
+            Application.Quit();
         }
     }
 

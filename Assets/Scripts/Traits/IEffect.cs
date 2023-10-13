@@ -1,4 +1,7 @@
-﻿using Sirenix.OdinInspector;
+﻿using Cysharp.Threading.Tasks;
+using Sirenix.OdinInspector;
+using Sirenix.Serialization;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,59 +11,26 @@ namespace Effects
     {
         public void Perform(Unit unit);
         public void Revert(Unit unit);
+
+        public float ModifierValue { get; set; }
     }
 
-    #region Gain Max Health
+    #region Increase Stat
 
-    [InlineEditor]
-    public class GainMaxHealthEffect : IEffect
+    public class IncreaseStatEffect : IEffect
     {
-        public int HealthToGain = 10;
+        [TitleGroup("Modifier")]
+        [OdinSerialize]
+        public float ModifierValue { get; set; } = 20f;
 
-        private Dictionary<Unit, Modifier> ModifierDictionary = new Dictionary<Unit, Modifier>();
+        [TitleGroup("Modifier")]
+        public Modifier.ModifierType ModifierType;
 
-        public void Perform(Unit unit)
-        {
-            if (ModifierDictionary == null)
-            {
-                ModifierDictionary = new Dictionary<Unit, Modifier>();
-            }
+        [TitleGroup("Modifier")]
+        public StatType StatType;
 
-            if (!ModifierDictionary.ContainsKey(unit))
-            {
-                ModifierDictionary.Add(unit, new Modifier { Type = Modifier.ModifierType.Additive, Value = HealthToGain });
-                unit.UnitStats.MaxHealth.AddModifier(ModifierDictionary[unit]);
-            }
-            else
-            {
-                ModifierDictionary[unit].Value += HealthToGain;
-            }
-
-            unit.UnitHealth.AddHealth(HealthToGain);
-            unit.UnitHealth.UpdateMaxHealth();
-        }
-
-        public void Revert(Unit unit)
-        {
-            if (ModifierDictionary == null || !ModifierDictionary.ContainsKey(unit))
-            {
-                return;
-            }
-
-            unit.UnitStats.MaxHealth.RemoveModifier(ModifierDictionary[unit]);
-            unit.UnitHealth.MaxCurrentHealth();
-
-            ModifierDictionary.Remove(unit);
-        }
-    }
-
-    #endregion
-
-    #region Gain Attack Speed
-
-    public class GainAttackSpeedEffect : IEffect
-    {
-        public float AttackSpeedGain = 1.1f;
+        [TitleGroup("Options")]
+        public bool CanIncrease = true;
 
         private Dictionary<Unit, Modifier> ModifierDictionary;
 
@@ -73,12 +43,17 @@ namespace Effects
 
             if (!ModifierDictionary.ContainsKey(unit))
             {
-                ModifierDictionary.Add(unit, new Modifier { Type = Modifier.ModifierType.Multiplicative, Value = AttackSpeedGain });
-                unit.UnitStats.AttackSpeed.AddModifier(ModifierDictionary[unit]);
+                ModifierDictionary.Add(unit, new Modifier 
+                { 
+                    Type = ModifierType, 
+                    Value = ModifierValue 
+                });
+
+                unit.UnitStats.ModifyStat(StatType, ModifierDictionary[unit]);
             }
-            else
+            else if (CanIncrease)
             {
-                ModifierDictionary[unit].Value *= AttackSpeedGain;
+                ModifierDictionary[unit].Value += ModifierValue;
             }
         }
 
@@ -89,7 +64,7 @@ namespace Effects
                 return;
             }
 
-            unit.UnitStats.AttackSpeed.RemoveModifier(ModifierDictionary[unit]);
+            unit.UnitStats.RevertModifiedStat(StatType, ModifierDictionary[unit]);
 
             ModifierDictionary.Remove(unit);
         }
@@ -97,29 +72,540 @@ namespace Effects
 
     #endregion
 
-    #region Gain Attack Damage
+    #region Timed Stat Increase
 
-    public class GainAttackDamageEffect : IEffect
+    public class TimedStatIncreaseEffect : IEffect
     {
-        public float AttackDamage = 20f;
+        [TitleGroup("Modifier")]
+        [OdinSerialize]
+        public float ModifierValue { get; set; } = 20f;
+
+        [TitleGroup("Modifier")]
+        public Modifier.ModifierType ModifierType;
+
+        [TitleGroup("Modifier")]
+        public StatType StatType;
+
+        [TitleGroup("Modifier")]
+        public float Time = 3;
+
+        [TitleGroup("Modifier")]
+        [ReadOnly]
+        public bool CanIncrease = false;
 
         private Dictionary<Unit, Modifier> ModifierDictionary;
 
-        public void Perform(Unit unit)
+        public async void Perform(Unit unit)
         {
             if (ModifierDictionary == null)
             {
                 ModifierDictionary = new Dictionary<Unit, Modifier>();
             }
 
-            if (!ModifierDictionary.ContainsKey(unit))
+            if (ModifierDictionary.ContainsKey(unit))
             {
-                ModifierDictionary.Add(unit, new Modifier { Type = Modifier.ModifierType.Additive, Value = AttackDamage });
-                unit.UnitStats.AttackDamage.AddModifier(ModifierDictionary[unit]);
+                return;
+            }
+
+            ModifierDictionary.Add(unit, new Modifier
+            {
+                Type = ModifierType,
+                Value = ModifierValue
+            });
+
+            unit.UnitStats.ModifyStat(StatType, ModifierDictionary[unit]);
+
+            await UniTask.Delay(TimeSpan.FromSeconds(Time));
+
+            if (unit == null)
+            {
+                if (ModifierDictionary.ContainsKey(unit))
+                {
+                    ModifierDictionary.Remove(unit);
+                }
+
+                return;
+            }
+
+            Revert(unit);
+        }
+
+        public void Revert(Unit unit)
+        {
+            if (ModifierDictionary == null || !ModifierDictionary.ContainsKey(unit))
+            {
+                return;
+            }
+
+            unit.UnitStats.RevertModifiedStat(StatType, ModifierDictionary[unit]);
+
+            ModifierDictionary.Remove(unit);
+        }
+    }
+
+    #endregion
+
+    #region Temporary Increase Stat
+
+    public class TemporaryIncreaseStatEffect : IEffect
+    {
+        [TitleGroup("Modifier")]
+        [OdinSerialize]
+        public float ModifierValue { get; set; } = 20f;
+
+        [TitleGroup("Modifier")]
+        public Modifier.ModifierType ModifierType;
+
+        [TitleGroup("Modifier")]
+        public StatType StatType;
+
+        [TitleGroup("Modifier")]
+        public float ChanceToTrigger = 0.2f;
+
+        private HashSet<Unit> unitsAttacking = new HashSet<Unit>();
+
+        public void Perform(Unit unit)
+        {
+            if (unitsAttacking == null) unitsAttacking = new HashSet<Unit>();
+
+            if (unitsAttacking.Contains(unit)) return;
+
+            unit.UnitStats.ModifyStat(StatType, new Modifier
+            {
+                Type = ModifierType,
+                Value = ModifierValue
+            });
+
+            Action RevertAfterAttack = null;
+            RevertAfterAttack = () =>
+            {
+                Revert(unit);
+                unit.OnAttack -= RevertAfterAttack;
+            };
+
+            unit.OnAttack += RevertAfterAttack;
+            unitsAttacking.Add(unit);
+        }
+
+        public async void Revert(Unit unit)
+        {
+            if (unitsAttacking == null)
+            {
+                return;
+            }
+
+            unit.UnitStats.RevertModifiedStat(StatType, new Modifier
+            {
+                Type = ModifierType,
+                Value = ModifierValue
+            });
+
+            await UniTask.NextFrame();
+            unitsAttacking.Remove(unit);
+        }
+    }
+
+    #endregion
+
+    #region Stacking Effect
+
+    public class StackingEffectEffect : IEffect
+    {
+        [TitleGroup("Stat Increase")]
+        [OdinSerialize]
+        public float ModifierValue { get; set; } = 1f;
+
+        [TitleGroup("Stat Increase")]
+        public bool ShouldMultiply = false;
+
+        [Title("Effect")]
+        [OdinSerialize]
+        public IEffect EffectToStack;
+
+        private Dictionary<Unit, float> MultiplierDictionary;
+
+        public void Perform(Unit unit)
+        {
+            if (MultiplierDictionary == null)
+            {
+                MultiplierDictionary = new Dictionary<Unit, float>();
+            }
+
+            if (!MultiplierDictionary.ContainsKey(unit))
+            {
+                if (ShouldMultiply)
+                {
+                    MultiplierDictionary.Add(unit, EffectToStack.ModifierValue);
+                }
+                else
+                {
+                    MultiplierDictionary.Add(unit, ModifierValue);
+                }
             }
             else
             {
-                ModifierDictionary[unit].Value += AttackDamage;
+                if (ShouldMultiply)
+                {
+                    MultiplierDictionary[unit] *= this.ModifierValue;
+                }
+                else
+                {
+                    MultiplierDictionary[unit] += this.ModifierValue;
+                }
+            }
+            
+
+            EffectToStack.ModifierValue = MultiplierDictionary[unit];
+            EffectToStack.Perform(unit);
+        }
+
+        public void Revert(Unit unit)
+        {
+            if (MultiplierDictionary == null || !MultiplierDictionary.ContainsKey(unit))
+            {
+                return;
+            }
+
+            MultiplierDictionary.Remove(unit);
+
+            EffectToStack.Revert(unit);
+        }
+    }
+
+    #endregion
+
+    #region Reflect Damage Taken
+
+    public class ReflectDamageTakenEffect : IEffect
+    {
+        [TitleGroup("Percent Damage Reflected")]
+        [OdinSerialize]
+        public float ModifierValue { get; set; }
+
+        [TitleGroup("Percent Damage Reflected")]
+        public float TimePeriod = 0;
+
+        private const float tickRate = 0.2f;
+
+        private const int EffectKey = 100;
+
+        public async void Perform(Unit unit)
+        {
+            DamageInstance damageToReflect = unit.UnitHealth.LastDamageTaken;
+
+            if (damageToReflect == null || damageToReflect.SpecialEffectSet.Contains(EffectKey) || damageToReflect.UnitTarget == unit)
+            {
+                return;
+            }
+
+            int ticks = Mathf.FloorToInt(Mathf.Max(1, TimePeriod / tickRate));
+            float damage = (damageToReflect.GetTotal() * ModifierValue) / ticks;
+
+            DamageInstance reflectInstance = new DamageInstance
+            {
+                UnitSource = unit,
+                UnitTarget = damageToReflect.UnitTarget,
+
+                AbilityDamage = damage,
+                CritChance = unit.UnitStats.CritChance.Value,
+                CritMultiplier = unit.UnitStats.CritMultiplier.Value,
+            };
+
+            reflectInstance.SpecialEffectSet.Add(EffectKey);
+            reflectInstance.SpecialEffectSet.Add(200); // Make un-splashable
+
+            for (int i = 0; i < ticks; i++)
+            {
+                await UniTask.Delay(TimeSpan.FromSeconds(tickRate));
+
+                if (reflectInstance.UnitTarget == null) return;
+
+                reflectInstance.UnitTarget.TakeDamage(reflectInstance, out DamageInstance damageDone);
+                if (!damageDone.SpecialEffectSet.Contains(EffectKey))
+                {
+                    damageDone.SpecialEffectSet.Add(EffectKey);
+                    damageDone.SpecialEffectSet.Add(200); // Make un-splashable
+                }
+
+                unit.OnUnitDoneDamage(damageDone);
+            }
+        }
+
+        public void Revert(Unit unit)
+        {
+            // Nothing to revert
+        }
+    }
+
+    #endregion
+
+    #region Damage Over Time On Damage
+
+    public class DamageOverTimeOnDamageEffect : IEffect
+    {
+        [TitleGroup("Percent Damage DOT'd")]
+        [OdinSerialize]
+        public float ModifierValue { get; set; }
+
+        [TitleGroup("Percent Damage DOT'd")]
+        public float TimePeriod = 0;
+
+        private const float tickRate = 0.2f;
+        private const int EffectKey = 150;
+
+        public async void Perform(Unit unit)
+        {
+            DamageInstance damageToDOT = unit.LastDamageDone;
+
+            if (damageToDOT == null || damageToDOT.AbilityDamage <= 1 || damageToDOT.SpecialEffectSet.Contains(EffectKey))
+            {
+                return;
+            }
+
+            int ticks = Mathf.FloorToInt(Mathf.Max(1, TimePeriod / tickRate));
+            float totalDamage = (damageToDOT.AbilityDamage + damageToDOT.TrueDamage) * ModifierValue;
+            float damage = totalDamage / ticks;
+            //Debug.Log(tickRate + ", Triggering DamageOverTime with " + damageToDOT.AbilityDamage + ", that is first multiplied with " + ModifierValue + " resulting in " + totalDamage + ", then that is divided by " + ticks + " finally resulting in " + damage); ;
+
+            DamageInstance dotInstance = new DamageInstance
+            {
+                UnitSource = unit,
+                UnitTarget = damageToDOT.UnitTarget,
+
+                AbilityDamage = damage,
+                CritChance = unit.UnitStats.CritChance.Value,
+                CritMultiplier = unit.UnitStats.CritMultiplier.Value,
+                SpecialEffectSet = damageToDOT.SpecialEffectSet,
+            };
+
+            dotInstance.SpecialEffectSet.Add(EffectKey);
+            dotInstance.SpecialEffectSet.Add(200); // Make un-splashable
+
+            for (int i = 0; i < ticks; i++)
+            {
+                await UniTask.Delay(TimeSpan.FromSeconds(tickRate));
+                
+                if (dotInstance.UnitTarget == null) return;
+
+                dotInstance.UnitTarget.TakeDamage(dotInstance, out DamageInstance damageDone);
+                if (!damageDone.SpecialEffectSet.Contains(EffectKey))
+                {
+                    damageDone.SpecialEffectSet.Add(EffectKey);
+                    damageDone.SpecialEffectSet.Add(200); // Make un-splashable
+                }
+                unit.OnUnitDoneDamage(damageDone);
+            }
+        }
+
+        public void Revert(Unit unit)
+        {
+            // Nothing to revert
+        }
+    }
+
+    #endregion
+
+    #region Splash Damage
+
+    public class SplashDamageEffect : IEffect
+    {
+        [TitleGroup("Splash Damage Percent")]
+        [OdinSerialize]
+        public float ModifierValue { get; set; }
+
+        [TitleGroup("Splash Damage Percent")]
+        public bool CountAP = true;
+
+        [TitleGroup("Splash Damage Percent")]
+        public bool CountAD = false;
+
+        [TitleGroup("Splash Damage Percent")]
+        public bool CountTrueDamage = true;
+
+        private const int EffectKey = 200;
+
+        public void Perform(Unit unit)
+        {
+            DamageInstance damageToSplash = unit.LastDamageDone;
+
+            if (damageToSplash == null || damageToSplash.UnitTarget == null || damageToSplash.SpecialEffectSet.Contains(EffectKey))
+            {
+                return;
+            }
+
+            float damage = 0;
+            if (CountAP) damage += damageToSplash.AbilityDamage * ModifierValue;
+            if (CountAD) damage += damageToSplash.AttackDamage * ModifierValue;
+            if (CountTrueDamage) damage += damageToSplash.TrueDamage * ModifierValue;
+
+            if (damage <= 0)
+            {
+                return;
+            }
+
+            DamageInstance splashInstance = new DamageInstance
+            {
+                UnitSource = unit,
+                UnitTarget = damageToSplash.UnitTarget,
+
+                AbilityDamage = damage,
+                CritChance = unit.UnitStats.CritChance.Value,
+                CritMultiplier = unit.UnitStats.CritMultiplier.Value,
+                SpecialEffectSet = damageToSplash.SpecialEffectSet,
+            };
+
+            splashInstance.SpecialEffectSet.Add(EffectKey);
+            //splashInstance.SpecialEffectSet.Add(150); // Make un-marriable
+
+            List<Unit> splashableUnits = unit.PlayerHandler.BoardSystem.GetSurroundingUnits(damageToSplash.UnitTarget);
+
+            Debug.Log("Splashing " + splashableUnits.Count + " units");
+            for (int i = 0; i < splashableUnits.Count; i++)
+            {
+                if (splashableUnits[i] == unit)
+                {
+                    continue;
+                }
+
+                splashInstance.UnitTarget = splashableUnits[i];
+                splashInstance.UnitTarget.TakeDamage(splashInstance, out DamageInstance damageDone);
+                if (!damageDone.SpecialEffectSet.Contains(EffectKey))
+                {
+                    damageDone.SpecialEffectSet.Add(EffectKey);
+                    //damageDone.SpecialEffectSet.Add(150);
+                }
+
+                //Debug.Log("Splashing " + damageDone.GetTotal() + " damage to " + splashInstance.UnitTarget);
+
+                unit.OnUnitDoneDamage(damageDone);
+            }
+        }
+
+        public void Revert(Unit unit)
+        {
+            // Nothing to revert
+        }
+    }
+
+    #endregion
+
+    #region Give Item
+
+    public class GiveItemEffect : IEffect
+    {
+        [TitleGroup("Item Amount")]
+        [OdinSerialize]
+        public float ModifierValue { get; set; }
+
+        [TitleGroup("Item Amount")]
+        public bool AllUnits = false;
+
+        [TitleGroup("Item Amount")]
+        [HideIf(nameof(AllUnits))]
+        public Trait RestrictToTrait;
+
+        private Dictionary<Unit, ItemData> ItemDictionary;
+
+        public void Perform(Unit unit)
+        {
+            if (!unit.PlayerHandler.BattleSystem.IsInBattle)
+            {
+                return;
+            }
+
+            if (!AllUnits)
+            {
+                int matchingTraitIndex = GameManager.Instance.TraitUtility.GetIndex(RestrictToTrait);
+
+                if (!unit.IsStrongest(matchingTraitIndex))
+                {
+                    return;
+                }
+            }
+
+            for (int i = 0; i < ModifierValue; i++)
+            {
+                ItemData randomItemData = GameManager.Instance.ItemDataUtility.GetRandomItem(true);
+                if (!unit.ApplyItem(randomItemData))
+                {
+                    break;
+                }
+
+                if (ItemDictionary == null)
+                {
+                    ItemDictionary = new Dictionary<Unit, ItemData>();
+                }
+
+                ItemDictionary.Add(unit, randomItemData);
+            }
+        }
+
+        public void Revert(Unit unit)
+        {
+            if (ItemDictionary == null)
+            {
+                return;
+            }
+
+            if (ItemDictionary.ContainsKey(unit))
+            {
+                unit.RemoveItem(ItemDictionary[unit]);
+
+                ItemDictionary.Remove(unit);
+            }
+        }
+    }
+
+    #endregion
+
+    #region Random Bonus
+
+    public class RandomBonusEffect : IEffect
+    {
+        [TitleGroup("Modifier")]
+        [OdinSerialize]
+        public float ModifierValue { get; set; } = 2f;
+
+        [TitleGroup("Modifier")]
+        public Modifier.ModifierType ModifierType;
+
+        [TitleGroup("Modifier")]
+        public int StatAmount;
+
+        [TitleGroup("Options")]
+        public bool CanIncrease = true;
+
+        private Dictionary<Unit, List<(StatType, Modifier)>> ModifierDictionary;
+
+        public void Perform(Unit unit)
+        {
+            if (ModifierDictionary == null)
+            {
+                ModifierDictionary = new Dictionary<Unit, List<(StatType, Modifier)>>();
+            }
+
+            if (!ModifierDictionary.ContainsKey(unit))
+            {
+                ModifierDictionary.Add(unit, new List<(StatType, Modifier)>());
+                
+                for (int i = 0; i < StatAmount; i++)
+                {
+                    int statTypeIndex = UnityEngine.Random.Range(0, Enum.GetValues(typeof(StatType)).Length);
+                    Modifier modifier = new Modifier
+                    {
+                        Type = ModifierType,
+                        Value = ModifierValue
+                    };
+
+                    unit.UnitStats.ModifyStat((StatType)statTypeIndex, modifier);
+
+                    ModifierDictionary[unit].Add(((StatType)statTypeIndex, modifier));
+                }
+
+            }
+            else if (CanIncrease)
+            {
+                //ModifierDictionary[unit].Value += ModifierValue;
             }
         }
 
@@ -130,7 +616,10 @@ namespace Effects
                 return;
             }
 
-            unit.UnitStats.AttackDamage.RemoveModifier(ModifierDictionary[unit]);
+            for (int i = 0; i < ModifierDictionary[unit].Count; i++)
+            {
+                unit.UnitStats.RevertModifiedStat(ModifierDictionary[unit][i].Item1, ModifierDictionary[unit][i].Item2);
+            }
 
             ModifierDictionary.Remove(unit);
         }
@@ -138,5 +627,160 @@ namespace Effects
 
     #endregion
 
+    #region Team Bonus
+
+    public class TeamBonusEffect : IEffect
+    {
+        [TitleGroup("Modifier")]
+        [OdinSerialize]
+        public float ModifierValue { get; set; } = 20f;
+
+        [TitleGroup("Modifier")]
+        public Modifier.ModifierType ModifierType;
+
+        [TitleGroup("Modifier")]
+        public StatType StatType;
+
+        [TitleGroup("Options")]
+        [ReadOnly]
+        public bool CanIncrease = false;
+
+        private Dictionary<Unit, (List<Unit>, Modifier)> ModifierDictionary;
+
+        public void Perform(Unit unit)
+        {
+            if (ModifierDictionary == null)
+            {
+                ModifierDictionary = new Dictionary<Unit, (List<Unit>, Modifier)>();
+            }
+
+            if (!ModifierDictionary.ContainsKey(unit))
+            {
+                List<Unit> unitsOnBoard = unit.PlayerHandler.BoardSystem.UnitsOnBoard;
+
+                ModifierDictionary.Add(unit, (unitsOnBoard, new Modifier
+                {
+                    Type = ModifierType,
+                    Value = ModifierValue
+                }));
+
+                for (int i = 0; i < unitsOnBoard.Count; i++)
+                {
+                    unitsOnBoard[i].UnitStats.ModifyStat(StatType, ModifierDictionary[unit].Item2);
+                }
+            }
+            else if (CanIncrease)
+            {
+                //ModifierDictionary[unit].Value += ModifierValue;
+            }
+        }
+
+        public void Revert(Unit unit)
+        {
+            if (ModifierDictionary == null || !ModifierDictionary.ContainsKey(unit))
+            {
+                return;
+            }
+
+            List<Unit> unitsOnBoard = ModifierDictionary[unit].Item1;
+            for (int i = 0; i < unitsOnBoard.Count; i++)
+            {
+                if (unitsOnBoard[i] == null)
+                {
+                    continue;
+                }
+
+                unitsOnBoard[i].UnitStats.RevertModifiedStat(StatType, ModifierDictionary[unit].Item2);
+            }
+
+            ModifierDictionary.Remove(unit);
+        }
+    }
+
+    #endregion
+
+    #region Gold
+
+    public class GoldEffect : IEffect
+    {
+        [TitleGroup("Gold Amount")]
+        [OdinSerialize]
+        public float ModifierValue { get; set; } = 20f;
+
+        public void Perform(Unit unit)
+        {
+            unit.PlayerHandler.MoneySystem.AddMoney(Mathf.FloorToInt(ModifierValue));    
+        }
+
+        public void Revert(Unit unit)
+        {
+            
+        }
+    }
+
+    #endregion
+
+    #region Health Condition
+
+    public class HealthConditionalEffect : IEffect
+    {
+        [TitleGroup("Health Percent")]
+        [OdinSerialize]
+        public float ModifierValue { get; set; } = 0.5f;
+
+        [TitleGroup("Health Percent")]
+        [OdinSerialize]
+        private IEffect EffectToTrigger;
+
+        [TitleGroup("Health Percent")]
+        public bool TriggerOnce = true;
+
+        private HashSet<Unit> TriggeredUnits;
+
+        public void Perform(Unit unit)
+        {
+            if (TriggeredUnits == null)
+            {
+                TriggeredUnits = new HashSet<Unit>();
+            }
+
+            if (TriggerOnce && TriggeredUnits.Contains(unit))
+            {
+                return;
+            }
+
+            if (unit.UnitHealth.HealthPercentage <= ModifierValue)
+            {
+                EffectToTrigger.Perform(unit);
+
+                if (TriggerOnce)
+                {
+                    TriggeredUnits.Add(unit);
+                }
+            }
+        }
+
+        public void Revert(Unit unit)
+        {
+            if (TriggeredUnits == null)
+            {
+                return;
+            }
+
+            if (TriggerOnce)
+            {
+                if (!TriggeredUnits.Contains(unit))
+                {
+                    return;
+                }
+
+                TriggeredUnits.Remove(unit);
+            }
+
+            EffectToTrigger.Revert(unit);
+        }
+    }
+
+    #endregion
 }
 

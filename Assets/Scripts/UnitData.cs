@@ -18,18 +18,27 @@ public class UnitData : ScriptableObject
     [Title("Traits")]
     public Trait[] Traits;
 
-    [Title("Combat")]
+    [Title("Combat", "Attack")]
     public float AttackDamage = 50;
     public float AttackSpeed = 0.7f;
     public int AttackRange = 1;
 
+    [Title("Combat", "Ability")]
     public float AbilityPower = 100;
     public float Mana = 10;
     public float MaxMana = 100;
 
+    [Title("Combat", "Crit")]
+    public float CritChance = 0.25f;
+    public float CritMultiplier = 2.0f;
+
+    [Title("Defense")]
+    public float Armor = 30;
+    public float MagicResist = 25;
 
     [Title("Health")]
     public int BaseHealth = 500;
+    public float Omnivamp = 0;
 
     [Title("Movement")]
     public float MovementSpeed = 1;
@@ -37,11 +46,16 @@ public class UnitData : ScriptableObject
 
 public struct UnitNetworkData : INetworkSerializable, System.IEquatable<UnitNetworkData>
 {
+    [Title("Unit")]
     public int UnitDataIndex;
     public int StarLevel;
+
+    [Title("Items")]
     public int ItemIndex0;
     public int ItemIndex1;
     public int ItemIndex2;
+
+    [Title("Position")]
     public int TileIndexX;
     public int TileIndexY;
 

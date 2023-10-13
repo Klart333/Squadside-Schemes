@@ -88,7 +88,8 @@ public class UnitShop : MonoBehaviour
 
         DisableTraits();
 
-        for (int i = 0; i < unitData.Traits.Length; i++)
+        int length = Mathf.Min(unitData.Traits.Length, traitTexts.Length);
+        for (int i = 0; i < length; i++)
         {
             traitTexts[i].gameObject.SetActive(true);
             traitTexts[i].text = unitData.Traits[i].Name;
@@ -115,7 +116,7 @@ public class UnitShop : MonoBehaviour
 
     public void BuyUnit()
     {
-        if (bought || !PlayerUI.PlayerHandler.CanInteract)
+        if (bought)
         {
             return;
         }

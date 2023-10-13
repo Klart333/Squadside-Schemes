@@ -21,68 +21,61 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
+    - Name: StaticEffect
+      Entry: 7
+      Data: 0|Effects.IncreaseStatEffect, Assembly-CSharp
+    - Name: ModifierValue
+      Entry: 4
+      Data: 100
+    - Name: ModifierType
+      Entry: 3
+      Data: 0
+    - Name: StatType
+      Entry: 3
+      Data: 10
+    - Name: CanIncrease
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: TraitBreakpoints
       Entry: 7
-      Data: 0|TraitEffects[], Assembly-CSharp
+      Data: 1|TraitEffects[], Assembly-CSharp
     - Name: 
       Entry: 12
-      Data: 3
+      Data: 4
     - Name: 
       Entry: 7
-      Data: 1|TraitEffects, Assembly-CSharp
-    - Name: UnitCount
-      Entry: 3
-      Data: 1
-    - Name: OnBoardEffects
-      Entry: 7
-      Data: 2|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
-        mscorlib
-    - Name: 
-      Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 7
-      Data: 3|Effects.GainMaxHealthEffect, Assembly-CSharp
-    - Name: HealthToGain
-      Entry: 3
-      Data: 200
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: OnAttackEffects
-      Entry: 6
-      Data: 
-    - Name: OnTakeDamageEffects
-      Entry: 6
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 4|TraitEffects, Assembly-CSharp
+      Data: 2|TraitEffects, Assembly-CSharp
     - Name: UnitCount
       Entry: 3
       Data: 2
+    - Name: ColorIndex
+      Entry: 3
+      Data: 1
     - Name: OnBoardEffects
       Entry: 7
-      Data: 5|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+      Data: 3|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 7
-      Data: 6|Effects.GainMaxHealthEffect, Assembly-CSharp
-    - Name: HealthToGain
+      Data: 4|Effects.IncreaseStatEffect, Assembly-CSharp
+    - Name: ModifierValue
+      Entry: 4
+      Data: 500
+    - Name: ModifierType
       Entry: 3
-      Data: 1000
+      Data: 0
+    - Name: StatType
+      Entry: 3
+      Data: 10
+    - Name: CanIncrease
+      Entry: 5
+      Data: false
     - Name: 
       Entry: 8
       Data: 
@@ -94,7 +87,7 @@ MonoBehaviour:
       Data: 
     - Name: OnAttackEffects
       Entry: 7
-      Data: 7|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+      Data: 5|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
@@ -102,6 +95,26 @@ MonoBehaviour:
     - Name: 
       Entry: 13
       Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnDoneDamageEffects
+      Entry: 7
+      Data: 6|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnKillEffects
+      Entry: 7
+      Data: 7|UnityEditor.ShaderGraph.PooledList`1[[Effects.IEffect, Assembly-CSharp]],
+        Unity.ShaderGraph.Editor
     - Name: 
       Entry: 8
       Data: 
@@ -126,7 +139,10 @@ MonoBehaviour:
       Data: 9|TraitEffects, Assembly-CSharp
     - Name: UnitCount
       Entry: 3
-      Data: 3
+      Data: 4
+    - Name: ColorIndex
+      Entry: 3
+      Data: 2
     - Name: OnBoardEffects
       Entry: 7
       Data: 10|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
@@ -136,10 +152,19 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 7
-      Data: 11|Effects.GainMaxHealthEffect, Assembly-CSharp
-    - Name: HealthToGain
+      Data: 11|Effects.IncreaseStatEffect, Assembly-CSharp
+    - Name: ModifierValue
+      Entry: 4
+      Data: 1500
+    - Name: ModifierType
       Entry: 3
-      Data: 4000
+      Data: 0
+    - Name: StatType
+      Entry: 3
+      Data: 10
+    - Name: CanIncrease
+      Entry: 5
+      Data: false
     - Name: 
       Entry: 8
       Data: 
@@ -162,9 +187,213 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: OnTakeDamageEffects
+    - Name: OnDoneDamageEffects
       Entry: 7
       Data: 13|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnKillEffects
+      Entry: 7
+      Data: 14|UnityEditor.ShaderGraph.PooledList`1[[Effects.IEffect, Assembly-CSharp]],
+        Unity.ShaderGraph.Editor
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnTakeDamageEffects
+      Entry: 7
+      Data: 15|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 16|TraitEffects, Assembly-CSharp
+    - Name: UnitCount
+      Entry: 3
+      Data: 6
+    - Name: ColorIndex
+      Entry: 3
+      Data: 3
+    - Name: OnBoardEffects
+      Entry: 7
+      Data: 17|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 18|Effects.IncreaseStatEffect, Assembly-CSharp
+    - Name: ModifierValue
+      Entry: 4
+      Data: 4000
+    - Name: ModifierType
+      Entry: 3
+      Data: 0
+    - Name: StatType
+      Entry: 3
+      Data: 10
+    - Name: CanIncrease
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnAttackEffects
+      Entry: 7
+      Data: 19|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnDoneDamageEffects
+      Entry: 7
+      Data: 20|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnKillEffects
+      Entry: 7
+      Data: 21|UnityEditor.ShaderGraph.PooledList`1[[Effects.IEffect, Assembly-CSharp]],
+        Unity.ShaderGraph.Editor
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnTakeDamageEffects
+      Entry: 7
+      Data: 22|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 23|TraitEffects, Assembly-CSharp
+    - Name: UnitCount
+      Entry: 3
+      Data: 8
+    - Name: ColorIndex
+      Entry: 3
+      Data: 4
+    - Name: OnBoardEffects
+      Entry: 7
+      Data: 24|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 25|Effects.IncreaseStatEffect, Assembly-CSharp
+    - Name: ModifierValue
+      Entry: 4
+      Data: 10000
+    - Name: ModifierType
+      Entry: 3
+      Data: 0
+    - Name: StatType
+      Entry: 3
+      Data: 10
+    - Name: CanIncrease
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnAttackEffects
+      Entry: 7
+      Data: 26|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnDoneDamageEffects
+      Entry: 7
+      Data: 27|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnKillEffects
+      Entry: 7
+      Data: 28|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnTakeDamageEffects
+      Entry: 7
+      Data: 29|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
@@ -186,3 +415,20 @@ MonoBehaviour:
       Data: 
   Name: Bruiser
   Icon: {fileID: 21300000, guid: 54e09c3a6b16b71478823e74a58b7a6e, type: 3}
+  Description: 'Bruisers get +100 Health.
+
+    Plus more health
+
+
+    (2) 500 HP
+
+
+    (4)
+    1500 HP
+
+
+    (6) 4000 HP
+
+
+    (8) 10000 HP'
+  Exclusive: 0

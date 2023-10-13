@@ -42,11 +42,14 @@ public class InteractSystem : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonDown(0) && PlayerHandler.CanInteract)
+        if (Input.GetMouseButtonDown(0))
         {
             if (holding)
             {
-                Place();
+                if (PlayerHandler.CanInteract)
+                {
+                    Place();
+                }
             }
             else
             {

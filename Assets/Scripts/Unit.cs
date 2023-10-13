@@ -1,36 +1,45 @@
+using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
+using System.Linq;
+using System;
 
 public class Unit : NetworkBehaviour, IInteractable
 {
     public event Action<Unit> OnDeath;
     public event Action OnCombatStart;
+    public event Action OnAttack;
+    public event Action OnTakeDamage;
+    public event Action OnDamageDone;
+    public event Action OnKill;
 
     [TitleGroup("Data")]
     [SerializeField]
     private UnitData unitData;
 
-    public List<(Trait, int)> AppliedBoardTraits = new List<(Trait, int)>();
+    public Dictionary<Trait, int> AppliedBoardTraits = new Dictionary<Trait, int>();
 
-    private List<(Trait, int)> cachedTraits;
+    private Dictionary<Trait, int> cachedTraits;
 
-    private UnitBattleController battleController;
     private MeshRenderer meshRenderer;
     private UnitHealth unitHealth;
     private UnitManaBar unitMana;
+    private UnitItems unitItems;
 
     public UnitHealth UnitHealth => unitHealth;
     public UnitManaBar UnitMana => unitMana;
+    public UnitItems UnitItems => unitItems;
     public UnitData UnitData => unitData;
     public int StarLevel { get; set; } = 0;
     public bool IsOnBoard { get; set; } = false;
+    public bool IsInitialized { get; set; } = false;
     public Tile CurrentTile { get; set; }
+    public ItemData[] ItemSlots { get; set; }
     public PlayerHandler PlayerHandler { get; set; }
+    public DamageInstance LastDamageDone { get; set; }
+    public UnitBattleController BattleController { get; private set; }
 
     [Title("Stats"), ShowInInspector, ReadOnly]
     public UnitStats UnitStats { get; set; }
@@ -48,10 +57,29 @@ public class Unit : NetworkBehaviour, IInteractable
             interactable = value;
         }
     }
+    public int ItemCount
+    {
+        get
+        {
+            int count = 0;
+            for (int i = 0; i < ItemSlots.Length; i++)
+            {
+                if (ItemSlots[i] == null)
+                {
+                    break;
+                }
+                count++;
+            }
+
+            return count;
+        }
+    }
 
     private void Start()
     {
-        battleController = new UnitBattleController()
+        ItemSlots = new ItemData[3];
+
+        BattleController = new UnitBattleController()
         {
             Unit = this,
             UnitMoveState = new UnitMoveState(this),
@@ -65,12 +93,17 @@ public class Unit : NetworkBehaviour, IInteractable
         {
             AttackDamage = new Stat(unitData.AttackDamage),
             AttackSpeed = new Stat(unitData.AttackSpeed),
-            AbilityPower = new Stat(unitData.AbilityPower),
             AttackRange = new Stat(unitData.AttackRange),
-            MaxHealth = new Stat(unitData.BaseHealth),
-            MovementSpeed = new Stat(unitData.MovementSpeed),
+            AbilityPower = new Stat(unitData.AbilityPower),
             Mana = new Stat(0),
             MaxMana = new Stat(unitData.MaxMana),
+            CritChance = new Stat(unitData.CritChance),
+            CritMultiplier = new Stat(unitData.CritMultiplier),
+            Armor = new Stat(unitData.Armor),
+            MagicResist = new Stat(unitData.MagicResist),
+            MaxHealth = new Stat(unitData.BaseHealth),
+            MovementSpeed = new Stat(unitData.MovementSpeed),
+            Omnivamp = new Stat(unitData.Omnivamp),
 
             Traits = indexHashSet
         };
@@ -81,6 +114,7 @@ public class Unit : NetworkBehaviour, IInteractable
         }
 
         unitHealth = GetComponent<UnitHealth>();
+        unitItems = GetComponent<UnitItems>();
         unitMana = GetComponentInChildren<UnitManaBar>();
         meshRenderer = GetComponentInChildren<MeshRenderer>();
 
@@ -94,6 +128,8 @@ public class Unit : NetworkBehaviour, IInteractable
         {
             PlayerHandler.BoardSystem.OnBoardedUnitsChanged += UpdateCachedTraits;
         }
+
+        IsInitialized = true;
     }
 
     private void OnDisable()
@@ -114,14 +150,14 @@ public class Unit : NetworkBehaviour, IInteractable
         }
     }
 
-    private void UpdateCachedTraits(List<Unit> units)
+    public void UpdateCachedTraits(List<Unit> units)
     {
         if (!units.Contains(this))
         {
             return;
         }
 
-        cachedTraits = new List<(Trait, int)>();
+        cachedTraits = new Dictionary<Trait, int>();
 
         foreach (int traitIndex in UnitStats.Traits)
         {
@@ -144,21 +180,18 @@ public class Unit : NetworkBehaviour, IInteractable
             }
 
             //print("Trait: " + trait.Name + " has count: " + count);
-            cachedTraits.Add((trait, count));
+            cachedTraits.Add(trait, count);
         }
 
         // Check if we need to update one of the applied traits
-        for (int i = 0; i < AppliedBoardTraits.Count; i++)
+        foreach (Trait cachedTrait in cachedTraits.Keys)
         {
-            for (int g = 0; g < cachedTraits.Count; g++)
+            if (AppliedBoardTraits.ContainsKey(cachedTrait) && cachedTraits[cachedTrait] != AppliedBoardTraits[cachedTrait]) // If the Count is different
             {
-                if (AppliedBoardTraits[i].Item1 == cachedTraits[g].Item1 && AppliedBoardTraits[i].Item2 != cachedTraits[g].Item2) // If its the same and the count is different
-                {
-                    cachedTraits[g].Item1.RevertAll(this);
-                    cachedTraits[g].Item1.OnBoard(this, cachedTraits[g].Item2);
+                cachedTrait.RevertAll(this);
+                cachedTrait.OnBoard(this, cachedTraits[cachedTrait]);
 
-                    AppliedBoardTraits[i] = cachedTraits[g];
-                }
+                AppliedBoardTraits[cachedTrait] = cachedTraits[cachedTrait];
             }
         }
     }
@@ -234,13 +267,20 @@ public class Unit : NetworkBehaviour, IInteractable
 
     public void UpdateBattle(Battle battle)
     {
-        battleController.Update(battle);
+        BattleController.Update(battle);
     }
 
-    public bool TakeDamage(float damage)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="damage"></param>
+    /// <returns>If the unit died</returns>
+    public bool TakeDamage(DamageInstance damage, out DamageInstance damageDone)
     {
-        OnTakeDamage();
-        return unitHealth.TakeDamage(damage);
+        bool died = unitHealth.TakeDamage(damage, out damageDone);
+        OnUnitTakeDamage(damageDone);
+
+        return died;
     }
 
     #endregion
@@ -282,10 +322,11 @@ public class Unit : NetworkBehaviour, IInteractable
 
         IsOnBoard = true;
 
-        for (int i = 0; i < cachedTraits.Count; i++)
+        foreach (Trait trait in cachedTraits.Keys)
         {
-            cachedTraits[i].Item1.OnBoard(this, cachedTraits[i].Item2);
-            AppliedBoardTraits.Add(cachedTraits[i]);
+            trait.OnBoard(this, cachedTraits[trait]);
+
+            AppliedBoardTraits.Add(trait, cachedTraits[trait]);
         }
     }
 
@@ -295,47 +336,144 @@ public class Unit : NetworkBehaviour, IInteractable
 
         IsOnBoard = false;
 
-        if (cachedTraits == null)
+        foreach (Trait trait in cachedTraits.Keys)
         {
-            Debug.LogError("Uh wtf man");
-            UpdateCachedTraits(new List<Unit> { this });
-        }
+            trait.OnBench(this, cachedTraits[trait]);
 
-        for (int i = 0; i < cachedTraits.Count; i++)
-        {
-            cachedTraits[i].Item1.OnBench(this, cachedTraits[i].Item2);
-
-            if (AppliedBoardTraits.Contains(cachedTraits[i]))
+            if (AppliedBoardTraits.ContainsKey(trait))
             {
-                AppliedBoardTraits.Remove(cachedTraits[i]);
+                AppliedBoardTraits.Remove(trait);
             }
         }
     }
 
-    public void OnTakeDamage()
+    public void OnUnitTakeDamage(DamageInstance damageTaken)
     {
-        for (int i = 0; i < cachedTraits.Count; i++)
+        OnTakeDamage?.Invoke();
+
+        UnitStats.Mana.AddModifier((int)(damageTaken.GetTotal() / 10.0f));
+
+        foreach (Trait trait in cachedTraits.Keys)
         {
-            cachedTraits[i].Item1.OnTakeDamage(this, cachedTraits[i].Item2);
+            trait.OnTakeDamage(this, cachedTraits[trait]);
         }
     }
 
-    public void OnAttack()
+    public void OnUnitDoneDamage(DamageInstance damageInstance)
     {
-        UnitStats.Mana.AddModifier(10);
+        LastDamageDone = damageInstance;
 
-        for (int i = 0; i < cachedTraits.Count; i++)
+        OnDamageDone?.Invoke();
+
+        UnitHealth.AddHealth(UnitStats.Omnivamp.Value * damageInstance.GetTotal());
+
+        foreach (Trait trait in cachedTraits.Keys)
         {
-            cachedTraits[i].Item1.OnAttack(this, cachedTraits[i].Item2);
+            trait.OnDoneDamage(this, cachedTraits[trait]);
+        }
+    }
+
+    public void OnUnitAttack()
+    {
+        OnAttack?.Invoke();
+
+        UnitStats.Mana.AddModifier(10);
+        
+        foreach (Trait trait in cachedTraits.Keys)
+        {
+            trait.OnAttack(this, cachedTraits[trait]);
+        }
+    }
+
+    public void OnUnitKill()
+    {
+        OnKill?.Invoke();
+
+        foreach (Trait trait in cachedTraits.Keys)
+        {
+            trait.OnKill(this, cachedTraits[trait]);
         }
     }
 
     public void RevertTrait()
     {
-        for (int i = 0; i < cachedTraits.Count; i++)
+        foreach (Trait trait in cachedTraits.Keys)
         {
-            cachedTraits[i].Item1.RevertAll(this);
+            trait.RevertAll(this);
         }
+    }
+
+    #endregion
+
+    #region Items
+
+    public bool ApplyItem(ItemData item)
+    {
+        if (item == null)
+        {
+            return false;
+        }
+
+        if (item.IsComponent)
+        {
+            for (int i = 0; i < ItemSlots.Length; i++)
+            {
+                if (ItemSlots[i] != null && ItemSlots[i].IsComponent)
+                {
+                    ItemData combined = GameManager.Instance.ItemDataUtility.CombineItems(item, ItemSlots[i]);
+                    RemoveItem(ItemSlots[i]);
+
+                    return ApplyItem(combined);
+                }
+            }
+        }
+
+        int index = -1;
+        for (int i = 0; i < ItemSlots.Length; i++)
+        {
+            if (ItemSlots[i] == null)
+            {
+                ItemSlots[i] = item;
+                index = i;
+                break;
+            }
+        }
+
+        if (index == -1)
+        {
+            return false;
+        }
+
+        UnitItems.ApplyItem(item, index);
+
+        return true;
+    }
+
+    public void RemoveItem(ItemData item)
+    {
+        int index = -1;
+        for (int i = 0; i < ItemSlots.Length; i++)
+        {
+            if (ItemSlots[i] == null)
+            {
+                break;
+            }
+
+            if (ItemSlots[i].name == item.name)
+            {
+                ItemSlots[i] = null;
+                index = i;
+                break;
+            }
+        }
+
+        if (index == -1)
+        {
+            Debug.LogError("Trying to remove item unit does not have ???");
+            return;
+        }
+
+        UnitItems.RemoveItem(item, index);
     }
 
     #endregion
@@ -348,6 +486,59 @@ public class Unit : NetworkBehaviour, IInteractable
         {
             transform.GetChild(i).gameObject.SetActive(value);
         }
+    }
+
+    #endregion
+
+    #region Utility
+
+    public bool IsStrongest(int matchingTraitIndex = -1)
+    {
+        List<Unit> units = PlayerHandler.BoardSystem.UnitsOnBoard;
+
+        for (int i = 0; i < units.Count; i++)
+        {
+            if (units[i] == this)
+            {
+                continue;
+            }
+
+            if (matchingTraitIndex != -1 && !units[i].UnitStats.Traits.Contains(matchingTraitIndex))
+            {
+                continue;
+            }
+
+            int myCount = ItemCount;
+            int theirCount = units[i].ItemCount;
+            if (myCount < theirCount)
+            {
+                return false;
+            }
+            else if (myCount > theirCount)
+            {
+                continue;
+            }
+
+            if (StarLevel < units[i].StarLevel)
+            {
+                return false;
+            }
+            else if (StarLevel > units[i].StarLevel)
+            {
+                continue;
+            }
+
+            if (UnitData.Cost < units[i].UnitData.Cost)
+            {
+                return false;
+            }
+            else if (UnitData.Cost > units[i].UnitData.Cost)
+            {
+                continue;
+            }
+        }
+
+        return true;
     }
 
     #endregion

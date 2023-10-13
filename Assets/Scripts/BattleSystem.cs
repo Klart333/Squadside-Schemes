@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections;
@@ -35,7 +36,14 @@ public class BattleSystem : MonoBehaviour
         {
             GameManager.Instance.ToggleUnitVisibilityServerRPC(unitsToHide[i].NetworkObjectId, false);
 
-            alliedUnits.Add(PlayerHandler.BoardSystem.SpawnUnitLocal(PlayerHandler.BoardSystem.UnitsOnBoardNetwork[i], false));
+            Unit unit = PlayerHandler.BoardSystem.SpawnUnitLocal(PlayerHandler.BoardSystem.UnitsOnBoardNetwork[i], false);
+            await UniTask.WaitUntil(() => unit.IsInitialized);
+
+            if (PlayerHandler.BoardSystem.UnitsOnBoardNetwork[i].ItemIndex0 != -1) unit.ApplyItem(GameManager.Instance.ItemDataUtility.Get(PlayerHandler.BoardSystem.UnitsOnBoardNetwork[i].ItemIndex0));
+            if (PlayerHandler.BoardSystem.UnitsOnBoardNetwork[i].ItemIndex1 != -1) unit.ApplyItem(GameManager.Instance.ItemDataUtility.Get(PlayerHandler.BoardSystem.UnitsOnBoardNetwork[i].ItemIndex1));
+            if (PlayerHandler.BoardSystem.UnitsOnBoardNetwork[i].ItemIndex2 != -1) unit.ApplyItem(GameManager.Instance.ItemDataUtility.Get(PlayerHandler.BoardSystem.UnitsOnBoardNetwork[i].ItemIndex2));
+
+            alliedUnits.Add(unit);
         }
 
         foreach (var unitNetworkData in unitsNetworkData)
@@ -45,11 +53,16 @@ public class BattleSystem : MonoBehaviour
                 Debug.LogError("Unit is null");
                 continue;
             }
+            
             Unit unit = PlayerHandler.BoardSystem.SpawnUnitLocal(unitNetworkData, true);
+            await UniTask.WaitUntil(() => unit.IsInitialized);
+
+            if (unitNetworkData.ItemIndex0 != -1) unit.ApplyItem(GameManager.Instance.ItemDataUtility.Get(unitNetworkData.ItemIndex0));
+            if (unitNetworkData.ItemIndex1 != -1) unit.ApplyItem(GameManager.Instance.ItemDataUtility.Get(unitNetworkData.ItemIndex1));
+            if (unitNetworkData.ItemIndex2 != -1) unit.ApplyItem(GameManager.Instance.ItemDataUtility.Get(unitNetworkData.ItemIndex2));
+
             enemyUnits.Add(unit);
         }
-
-        await Task.Delay(1000);
 
         battle = new Battle
         {
@@ -62,6 +75,11 @@ public class BattleSystem : MonoBehaviour
             IsAlliesFirst = PlayerHandler.OwnerClientId < opponentClientId,
             EnemyHasCandy = PVEEnemies
         };
+
+        enemyUnits.ForEach((unit) => { unit.UpdateCachedTraits(enemyUnits); unit.OnPlacedOnBoard(); });
+        alliedUnits.ForEach((unit) => { unit.UpdateCachedTraits(alliedUnits); unit.OnPlacedOnBoard(); });
+
+        await UniTask.Delay(1000);
 
         battle.StartBattle();
     }

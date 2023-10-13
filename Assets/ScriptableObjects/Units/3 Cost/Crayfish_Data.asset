@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25f45e41a3607b841a9bb0497a18fd10, type: 3}
+  m_Name: Crayfish_Data
+  m_EditorClassIdentifier: 
+  Name: Crayfish
+  Cost: 3
+  Portrait: {fileID: 21300000, guid: 15cfa6efb1ce2c644bd89e6104c89583, type: 3}
+  UnitPrefab: {fileID: 3699937979566777750, guid: 2521bfa43baf48f4abddfa34bc520b1e,
+    type: 3}
+  Traits:
+  - {fileID: 11400000, guid: 0870cbbfecf24ce42a3522e97a3b1642, type: 2}
+  - {fileID: 11400000, guid: 6d05d7d0b4970b6418f3957faef3618b, type: 2}
+  AttackDamage: 50
+  AttackSpeed: 0.7
+  AttackRange: 1
+  AbilityPower: 100
+  Mana: 0
+  MaxMana: 100
+  CritChance: 0.25
+  CritMultiplier: 2
+  Armor: 40
+  MagicResist: 40
+  BaseHealth: 750
+  Omnivamp: 0
+  MovementSpeed: 1

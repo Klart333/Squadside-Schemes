@@ -182,6 +182,66 @@ public static class PathFinding
 
         return index;
     }
+
+    public static List<Vector2Int> GetNeighbours(Vector2Int index, Tile[,] map)
+    {
+        List<Vector2Int> neighbours = new List<Vector2Int>();
+
+        // Left
+        if (index.x > 0)
+        {
+            neighbours.Add(new Vector2Int(index.x - 1, index.y));
+        }
+
+        // Right
+        if (index.x + 1 < map.GetLength(0))
+        {
+            neighbours.Add(new Vector2Int(index.x + 1, index.y));
+        }
+
+        // Back
+        if (index.y > 0)
+        {
+            neighbours.Add(new Vector2Int(index.x, index.y - 1));
+        }
+
+        // Up
+        if (index.y + 1 < map.GetLength(1))
+        {
+            neighbours.Add(new Vector2Int(index.x, index.y + 1));
+        }
+
+        if (index.y % 2 == 0)
+        {
+            // Up Left
+            if (index.x > 0 && index.y + 1 < map.GetLength(1))
+            {
+                neighbours.Add(new Vector2Int(index.x - 1, index.y + 1));
+            }
+
+            // Down Left
+            if (index.x > 0 && index.y > 0)
+            {
+                neighbours.Add(new Vector2Int(index.x - 1, index.y - 1));
+            }
+        }
+        else
+        {
+            // Up Right
+            if (index.x + 1 < map.GetLength(0) && index.y + 1 < map.GetLength(1))
+            {
+                neighbours.Add(new Vector2Int(index.x + 1, index.y + 1));
+            }
+
+            // Down Right
+            if (index.x + 1 < map.GetLength(0) && index.y > 0)
+            {
+                neighbours.Add(new Vector2Int(index.x + 1, index.y - 1));
+            }
+        }
+
+        return neighbours;
+    }
 }
 
 namespace DataStructures.Queue

@@ -26,6 +26,17 @@ public class Item : MonoBehaviour, IInteractable
         meshRenderer = GetComponentInChildren<MeshRenderer>();
     }
 
+    public void SetItemData(ItemData itemData)
+    {
+        this.ItemData = itemData;
+
+        var rends = GetComponentsInChildren<SpriteRenderer>();
+        for (int i = 0; i < rends.Length; i++)
+        {
+            rends[i].sprite = itemData.Icon;
+        }
+    }
+
     #region Interact
 
     public void StartInteract()

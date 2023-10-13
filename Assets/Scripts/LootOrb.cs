@@ -38,7 +38,6 @@ public class LootOrb : MonoBehaviour, IInteractable
 
     public bool Pickup()
     {
-        print(LootSystem);
         LootSystem.SpawnItem(LootItemData);
 
         Destroy(gameObject);

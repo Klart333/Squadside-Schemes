@@ -237,7 +237,6 @@ public class GameManager : NetworkBehaviour
         int amountDone = 0;
         while (amountDone < battlePairings.Length)
         {
-            amountDone = 0;
             for (int i = 0; i < battlePairings.Length; i++)
             {
                 if (battlePairings[i].BattleSettled)

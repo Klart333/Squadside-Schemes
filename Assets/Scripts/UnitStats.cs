@@ -6,20 +6,30 @@ using UnityEngine;
 [Serializable]
 public class UnitStats
 {
-    [Title("Combat")]
+    [Title("Combat", "Attack")]
     public Stat AttackDamage;
     public Stat AttackSpeed;
     public Stat AttackRange;
 
+    [Title("Combat", "Ability")]
     public Stat AbilityPower;
     public Stat Mana;
     public Stat MaxMana;
 
+    [Title("Combat", "Crit")]
+    public Stat CritChance;
+    public Stat CritMultiplier;
+
     [Title("Traits")]
     public HashSet<int> Traits;
 
+    [Title("Defense")]
+    public Stat Armor;
+    public Stat MagicResist;
+
     [Title("Health")]
     public Stat MaxHealth;
+    public Stat Omnivamp;
 
     [TitleGroup("Movement")]
     public Stat MovementSpeed;
@@ -33,6 +43,119 @@ public class UnitStats
     {
         Traits.Remove(traitIndex);
     }
+
+    public void ModifyStat(StatType statType, Modifier modifier)
+    {
+        switch (statType)
+        {
+            case StatType.AttackDamage:
+                AttackDamage.AddModifier(modifier);
+                break;
+            case StatType.AttackSpeed:
+                AttackSpeed.AddModifier(modifier);
+                break;
+            case StatType.AttackRange:
+                AttackRange.AddModifier(modifier);
+                break;
+            case StatType.AbilityPower:
+                AbilityPower.AddModifier(modifier);
+                break;
+            case StatType.Mana:
+                Mana.AddModifier(modifier);
+                break;
+            case StatType.MaxMana:
+                MaxMana.AddModifier(modifier);
+                break;
+            case StatType.CritChance:
+                CritChance.AddModifier(modifier);
+                break;
+            case StatType.CritMultiplier:
+                CritMultiplier.AddModifier(modifier);
+                break;
+            case StatType.Armor:
+                Armor.AddModifier(modifier);
+                break;
+            case StatType.MagicResist:
+                MagicResist.AddModifier(modifier);
+                break;
+            case StatType.MaxHealth:
+                MaxHealth.AddModifier(modifier);
+                break;
+            case StatType.Omnivamp:
+                Omnivamp.AddModifier(modifier);
+                break;
+            case StatType.MovementSpeed:
+                MovementSpeed.AddModifier(modifier);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void RevertModifiedStat(StatType statType, Modifier modifier)
+    {
+        switch (statType)
+        {
+            case StatType.AttackDamage:
+                AttackDamage.RemoveModifier(modifier);
+                break;
+            case StatType.AttackSpeed:
+                AttackSpeed.RemoveModifier(modifier);
+                break;
+            case StatType.AttackRange:
+                AttackRange.RemoveModifier(modifier);
+                break;
+            case StatType.AbilityPower:
+                AbilityPower.RemoveModifier(modifier);
+                break;
+            case StatType.Mana:
+                Mana.RemoveModifier(modifier);
+                break;
+            case StatType.MaxMana:
+                MaxMana.RemoveModifier(modifier);
+                break;
+            case StatType.CritChance:
+                CritChance.RemoveModifier(modifier);
+                break;
+            case StatType.CritMultiplier:
+                CritMultiplier.RemoveModifier(modifier);
+                break;
+            case StatType.Armor:
+                Armor.RemoveModifier(modifier);
+                break;
+            case StatType.MagicResist:
+                MagicResist.RemoveModifier(modifier);
+                break;
+            case StatType.MaxHealth:
+                MaxHealth.RemoveModifier(modifier);
+                break;
+            case StatType.Omnivamp:
+                Omnivamp.RemoveModifier(modifier);
+                break;
+            case StatType.MovementSpeed:
+                MovementSpeed.RemoveModifier(modifier);
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+public enum StatType
+{
+    AttackDamage,
+    AttackSpeed,
+    AttackRange,
+    AbilityPower,
+    Mana,
+    MaxMana,
+    CritChance,
+    CritMultiplier,
+    Armor,
+    MagicResist,
+    MaxHealth,
+    Omnivamp,
+    MovementSpeed,
 }
 
 [Serializable]
@@ -152,6 +275,7 @@ public class Stat
     public void RemoveAllModifiers()
     {
         modifiers.Clear();
+        OnValueChanged?.Invoke();
     }
 }
 

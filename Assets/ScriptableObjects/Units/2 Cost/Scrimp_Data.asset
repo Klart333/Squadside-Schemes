@@ -20,11 +20,16 @@ MonoBehaviour:
   Traits:
   - {fileID: 11400000, guid: 0870cbbfecf24ce42a3522e97a3b1642, type: 2}
   - {fileID: 11400000, guid: dec7b73c22845f142bc86fc3116bca44, type: 2}
-  AttackDamage: 20
-  AttackSpeed: 0.6
+  AttackDamage: 40
+  AttackSpeed: 0.7
   AttackRange: 1
   AbilityPower: 100
   Mana: 10
   MaxMana: 100
-  BaseHealth: 1000
-  MovementSpeed: 0.75
+  CritChance: 0.25
+  CritMultiplier: 2
+  Armor: 30
+  MagicResist: 25
+  BaseHealth: 700
+  Omnivamp: 0
+  MovementSpeed: 1

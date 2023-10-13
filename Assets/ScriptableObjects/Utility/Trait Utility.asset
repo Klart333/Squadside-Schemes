@@ -13,8 +13,18 @@ MonoBehaviour:
   m_Name: Trait Utility
   m_EditorClassIdentifier: 
   AllTraits:
+  - {fileID: 11400000, guid: 8aee8c1781b14224a9c18d8646f8f492, type: 2}
+  - {fileID: 11400000, guid: e93cf2053193eea499af7d30fe90ed25, type: 2}
+  - {fileID: 11400000, guid: 3c32c862502bfcb408dba27704c3a3a5, type: 2}
+  - {fileID: 11400000, guid: 6d05d7d0b4970b6418f3957faef3618b, type: 2}
   - {fileID: 11400000, guid: b91259f7a90a3b849b97b59c73be965c, type: 2}
+  - {fileID: 11400000, guid: f22f9cc25640ccd4d805ead6cc0cfca7, type: 2}
+  - {fileID: 11400000, guid: 267e49667b6e19142a480eebacddaf24, type: 2}
+  - {fileID: 11400000, guid: 8be750625a615574793970d378d54b35, type: 2}
+  - {fileID: 11400000, guid: b1ed91b54a314f242a07f5a35d56b7ae, type: 2}
   - {fileID: 11400000, guid: 3f3499ee9ec7abf45a0798e6adde35f2, type: 2}
-  - {fileID: 11400000, guid: ffd0365d3066b664eaab42aec2b182f4, type: 2}
-  - {fileID: 11400000, guid: dec7b73c22845f142bc86fc3116bca44, type: 2}
   - {fileID: 11400000, guid: 0870cbbfecf24ce42a3522e97a3b1642, type: 2}
+  - {fileID: 11400000, guid: 304ff022426cf48499592fcef4b63d60, type: 2}
+  - {fileID: 11400000, guid: dec7b73c22845f142bc86fc3116bca44, type: 2}
+  - {fileID: 11400000, guid: ac700306e8c2d824b96e8671e12d86a1, type: 2}
+  - {fileID: 11400000, guid: daaa4765294a86f4aaf99b0355aabf43, type: 2}

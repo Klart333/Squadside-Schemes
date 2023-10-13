@@ -112,15 +112,48 @@ public class UnitAttackState : UnitBaseState
     {
         attacking = true;
 
+        await UniTask.Delay(TimeSpan.FromSeconds(1.0f / Unit.UnitStats.AttackSpeed.Value) * 0.8f);
+
+        if (Unit == null) 
+        {
+            attacking = false;
+            return;
+        }
+
         List<Unit> enemies = battle.GetEnemyUnits(Unit);
-        if (!enemies[0].TakeDamage(Unit.UnitStats.AttackDamage.Value)) // if the unit didn't die
+
+        if (enemies == null || enemies.Count == 0)
+        {
+            attacking = false;
+            return;
+        }
+
+        DamageInstance damageInstance = new DamageInstance
+        {
+            UnitSource = Unit,
+            UnitTarget = enemies[0],
+
+            AttackDamage = Unit.UnitStats.AttackDamage.Value,
+            CritChance = Unit.UnitStats.CritChance.Value,
+            CritMultiplier = Unit.UnitStats.CritMultiplier.Value,
+            AbilityDamage = 0,
+            TrueDamage = 0,
+        };
+
+        if (enemies[0].TakeDamage(damageInstance, out DamageInstance damageDone))
+        {
+            Unit.OnUnitKill();
+        }
+        else
         {
             RotateTowardTarget(enemies[0].CurrentTile);
         }
 
-        Unit.OnAttack();
+        Unit.OnUnitAttack();
+        Unit.OnUnitDoneDamage(damageDone);
+        Unit.BattleController.LastAttackDone = damageDone;
 
-        await UniTask.Delay(TimeSpan.FromSeconds(1.0f / Unit.UnitStats.AttackSpeed.Value));
+        await UniTask.Delay(TimeSpan.FromSeconds(1.0f / Unit.UnitStats.AttackSpeed.Value) * 0.2f);
 
         attacking = false;
     }
@@ -165,12 +198,31 @@ public class UnitUltimateState : UnitBaseState
         attacking = true;
 
         List<Unit> enemies = battle.GetEnemyUnits(Unit);
-        if (!enemies[0].TakeDamage(Unit.UnitStats.AttackDamage.Value * 10)) // if the unit didn't die
+
+        DamageInstance damageInstance = new DamageInstance
+        {
+            UnitSource = Unit,
+            UnitTarget = enemies[0],
+
+            AttackDamage = 0,
+            AbilityDamage = Unit.UnitStats.AbilityPower.Value * 2,
+            CritChance = Unit.UnitStats.CritChance.Value,
+            CritMultiplier = Unit.UnitStats.CritMultiplier.Value,
+            TrueDamage = 0
+        };
+
+        if (enemies[0].TakeDamage(damageInstance, out DamageInstance damageDone))
+        {
+            Unit.OnUnitKill();
+        }
+        else
         {
             RotateTowardTarget(enemies[0].CurrentTile);
         }
 
-        Unit.OnAttack();
+        //Unit.OnUnitAttack();
+        Unit.OnUnitDoneDamage(damageDone);
+        Unit.BattleController.LastAttackDone = damageDone;
 
         await UniTask.Delay(TimeSpan.FromSeconds(1.0f / Unit.UnitStats.AttackSpeed.Value));
 

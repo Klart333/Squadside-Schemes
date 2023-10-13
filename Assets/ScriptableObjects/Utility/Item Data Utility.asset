@@ -12,7 +12,287 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65cd0a12d9e9cc74a9a8dbfe1889c119, type: 3}
   m_Name: Item Data Utility
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 69937f968446a234ab1f24e50481e080, type: 2}
+    - {fileID: 11400000, guid: d788fde891a00914d850ed775456d54a, type: 2}
+    - {fileID: 11400000, guid: 86d9577bddffde641b097eef2de7b679, type: 2}
+    - {fileID: 11400000, guid: 985914f29c8f0e540802af9d78330513, type: 2}
+    - {fileID: 11400000, guid: 5faaba8eafbaf1349ab37f41e68958ef, type: 2}
+    - {fileID: 11400000, guid: 50358e30387e635428096d5f59b98b36, type: 2}
+    - {fileID: 11400000, guid: 44f5ac87e2f73994fb9c3c221ea3d222, type: 2}
+    - {fileID: 11400000, guid: a0e6d7e4d15795148a2a38cca5d6f65a, type: 2}
+    - {fileID: 11400000, guid: 0b282edabceef4a4cbad7d4149700422, type: 2}
+    - {fileID: 11400000, guid: 909c5526b2200e14387fa285d1af39bd, type: 2}
+    - {fileID: 11400000, guid: 16b848a735fff374cb33d5ce020f4aaa, type: 2}
+    - {fileID: 11400000, guid: 4e318c188ba7b504e8479dbad4ceba57, type: 2}
+    - {fileID: 11400000, guid: f550d39d56b35154fa2bfdfe278efc5c, type: 2}
+    - {fileID: 11400000, guid: 6428c48ba55c3a240afd5e584b994838, type: 2}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: ItemCombinationTable
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[System.ValueTuple`2[[ItemData,
+        Assembly-CSharp],[ItemData, Assembly-CSharp]], mscorlib],[ItemData, Assembly-CSharp]],
+        mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.GenericEqualityComparer`1[[System.ValueTuple`2[[ItemData,
+        Assembly-CSharp],[ItemData, Assembly-CSharp]], mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 10
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: System.ValueTuple`2[[ItemData, Assembly-CSharp],[ItemData, Assembly-CSharp]],
+        mscorlib
+    - Name: Item1
+      Entry: 10
+      Data: 0
+    - Name: Item2
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: System.ValueTuple`2[[ItemData, Assembly-CSharp],[ItemData, Assembly-CSharp]],
+        mscorlib
+    - Name: Item1
+      Entry: 10
+      Data: 0
+    - Name: Item2
+      Entry: 10
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 10
+      Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: System.ValueTuple`2[[ItemData, Assembly-CSharp],[ItemData, Assembly-CSharp]],
+        mscorlib
+    - Name: Item1
+      Entry: 10
+      Data: 0
+    - Name: Item2
+      Entry: 10
+      Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 10
+      Data: 5
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: System.ValueTuple`2[[ItemData, Assembly-CSharp],[ItemData, Assembly-CSharp]],
+        mscorlib
+    - Name: Item1
+      Entry: 10
+      Data: 0
+    - Name: Item2
+      Entry: 10
+      Data: 6
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 10
+      Data: 7
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: System.ValueTuple`2[[ItemData, Assembly-CSharp],[ItemData, Assembly-CSharp]],
+        mscorlib
+    - Name: Item1
+      Entry: 10
+      Data: 3
+    - Name: Item2
+      Entry: 10
+      Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 10
+      Data: 8
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: System.ValueTuple`2[[ItemData, Assembly-CSharp],[ItemData, Assembly-CSharp]],
+        mscorlib
+    - Name: Item1
+      Entry: 10
+      Data: 3
+    - Name: Item2
+      Entry: 10
+      Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 10
+      Data: 9
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: System.ValueTuple`2[[ItemData, Assembly-CSharp],[ItemData, Assembly-CSharp]],
+        mscorlib
+    - Name: Item1
+      Entry: 10
+      Data: 3
+    - Name: Item2
+      Entry: 10
+      Data: 6
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 10
+      Data: 10
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: System.ValueTuple`2[[ItemData, Assembly-CSharp],[ItemData, Assembly-CSharp]],
+        mscorlib
+    - Name: Item1
+      Entry: 10
+      Data: 4
+    - Name: Item2
+      Entry: 10
+      Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 10
+      Data: 11
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: System.ValueTuple`2[[ItemData, Assembly-CSharp],[ItemData, Assembly-CSharp]],
+        mscorlib
+    - Name: Item1
+      Entry: 10
+      Data: 4
+    - Name: Item2
+      Entry: 10
+      Data: 6
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 10
+      Data: 12
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: System.ValueTuple`2[[ItemData, Assembly-CSharp],[ItemData, Assembly-CSharp]],
+        mscorlib
+    - Name: Item1
+      Entry: 10
+      Data: 6
+    - Name: Item2
+      Entry: 10
+      Data: 6
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 10
+      Data: 13
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   AllItems:
+  - {fileID: 11400000, guid: 6428c48ba55c3a240afd5e584b994838, type: 2}
+  - {fileID: 11400000, guid: 5faaba8eafbaf1349ab37f41e68958ef, type: 2}
+  - {fileID: 11400000, guid: 909c5526b2200e14387fa285d1af39bd, type: 2}
+  - {fileID: 11400000, guid: 50358e30387e635428096d5f59b98b36, type: 2}
+  - {fileID: 11400000, guid: 985914f29c8f0e540802af9d78330513, type: 2}
+  - {fileID: 11400000, guid: a0e6d7e4d15795148a2a38cca5d6f65a, type: 2}
+  - {fileID: 11400000, guid: f550d39d56b35154fa2bfdfe278efc5c, type: 2}
+  - {fileID: 11400000, guid: 16b848a735fff374cb33d5ce020f4aaa, type: 2}
+  - {fileID: 11400000, guid: 4e318c188ba7b504e8479dbad4ceba57, type: 2}
   - {fileID: 11400000, guid: 69937f968446a234ab1f24e50481e080, type: 2}
+  - {fileID: 11400000, guid: 86d9577bddffde641b097eef2de7b679, type: 2}
+  - {fileID: 11400000, guid: 0b282edabceef4a4cbad7d4149700422, type: 2}
+  - {fileID: 11400000, guid: d788fde891a00914d850ed775456d54a, type: 2}
+  - {fileID: 11400000, guid: 44f5ac87e2f73994fb9c3c221ea3d222, type: 2}
   AllComponent:
+  - {fileID: 11400000, guid: 985914f29c8f0e540802af9d78330513, type: 2}
   - {fileID: 11400000, guid: 69937f968446a234ab1f24e50481e080, type: 2}
+  - {fileID: 11400000, guid: 44f5ac87e2f73994fb9c3c221ea3d222, type: 2}
+  - {fileID: 11400000, guid: 5faaba8eafbaf1349ab37f41e68958ef, type: 2}

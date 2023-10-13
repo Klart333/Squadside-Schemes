@@ -1,9 +1,13 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MoneySystem : MonoBehaviour
 {
     public event Action OnAmountChanged;
+
+    [SerializeField]
+    private Trait Hustler;
 
     public PlayerHandler PlayerHandler { get; set; }
 
@@ -33,7 +37,23 @@ public class MoneySystem : MonoBehaviour
     public void StartRound()
     {
         int money = 5;
-        money += GetStreakGold(WinStreak > LoseStreak ? WinStreak : LoseStreak);
+
+        if (WinStreak > LoseStreak)
+        {
+            money += GetStreakGold(WinStreak);
+        }
+        else
+        {
+            int mult = 1;
+            Dictionary<Trait, int> trats = GameManager.Instance.TraitUtility.GetTraits(PlayerHandler.BoardSystem.UnitsOnBoard);
+            if (trats != null && trats.ContainsKey(Hustler))
+            {
+                mult = 2;
+            }
+
+            money += GetStreakGold(LoseStreak) * mult;
+        }
+
         money += GetInterestGold();
 
         AddMoney(money);

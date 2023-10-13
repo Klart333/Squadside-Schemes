@@ -427,30 +427,55 @@ public class BoardSystem : NetworkBehaviour
 
     #endregion
 
+    private Queue<Unit> upgradeQueue = new Queue<Unit>();
+    private bool upgrading = false;
     private async void CheckForUpgrade(Unit unit)
     {
-        (int, int) key = (unit.UnitData.GetInstanceID(), unit.StarLevel);
-        List<Unit> matchingUnits = new List<Unit>();
-
-        for (int i = 0; i < Units.Count; i++)
+        upgradeQueue.Enqueue(unit);
+        if (upgrading)
         {
-            (int, int) unitKey = (Units[i].UnitData.GetInstanceID(), Units[i].StarLevel);
-            if (unitKey == key)
+            return;
+        }
+
+        upgrading = true;
+
+        while (upgradeQueue.TryDequeue(out Unit unitToUpgrade))
+        {
+            while (!PlayerHandler.CanInteract)
             {
-                matchingUnits.Add(Units[i]);
+                await UniTask.Yield();
+            }
+
+            int starlevel = unitToUpgrade.StarLevel;
+            int ID = unitToUpgrade.UnitData.GetInstanceID();
+            List<Unit> matchingUnits = new List<Unit>();
+
+            for (int i = 0; i < Units.Count; i++)
+            {
+                if (matchingUnits.Count >= 3)
+                {
+                    break;
+                }
+
+                if (Units[i].UnitData.GetInstanceID() == ID && Units[i].StarLevel == starlevel)
+                {
+                    matchingUnits.Add(Units[i]);
+                }
+            }
+
+            if (matchingUnits.Count >= 3) // Mat is Glad
+            {
+                Unit upgraded = await CombineUnits(matchingUnits);
+                if (upgraded != null)
+                {
+                    await UniTask.WaitUntil(() => upgraded.StarLevel > starlevel);
+
+                    upgradeQueue.Enqueue(upgraded);
+                }
             }
         }
 
-        if (matchingUnits.Count == 3) // Mat is Mad
-        {
-            Unit upgraded = await CombineUnits(matchingUnits);
-            if (upgraded != null)
-            {
-                await UniTask.WaitUntil(() => upgraded.StarLevel > unit.StarLevel);
-
-                CheckForUpgrade(upgraded);
-            }
-        }
+        upgrading = false;
     }
 
     private async UniTask<Unit> CombineUnits(List<Unit> units)
@@ -510,9 +535,9 @@ public class BoardSystem : NetworkBehaviour
                     TileIndexX = -1,
                     TileIndexY = -1,
 
-                    ItemIndex0 = 0,
-                    ItemIndex1 = 0,
-                    ItemIndex2 = 0
+                    ItemIndex0 = -1,
+                    ItemIndex1 = -1,
+                    ItemIndex2 = -1
                 };
 
                 continue;
@@ -526,9 +551,9 @@ public class BoardSystem : NetworkBehaviour
                 TileIndexX = units[i].CurrentTile.Index.x,
                 TileIndexY = units[i].CurrentTile.Index.y,
 
-                ItemIndex0 = 0,
-                ItemIndex1 = 0,
-                ItemIndex2 = 0
+                ItemIndex0 = units[i].ItemSlots[0] == null ? -1 : GameManager.Instance.ItemDataUtility.GetIndex(units[i].ItemSlots[0]),
+                ItemIndex1 = units[i].ItemSlots[1] == null ? -1 : GameManager.Instance.ItemDataUtility.GetIndex(units[i].ItemSlots[1]),
+                ItemIndex2 = units[i].ItemSlots[2] == null ? -1 : GameManager.Instance.ItemDataUtility.GetIndex(units[i].ItemSlots[2])
             };
 
             if (i >= UnitsOnBoardNetwork.Count)
@@ -549,4 +574,33 @@ public class BoardSystem : NetworkBehaviour
     {
         HasUpdatedUnitsOnBoard.Value = true;
     }
+
+    #region Utility
+
+    public List<Unit> GetSurroundingUnits(Unit unit)
+    {
+        if (unit == null || unit.CurrentTile == null)
+        {
+            Debug.LogError("Unit is null");
+
+            return null;
+        }
+
+        Vector2Int index = unit.CurrentTile.Index;
+
+        List<Vector2Int> neighbourIndices = PathFinding.GetNeighbours(index, Tiles);
+
+        List<Unit> units = new List<Unit>();
+        for (int i = 0; i < neighbourIndices.Count; i++)
+        {
+            if (Tiles[neighbourIndices[i].x, neighbourIndices[i].y].CurrentUnit != null)
+            {
+                units.Add(Tiles[neighbourIndices[i].x, neighbourIndices[i].y].CurrentUnit);
+            }
+        }
+
+        return units;
+    }
+
+    #endregion
 }

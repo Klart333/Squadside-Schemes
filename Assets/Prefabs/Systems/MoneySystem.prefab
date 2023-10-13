@@ -44,3 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa22fe119f0b02c4d886f1048bfbd94a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Hustler: {fileID: 11400000, guid: 97ebf51781655014999b089365928b1c, type: 2}

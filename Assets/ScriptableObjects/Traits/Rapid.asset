@@ -1,0 +1,318 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6719339cafe39a74387ff55c801d64be, type: 3}
+  m_Name: Rapid
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: StaticEffect
+      Entry: 7
+      Data: 0|Effects.IncreaseStatEffect, Assembly-CSharp
+    - Name: ModifierValue
+      Entry: 4
+      Data: 0.5
+    - Name: ModifierType
+      Entry: 3
+      Data: 0
+    - Name: StatType
+      Entry: 3
+      Data: 12
+    - Name: CanIncrease
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: TraitBreakpoints
+      Entry: 7
+      Data: 1|TraitEffects[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 2|TraitEffects, Assembly-CSharp
+    - Name: UnitCount
+      Entry: 3
+      Data: 3
+    - Name: ColorIndex
+      Entry: 3
+      Data: 2
+    - Name: OnBoardEffects
+      Entry: 7
+      Data: 3|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 4|Effects.IncreaseStatEffect, Assembly-CSharp
+    - Name: ModifierValue
+      Entry: 4
+      Data: 1.1
+    - Name: ModifierType
+      Entry: 3
+      Data: 1
+    - Name: StatType
+      Entry: 3
+      Data: 1
+    - Name: CanIncrease
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnAttackEffects
+      Entry: 7
+      Data: 5|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnDoneDamageEffects
+      Entry: 7
+      Data: 6|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnKillEffects
+      Entry: 7
+      Data: 7|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 8|Effects.StackingEffectEffect, Assembly-CSharp
+    - Name: ModifierValue
+      Entry: 4
+      Data: 2
+    - Name: ShouldMultiply
+      Entry: 5
+      Data: true
+    - Name: EffectToStack
+      Entry: 7
+      Data: 9|Effects.IncreaseStatEffect, Assembly-CSharp
+    - Name: ModifierValue
+      Entry: 4
+      Data: 1.1
+    - Name: ModifierType
+      Entry: 3
+      Data: 1
+    - Name: StatType
+      Entry: 3
+      Data: 1
+    - Name: CanIncrease
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnTakeDamageEffects
+      Entry: 7
+      Data: 10|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 11|TraitEffects, Assembly-CSharp
+    - Name: UnitCount
+      Entry: 3
+      Data: 4
+    - Name: ColorIndex
+      Entry: 3
+      Data: 3
+    - Name: OnBoardEffects
+      Entry: 7
+      Data: 12|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 13|Effects.IncreaseStatEffect, Assembly-CSharp
+    - Name: ModifierValue
+      Entry: 4
+      Data: 1.2
+    - Name: ModifierType
+      Entry: 3
+      Data: 1
+    - Name: StatType
+      Entry: 3
+      Data: 1
+    - Name: CanIncrease
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnAttackEffects
+      Entry: 7
+      Data: 14|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnDoneDamageEffects
+      Entry: 7
+      Data: 15|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnKillEffects
+      Entry: 7
+      Data: 16|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 17|Effects.StackingEffectEffect, Assembly-CSharp
+    - Name: ModifierValue
+      Entry: 4
+      Data: 2
+    - Name: ShouldMultiply
+      Entry: 5
+      Data: true
+    - Name: EffectToStack
+      Entry: 7
+      Data: 18|Effects.IncreaseStatEffect, Assembly-CSharp
+    - Name: ModifierValue
+      Entry: 4
+      Data: 1.2
+    - Name: ModifierType
+      Entry: 3
+      Data: 1
+    - Name: StatType
+      Entry: 3
+      Data: 1
+    - Name: CanIncrease
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnTakeDamageEffects
+      Entry: 7
+      Data: 19|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  Name: Rapid
+  Icon: {fileID: 21300000, guid: 3526f92d678244141966b8a0b0ad8f99, type: 3}
+  Description: '50% Movement speed
+
+
+    Rapid fish get bonus attack speed, this
+    bonus doubles for the rest of combat whenever they get a kill.
+
+
+    (3) 10%
+    Attack speed
+
+
+    (4) 20% Attack speed'
+  Exclusive: 0

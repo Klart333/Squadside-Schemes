@@ -18,12 +18,18 @@ MonoBehaviour:
   UnitPrefab: {fileID: 5733210652514848601, guid: 02bf5a046792b5a4888a1cfe61ed9721,
     type: 3}
   Traits:
-  - {fileID: 11400000, guid: b91259f7a90a3b849b97b59c73be965c, type: 2}
-  AttackDamage: 20
+  - {fileID: 11400000, guid: 6d05d7d0b4970b6418f3957faef3618b, type: 2}
+  - {fileID: 11400000, guid: 8be750625a615574793970d378d54b35, type: 2}
+  AttackDamage: 40
   AttackSpeed: 0.6
   AttackRange: 1
   AbilityPower: 100
   Mana: 10
   MaxMana: 100
+  CritChance: 0.25
+  CritMultiplier: 2
+  Armor: 30
+  MagicResist: 25
   BaseHealth: 1000
-  MovementSpeed: 0.75
+  Omnivamp: 0
+  MovementSpeed: 1

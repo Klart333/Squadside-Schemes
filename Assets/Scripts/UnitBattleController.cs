@@ -11,6 +11,20 @@ public class UnitBattleController
     public UnitAttackState UnitAttackState;
     public UnitUltimateState UnitUltimateState;
 
+    private DamageInstance lastAttackDone;
+    public DamageInstance LastAttackDone
+    {
+        get
+        {
+            return lastAttackDone;
+        }
+        set
+        {
+            lastAttackDone = value;
+            Unit.LastDamageDone = value;
+        }
+    }
+
     public void Update(Battle battle)
     {
         if (CurrentState == null)
@@ -32,7 +46,7 @@ public class UnitBattleController
     {
         SortEnemiesByDistance(ref enemyUnits);
 
-        if (GetDistance(enemyUnits[0].CurrentTile) > Unit.UnitData.AttackRange)
+        if (GetDistance(enemyUnits[0].CurrentTile) > Unit.UnitStats.AttackRange.Value)
         {
             return UnitMoveState;
         }

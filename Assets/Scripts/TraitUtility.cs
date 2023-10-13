@@ -56,4 +56,35 @@ public class TraitUtility : ScriptableObject
         Debug.LogError("Argument out of range exception");
         return null;
     }
+
+    public Dictionary<Trait, int> GetTraits(List<Unit> units)
+    {
+        Dictionary<Trait, int> traits = new Dictionary<Trait, int>();
+        HashSet<string> countedUnits = new HashSet<string>();
+
+        for (int i = 0; i < units.Count; i++)
+        {
+            if (countedUnits.Contains(units[i].UnitData.Name))
+            {
+                continue;
+            }
+
+            countedUnits.Add(units[i].UnitData.Name);
+
+            foreach (int traitIndex in units[i].UnitStats.Traits)
+            {
+                Trait trait = Get(traitIndex);
+                if (traits.ContainsKey(trait))
+                {
+                    traits[trait]++;
+                }
+                else
+                {
+                    traits.Add(trait, 1);
+                }
+            }
+        }
+
+        return traits;
+    }
 }

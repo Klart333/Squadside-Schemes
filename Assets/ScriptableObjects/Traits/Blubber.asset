@@ -1,0 +1,382 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6719339cafe39a74387ff55c801d64be, type: 3}
+  m_Name: Blubber
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: StaticEffect
+      Entry: 6
+      Data: 
+    - Name: TraitBreakpoints
+      Entry: 7
+      Data: 0|TraitEffects[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 1|TraitEffects, Assembly-CSharp
+    - Name: UnitCount
+      Entry: 3
+      Data: 3
+    - Name: ColorIndex
+      Entry: 3
+      Data: 1
+    - Name: OnBoardEffects
+      Entry: 7
+      Data: 2|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 3|Effects.IncreaseStatEffect, Assembly-CSharp
+    - Name: ModifierValue
+      Entry: 4
+      Data: 40
+    - Name: ModifierType
+      Entry: 3
+      Data: 0
+    - Name: StatType
+      Entry: 3
+      Data: 8
+    - Name: CanIncrease
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 4|Effects.IncreaseStatEffect, Assembly-CSharp
+    - Name: ModifierValue
+      Entry: 4
+      Data: 40
+    - Name: ModifierType
+      Entry: 3
+      Data: 0
+    - Name: StatType
+      Entry: 3
+      Data: 9
+    - Name: CanIncrease
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnAttackEffects
+      Entry: 7
+      Data: 5|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnDoneDamageEffects
+      Entry: 7
+      Data: 6|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnKillEffects
+      Entry: 7
+      Data: 7|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnTakeDamageEffects
+      Entry: 7
+      Data: 8|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 9|TraitEffects, Assembly-CSharp
+    - Name: UnitCount
+      Entry: 3
+      Data: 5
+    - Name: ColorIndex
+      Entry: 3
+      Data: 2
+    - Name: OnBoardEffects
+      Entry: 7
+      Data: 10|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 11|Effects.IncreaseStatEffect, Assembly-CSharp
+    - Name: ModifierValue
+      Entry: 4
+      Data: 100
+    - Name: ModifierType
+      Entry: 3
+      Data: 0
+    - Name: StatType
+      Entry: 3
+      Data: 8
+    - Name: CanIncrease
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 12|Effects.IncreaseStatEffect, Assembly-CSharp
+    - Name: ModifierValue
+      Entry: 4
+      Data: 100
+    - Name: ModifierType
+      Entry: 3
+      Data: 0
+    - Name: StatType
+      Entry: 3
+      Data: 9
+    - Name: CanIncrease
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnAttackEffects
+      Entry: 7
+      Data: 13|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnDoneDamageEffects
+      Entry: 7
+      Data: 14|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnKillEffects
+      Entry: 7
+      Data: 15|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnTakeDamageEffects
+      Entry: 7
+      Data: 16|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 17|TraitEffects, Assembly-CSharp
+    - Name: UnitCount
+      Entry: 3
+      Data: 7
+    - Name: ColorIndex
+      Entry: 3
+      Data: 3
+    - Name: OnBoardEffects
+      Entry: 7
+      Data: 18|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 19|Effects.IncreaseStatEffect, Assembly-CSharp
+    - Name: ModifierValue
+      Entry: 4
+      Data: 300
+    - Name: ModifierType
+      Entry: 3
+      Data: 0
+    - Name: StatType
+      Entry: 3
+      Data: 8
+    - Name: CanIncrease
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 20|Effects.IncreaseStatEffect, Assembly-CSharp
+    - Name: ModifierValue
+      Entry: 4
+      Data: 300
+    - Name: ModifierType
+      Entry: 3
+      Data: 0
+    - Name: StatType
+      Entry: 3
+      Data: 9
+    - Name: CanIncrease
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnAttackEffects
+      Entry: 7
+      Data: 21|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnDoneDamageEffects
+      Entry: 7
+      Data: 22|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnKillEffects
+      Entry: 7
+      Data: 23|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnTakeDamageEffects
+      Entry: 7
+      Data: 24|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  Name: Blubber
+  Icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  Description: "Blubber guys have thick armor, and magic resistance. \n\n(3) 40 Armor,
+    40 MR\n\n(5) 100 Armor, 100 MR\n\n(7) 300 Armor, 300 MR"
+  Exclusive: 0
