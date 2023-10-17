@@ -1,10 +1,11 @@
 ﻿using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 using Unity.Netcode;
 using UnityEngine;
 
 [InlineEditor]
 [CreateAssetMenu(fileName = "New Data", menuName = "Unit/Unit Data")]
-public class UnitData : ScriptableObject
+public class UnitData : SerializedScriptableObject
 {
     [Title("Unit")]
     public string Name;
@@ -17,6 +18,10 @@ public class UnitData : ScriptableObject
 
     [Title("Traits")]
     public Trait[] Traits;
+
+    [Title("Traits")]
+    [OdinSerialize]
+    public IUltimateAttack UltimateAttack;
 
     [Title("Combat", "Attack")]
     public float AttackDamage = 50;

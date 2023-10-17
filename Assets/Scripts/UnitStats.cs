@@ -87,6 +87,10 @@ public class UnitStats
             case StatType.MovementSpeed:
                 MovementSpeed.AddModifier(modifier);
                 break;
+            case StatType.ArmornMR:
+                Armor.AddModifier(modifier);
+                MagicResist.AddModifier(modifier);
+                break;
             default:
                 break;
         }
@@ -135,6 +139,10 @@ public class UnitStats
             case StatType.MovementSpeed:
                 MovementSpeed.RemoveModifier(modifier);
                 break;
+            case StatType.ArmornMR:
+                Armor.RemoveModifier(modifier);
+                MagicResist.RemoveModifier(modifier);
+                break;
             default:
                 break;
         }
@@ -156,6 +164,7 @@ public enum StatType
     MaxHealth,
     Omnivamp,
     MovementSpeed,
+    ArmornMR
 }
 
 [Serializable]

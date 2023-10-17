@@ -12,6 +12,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25f45e41a3607b841a9bb0497a18fd10, type: 3}
   m_Name: SeaLion_Data
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: UltimateAttack
+      Entry: 7
+      Data: 0|TeamHeal, Assembly-CSharp
+    - Name: Healing
+      Entry: 4
+      Data: 400
+    - Name: AbilityScaling
+      Entry: 4
+      Data: 0.5
+    - Name: 
+      Entry: 8
+      Data: 
   Name: Sea Lion
   Cost: 4
   Portrait: {fileID: 21300000, guid: 9e713513bac031a41b36ea82e3856596, type: 3}

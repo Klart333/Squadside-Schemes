@@ -1,8 +1,10 @@
 ﻿using Cysharp.Threading.Tasks;
+using Mono.CSharp;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using static UnityEngine.UI.CanvasScaler;
 
 public abstract class UnitBaseState
 {
@@ -40,6 +42,7 @@ public class UnitMoveState : UnitBaseState
         {
             return;
         }
+        
         lastTimeStamp = Time.time;
 
         Tile targetTile = battle.GetEnemyUnits(Unit)[0].CurrentTile;
@@ -49,6 +52,8 @@ public class UnitMoveState : UnitBaseState
         {
             return;
         }
+
+        Unit.UnitAnimator.PlayMove();
 
         Move(path[path.Count - 1]);
 
@@ -128,6 +133,8 @@ public class UnitAttackState : UnitBaseState
             return;
         }
 
+        Unit.UnitAnimator.PlayAttack();
+
         DamageInstance damageInstance = new DamageInstance
         {
             UnitSource = Unit,
@@ -196,33 +203,21 @@ public class UnitUltimateState : UnitBaseState
     public override async void TakeAction(Battle battle)
     {
         attacking = true;
-
         List<Unit> enemies = battle.GetEnemyUnits(Unit);
 
-        DamageInstance damageInstance = new DamageInstance
-        {
-            UnitSource = Unit,
-            UnitTarget = enemies[0],
+        Unit.UnitAnimator.PlayUlt();
 
-            AttackDamage = 0,
-            AbilityDamage = Unit.UnitStats.AbilityPower.Value * 2,
-            CritChance = Unit.UnitStats.CritChance.Value,
-            CritMultiplier = Unit.UnitStats.CritMultiplier.Value,
-            TrueDamage = 0
-        };
-
-        if (enemies[0].TakeDamage(damageInstance, out DamageInstance damageDone))
-        {
-            Unit.OnUnitKill();
-        }
-        else
+        if (!Unit.UnitData.UltimateAttack.Perform(Unit, enemies[0], battle, out DamageInstance damageDone))
         {
             RotateTowardTarget(enemies[0].CurrentTile);
         }
 
         //Unit.OnUnitAttack();
-        Unit.OnUnitDoneDamage(damageDone);
-        Unit.BattleController.LastAttackDone = damageDone;
+        if (damageDone != null)
+        {
+            Unit.OnUnitDoneDamage(damageDone);
+            Unit.BattleController.LastAttackDone = damageDone;
+        }
 
         await UniTask.Delay(TimeSpan.FromSeconds(1.0f / Unit.UnitStats.AttackSpeed.Value));
 

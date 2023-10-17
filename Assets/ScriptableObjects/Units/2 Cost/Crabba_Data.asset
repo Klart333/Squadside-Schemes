@@ -12,6 +12,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25f45e41a3607b841a9bb0497a18fd10, type: 3}
   m_Name: Crabba_Data
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: UltimateAttack
+      Entry: 7
+      Data: 0|UltimateEffect, Assembly-CSharp
+    - Name: IEffect
+      Entry: 7
+      Data: 1|Effects.TimedStatIncreaseEffect, Assembly-CSharp
+    - Name: ModifierValue
+      Entry: 4
+      Data: 2
+    - Name: ModifierType
+      Entry: 3
+      Data: 1
+    - Name: StatType
+      Entry: 3
+      Data: 1
+    - Name: Time
+      Entry: 4
+      Data: 3
+    - Name: CanIncrease
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   Name: Crabba
   Cost: 2
   Portrait: {fileID: 21300000, guid: b2309859dbfb4a04cbcbe1bca532b06f, type: 3}

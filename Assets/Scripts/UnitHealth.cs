@@ -9,6 +9,9 @@ public class UnitHealth : MonoBehaviour
     [SerializeField]
     private UIHealthBar healthBar;
 
+    [SerializeField]
+    private UIDamageNumber damageNumber;
+
     private Unit unit;
 
     private float currentHealth;
@@ -90,7 +93,7 @@ public class UnitHealth : MonoBehaviour
 
     private DamageInstance EvaluateDamage(DamageInstance damageInstance)
     {
-        float critMult = UnityEngine.Random.value < damageInstance.CritChance ? damageInstance.CritMultiplier : 1;
+        float critMult = Random.value < damageInstance.CritChance ? damageInstance.CritMultiplier : 1;
         damageInstance.AttackDamage *= critMult;
         damageInstance.AbilityDamage *= critMult;
         damageInstance.TrueDamage *= critMult;
@@ -105,7 +108,19 @@ public class UnitHealth : MonoBehaviour
 
         LastDamageTaken = damageInstance;
 
+        // Spawn damage numbers
+        HandleDamageNumbers(damageInstance, critMult > 1);
+        
         return damageInstance;
+    }
+
+    private void HandleDamageNumbers(DamageInstance damageInstance, bool isCrit)
+    {
+        if (unit.IsEnemyUnit)
+        {
+            UIDamageNumber dmgNumb = damageNumber.GetAtPosAndRot<UIDamageNumber>(unit.transform.position + Vector3.up, Quaternion.identity);
+            dmgNumb.Setup(damageInstance, isCrit);
+        }
     }
 
     public void AddHealth(float amount)

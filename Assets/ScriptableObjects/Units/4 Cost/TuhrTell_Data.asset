@@ -12,6 +12,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25f45e41a3607b841a9bb0497a18fd10, type: 3}
   m_Name: TuhrTell_Data
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: UltimateAttack
+      Entry: 7
+      Data: 0|UltimateEffect, Assembly-CSharp
+    - Name: IEffect
+      Entry: 7
+      Data: 1|Effects.RandomBonusEffect, Assembly-CSharp
+    - Name: ModifierValue
+      Entry: 4
+      Data: 2
+    - Name: ModifierType
+      Entry: 3
+      Data: 1
+    - Name: StatAmount
+      Entry: 3
+      Data: 5
+    - Name: CanIncrease
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   Name: Tuhr Tell
   Cost: 4
   Portrait: {fileID: 21300000, guid: ea54fe7f6eabca845ba9d525de09636f, type: 3}

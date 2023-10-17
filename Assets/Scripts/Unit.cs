@@ -23,11 +23,13 @@ public class Unit : NetworkBehaviour, IInteractable
 
     private Dictionary<Trait, int> cachedTraits;
 
+    private UnitAnimationHandler unitAnimator;
     private MeshRenderer meshRenderer;
     private UnitHealth unitHealth;
     private UnitManaBar unitMana;
     private UnitItems unitItems;
 
+    public UnitAnimationHandler UnitAnimator => unitAnimator;
     public UnitHealth UnitHealth => unitHealth;
     public UnitManaBar UnitMana => unitMana;
     public UnitItems UnitItems => unitItems;
@@ -35,6 +37,7 @@ public class Unit : NetworkBehaviour, IInteractable
     public int StarLevel { get; set; } = 0;
     public bool IsOnBoard { get; set; } = false;
     public bool IsInitialized { get; set; } = false;
+    public bool IsEnemyUnit { get; set; } = false;
     public Tile CurrentTile { get; set; }
     public ItemData[] ItemSlots { get; set; }
     public PlayerHandler PlayerHandler { get; set; }
@@ -113,10 +116,11 @@ public class Unit : NetworkBehaviour, IInteractable
             UpdateCachedTraits(new List<Unit> { this });
         }
 
+        unitAnimator = GetComponentInChildren<UnitAnimationHandler>();
+        meshRenderer = GetComponentInChildren<MeshRenderer>();
+        unitMana = GetComponentInChildren<UnitManaBar>();
         unitHealth = GetComponent<UnitHealth>();
         unitItems = GetComponent<UnitItems>();
-        unitMana = GetComponentInChildren<UnitManaBar>();
-        meshRenderer = GetComponentInChildren<MeshRenderer>();
 
         if (unitMana)
         {
@@ -498,7 +502,7 @@ public class Unit : NetworkBehaviour, IInteractable
 
         for (int i = 0; i < units.Count; i++)
         {
-            if (units[i] == this)
+            if (units[i] == this || this.IsEnemyUnit != units[i].IsEnemyUnit)
             {
                 continue;
             }
@@ -539,6 +543,32 @@ public class Unit : NetworkBehaviour, IInteractable
         }
 
         return true;
+    }
+
+    public int GetSuroundingOfType(int traitIndex, int distance)
+    {
+        List<Unit> units = PlayerHandler.BoardSystem.UnitsOnBoard;
+
+        int count = 0;
+        for (int i = 0; i < units.Count; i++)
+        {
+            if (units[i] == this || IsEnemyUnit != units[i].IsEnemyUnit)
+            {
+                continue;
+            }
+
+            if (traitIndex != -1 && !units[i].UnitStats.Traits.Contains(traitIndex))
+            {
+                continue;
+            }
+
+            if ((units[i].CurrentTile.WorldPosition - CurrentTile.WorldPosition).sqrMagnitude < distance * distance)
+            {
+                count++;
+            }
+        }
+
+        return count;
     }
 
     #endregion

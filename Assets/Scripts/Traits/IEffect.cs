@@ -253,10 +253,13 @@ namespace Effects
                     MultiplierDictionary[unit] += this.ModifierValue;
                 }
             }
-            
+
+            float value = EffectToStack.ModifierValue;
 
             EffectToStack.ModifierValue = MultiplierDictionary[unit];
             EffectToStack.Perform(unit);
+
+            EffectToStack.ModifierValue = value;
         }
 
         public void Revert(Unit unit)
@@ -266,9 +269,14 @@ namespace Effects
                 return;
             }
 
-            MultiplierDictionary.Remove(unit);
+            float value = EffectToStack.ModifierValue;
 
+            EffectToStack.ModifierValue = MultiplierDictionary[unit];
             EffectToStack.Revert(unit);
+
+            EffectToStack.ModifierValue = value;
+
+            MultiplierDictionary.Remove(unit);
         }
     }
 
@@ -553,6 +561,78 @@ namespace Effects
 
                 ItemDictionary.Remove(unit);
             }
+        }
+    }
+
+    #endregion
+
+    #region Stim Bonus 
+
+    public class StimBonusEffect : IEffect
+    {
+        [TitleGroup("Stim Distance")]
+        [OdinSerialize]
+        public float ModifierValue { get; set; }
+
+        [TitleGroup("Stat Increase")]
+        [OdinSerialize]
+        public IEffect EffectPerFish;
+
+        [TitleGroup("Stim Trait")]
+        public Trait TraitRestriction;
+
+        private Dictionary<Unit, int> StimCountDictionary;
+
+        public void Perform(Unit unit)
+        {
+            if (!unit.PlayerHandler.BattleSystem.IsInBattle)
+            {
+                return;
+            }
+
+            int matchingTraitIndex = GameManager.Instance.TraitUtility.GetIndex(TraitRestriction);
+
+            int stimCount = unit.GetSuroundingOfType(matchingTraitIndex, (int)ModifierValue);
+            if (stimCount <= 0)
+            {
+                return;
+            }
+
+            if (StimCountDictionary == null)
+            {
+                StimCountDictionary = new Dictionary<Unit, int>();
+            }
+
+            if (StimCountDictionary.ContainsKey(unit))
+            {
+                Revert(unit);
+            }
+
+            StimCountDictionary.Add(unit, stimCount);
+
+            float value = EffectPerFish.ModifierValue;
+
+            EffectPerFish.ModifierValue *= StimCountDictionary[unit];
+            EffectPerFish.Perform(unit);
+
+            EffectPerFish.ModifierValue = value;
+        }
+
+        public void Revert(Unit unit)
+        {
+            if (StimCountDictionary == null || !StimCountDictionary.ContainsKey(unit))
+            {
+                return;
+            }
+
+            float value = EffectPerFish.ModifierValue;
+
+            EffectPerFish.ModifierValue = StimCountDictionary[unit];
+            EffectPerFish.Revert(unit);
+
+            EffectPerFish.ModifierValue = value;
+
+            StimCountDictionary.Remove(unit);
         }
     }
 

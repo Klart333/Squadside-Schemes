@@ -61,6 +61,7 @@ public class BattleSystem : MonoBehaviour
             if (unitNetworkData.ItemIndex1 != -1) unit.ApplyItem(GameManager.Instance.ItemDataUtility.Get(unitNetworkData.ItemIndex1));
             if (unitNetworkData.ItemIndex2 != -1) unit.ApplyItem(GameManager.Instance.ItemDataUtility.Get(unitNetworkData.ItemIndex2));
 
+            unit.IsEnemyUnit = true;
             enemyUnits.Add(unit);
         }
 

@@ -15,39 +15,25 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 11400000}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
     - Name: StaticEffect
-      Entry: 7
-      Data: 0|Effects.IncreaseStatEffect, Assembly-CSharp
-    - Name: ModifierValue
-      Entry: 4
-      Data: -30
-    - Name: ModifierType
-      Entry: 3
-      Data: 0
-    - Name: StatType
-      Entry: 3
-      Data: 4
-    - Name: CanIncrease
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
+      Entry: 6
       Data: 
     - Name: TraitBreakpoints
       Entry: 7
-      Data: 1|TraitEffects[], Assembly-CSharp
+      Data: 0|TraitEffects[], Assembly-CSharp
     - Name: 
       Entry: 12
-      Data: 1
+      Data: 4
     - Name: 
       Entry: 7
-      Data: 2|TraitEffects, Assembly-CSharp
+      Data: 1|TraitEffects, Assembly-CSharp
     - Name: UnitCount
       Entry: 3
       Data: 2
@@ -56,7 +42,7 @@ MonoBehaviour:
       Data: 1
     - Name: OnBoardEffects
       Entry: 7
-      Data: 3|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+      Data: 2|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
@@ -69,7 +55,7 @@ MonoBehaviour:
       Data: 
     - Name: OnAttackEffects
       Entry: 7
-      Data: 4|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+      Data: 3|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
@@ -82,7 +68,7 @@ MonoBehaviour:
       Data: 
     - Name: OnDoneDamageEffects
       Entry: 7
-      Data: 5|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+      Data: 4|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
@@ -95,7 +81,7 @@ MonoBehaviour:
       Data: 
     - Name: OnKillEffects
       Entry: 7
-      Data: 6|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+      Data: 5|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
@@ -108,7 +94,358 @@ MonoBehaviour:
       Data: 
     - Name: OnTakeDamageEffects
       Entry: 7
-      Data: 7|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+      Data: 6|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 7|Effects.StimBonusEffect, Assembly-CSharp
+    - Name: ModifierValue
+      Entry: 4
+      Data: 1
+    - Name: EffectPerFish
+      Entry: 7
+      Data: 8|Effects.IncreaseStatEffect, Assembly-CSharp
+    - Name: ModifierValue
+      Entry: 4
+      Data: 10
+    - Name: ModifierType
+      Entry: 3
+      Data: 0
+    - Name: StatType
+      Entry: 3
+      Data: 13
+    - Name: CanIncrease
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: TraitRestriction
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 9|TraitEffects, Assembly-CSharp
+    - Name: UnitCount
+      Entry: 3
+      Data: 4
+    - Name: ColorIndex
+      Entry: 3
+      Data: 2
+    - Name: OnBoardEffects
+      Entry: 7
+      Data: 10|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnAttackEffects
+      Entry: 7
+      Data: 11|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnDoneDamageEffects
+      Entry: 7
+      Data: 12|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnKillEffects
+      Entry: 7
+      Data: 13|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnTakeDamageEffects
+      Entry: 7
+      Data: 14|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 15|Effects.StimBonusEffect, Assembly-CSharp
+    - Name: ModifierValue
+      Entry: 4
+      Data: 2
+    - Name: EffectPerFish
+      Entry: 7
+      Data: 16|Effects.IncreaseStatEffect, Assembly-CSharp
+    - Name: ModifierValue
+      Entry: 4
+      Data: 20
+    - Name: ModifierType
+      Entry: 3
+      Data: 0
+    - Name: StatType
+      Entry: 3
+      Data: 13
+    - Name: CanIncrease
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: TraitRestriction
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 17|TraitEffects, Assembly-CSharp
+    - Name: UnitCount
+      Entry: 3
+      Data: 6
+    - Name: ColorIndex
+      Entry: 3
+      Data: 3
+    - Name: OnBoardEffects
+      Entry: 7
+      Data: 18|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnAttackEffects
+      Entry: 7
+      Data: 19|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnDoneDamageEffects
+      Entry: 7
+      Data: 20|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnKillEffects
+      Entry: 7
+      Data: 21|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnTakeDamageEffects
+      Entry: 7
+      Data: 22|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 23|Effects.StimBonusEffect, Assembly-CSharp
+    - Name: ModifierValue
+      Entry: 4
+      Data: 3
+    - Name: EffectPerFish
+      Entry: 7
+      Data: 24|Effects.IncreaseStatEffect, Assembly-CSharp
+    - Name: ModifierValue
+      Entry: 4
+      Data: 30
+    - Name: ModifierType
+      Entry: 3
+      Data: 0
+    - Name: StatType
+      Entry: 3
+      Data: 13
+    - Name: CanIncrease
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: TraitRestriction
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 25|TraitEffects, Assembly-CSharp
+    - Name: UnitCount
+      Entry: 3
+      Data: 8
+    - Name: ColorIndex
+      Entry: 3
+      Data: 4
+    - Name: OnBoardEffects
+      Entry: 7
+      Data: 26|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnAttackEffects
+      Entry: 7
+      Data: 27|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnDoneDamageEffects
+      Entry: 7
+      Data: 28|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnKillEffects
+      Entry: 7
+      Data: 29|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 30|Effects.StimBonusEffect, Assembly-CSharp
+    - Name: ModifierValue
+      Entry: 4
+      Data: 5
+    - Name: EffectPerFish
+      Entry: 7
+      Data: 31|Effects.IncreaseStatEffect, Assembly-CSharp
+    - Name: ModifierValue
+      Entry: 4
+      Data: 50
+    - Name: ModifierType
+      Entry: 3
+      Data: 0
+    - Name: StatType
+      Entry: 3
+      Data: 13
+    - Name: CanIncrease
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: TraitRestriction
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: OnTakeDamageEffects
+      Entry: 7
+      Data: 32|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
@@ -130,4 +467,7 @@ MonoBehaviour:
       Data: 
   Name: Normal Fish
   Icon: {fileID: 21300000, guid: 9199f84f18430634db109aecd6f7dabf, type: 3}
+  Description: "Normal fish get bonus Armor & MR when inside their stim. All normal
+    fish within a distance give each other defense. \n\n(2) 10 Armor & MR, 1 tile
+    distance\n(4) 20 Armor & MR, 2\n(6) 30 Armor & MR, 3\n(8) 50 Armor & MR, 5"
   Exclusive: 0

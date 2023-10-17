@@ -12,6 +12,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25f45e41a3607b841a9bb0497a18fd10, type: 3}
   m_Name: Brax_Data
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: UltimateAttack
+      Entry: 7
+      Data: 0|BiteAttack, Assembly-CSharp
+    - Name: UseAttackDamage
+      Entry: 5
+      Data: true
+    - Name: AttackDamage
+      Entry: 4
+      Data: 300
+    - Name: AttackScaling
+      Entry: 4
+      Data: 1
+    - Name: UseAbilityDamage
+      Entry: 5
+      Data: false
+    - Name: AbilityDamage
+      Entry: 4
+      Data: 0
+    - Name: AbilityScaling
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
   Name: Brax
   Cost: 5
   Portrait: {fileID: 21300000, guid: d1b71ba5e62fc8b4b8d22850d23d8733, type: 3}

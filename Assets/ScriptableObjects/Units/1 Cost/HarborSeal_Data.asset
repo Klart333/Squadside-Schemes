@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25f45e41a3607b841a9bb0497a18fd10, type: 3}
+  m_Name: HarborSeal_Data
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: UltimateAttack
+      Entry: 7
+      Data: 0|TeamHeal, Assembly-CSharp
+    - Name: Healing
+      Entry: 4
+      Data: 100
+    - Name: AbilityScaling
+      Entry: 4
+      Data: 0.6
+    - Name: 
+      Entry: 8
+      Data: 
+  Name: Harbor Seal
+  Cost: 3
+  Portrait: {fileID: 21300000, guid: ed7e1343a53a4b748b608359f601eca4, type: 3}
+  UnitPrefab: {fileID: 8021208824128159135, guid: eb4288d08e279284194139f46a46ec6e,
+    type: 3}
+  Traits:
+  - {fileID: 11400000, guid: 304ff022426cf48499592fcef4b63d60, type: 2}
+  - {fileID: 11400000, guid: b91259f7a90a3b849b97b59c73be965c, type: 2}
+  AttackDamage: 55
+  AttackSpeed: 0.7
+  AttackRange: 1
+  AbilityPower: 100
+  Mana: 10
+  MaxMana: 40
+  CritChance: 0.25
+  CritMultiplier: 2
+  Armor: 30
+  MagicResist: 25
+  BaseHealth: 500
+  Omnivamp: 0
+  MovementSpeed: 1
