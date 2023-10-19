@@ -35,7 +35,7 @@ MonoBehaviour:
       Data: 
   Name: Sea Lion
   Cost: 4
-  Portrait: {fileID: 21300000, guid: 9e713513bac031a41b36ea82e3856596, type: 3}
+  Portrait: {fileID: 21300000, guid: 7e1b1dbf971e22b419c39376a57dda5e, type: 3}
   UnitPrefab: {fileID: 7713755738178497470, guid: 4a7d27d9bf4bc3a409133390577d122b,
     type: 3}
   Traits:

@@ -47,7 +47,7 @@ MonoBehaviour:
       Data: 
   Name: Brax
   Cost: 5
-  Portrait: {fileID: 21300000, guid: d1b71ba5e62fc8b4b8d22850d23d8733, type: 3}
+  Portrait: {fileID: 21300000, guid: 32708811899655a4aa3628cdeb46aabd, type: 3}
   UnitPrefab: {fileID: 3655881067494510129, guid: ed13f0aa2c866444b8fd8c6f8779333d,
     type: 3}
   Traits:

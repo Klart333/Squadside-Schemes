@@ -1,4 +1,6 @@
 using Sirenix.OdinInspector;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerUI : MonoBehaviour
@@ -17,6 +19,10 @@ public class PlayerUI : MonoBehaviour
     [SerializeField]
     private UIPlayerHealthHandler playerHealthHandler;
 
+    [Title("End Game")]
+    [SerializeField]
+    private UIEndGameHandler endGamePanel;
+
     public UITimerDisplay TimerDisplay => timerDisplay;
 
     public void StartRound()
@@ -30,9 +36,15 @@ public class PlayerUI : MonoBehaviour
         timerDisplay.StopTimer();
     }
 
-    public void SetupPlayerHealths(int playerCount)
+    public void SetupPlayerHealths(int playerCount, ulong[] steamIds)
     {
-        playerHealthHandler.Setup(playerCount, new Sprite[] { null, null, null, null });
+        List<User> users = new List<User>(steamIds.Length);
+        for (int i = 0; i < steamIds.Length; i++)
+        {
+            users.Add(new User(new Steamworks.CSteamID(steamIds[i])));
+        }
+
+        playerHealthHandler.Setup(playerCount, users);
     }
 
     public void UpdatePlayerHealth(int clientOwnerID, int health)
@@ -46,5 +58,10 @@ public class PlayerUI : MonoBehaviour
         {
             playerHealthHandler.UpdateHealth(i, healths[i]);
         }
+    }
+
+    public void EndGame(bool lost)
+    {
+        endGamePanel.EndGame(lost);
     }
 }

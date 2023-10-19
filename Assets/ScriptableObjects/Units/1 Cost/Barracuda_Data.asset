@@ -47,7 +47,7 @@ MonoBehaviour:
       Data: 
   Name: Barracuda
   Cost: 1
-  Portrait: {fileID: 21300000, guid: be53fddd005b2b945ba84a583a320074, type: 3}
+  Portrait: {fileID: 21300000, guid: 49981b134d8b57544b72f8ed000bb033, type: 3}
   UnitPrefab: {fileID: 7590964613017905075, guid: d9f78b30ffc9de64ab468592356da64c,
     type: 3}
   Traits:

@@ -63,13 +63,18 @@ public class GameManager : NetworkBehaviour
         sorted.Sort((x, y) => x.OwnerClientId.CompareTo(y.OwnerClientId));
 
         playerHandlers = sorted.ToArray();
+        ulong[] steamIds = new ulong[playerHandlers.Length];
+        for (int i = 0; i < playerHandlers.Length; i++)
+        {
+            steamIds[i] = playerHandlers[i].PlayerSteamID.Value;
+        }
 
         for (int i = 0; i < playerHandlers.Length; i++)
         {
             playerHandlers[i].Playerhealth.OnValueChanged += UpdateUIHealth;
 
             var param = new ClientRpcParams { Send = new ClientRpcSendParams { TargetClientIds = new ulong[] { playerHandlers[i].OwnerClientId } } };
-            playerHandlers[i].SetupUIHealthClientRPC(playerHandlers.Length, param);
+            playerHandlers[i].SetupUIHealthClientRPC(playerHandlers.Length, steamIds, param);
         }
 
         StartNewRound();
@@ -291,8 +296,36 @@ public class GameManager : NetworkBehaviour
 
         roundCount++;
 
+        for (int i = 0; i < playerHandlers.Length; i++)
+        {
+            if (playerHandlers[i].Playerhealth.Value < 0)
+            {
+                EndGame();
+                return;
+            }
+            
+        }
+
         // Start new round
         StartNewRound();
+    }
+
+    private void EndGame()
+    {
+        for (int i = 0; i < playerHandlers.Length; i++)
+        {
+            // Get opponent elo
+            float elo = 0;
+            for (int g = 0; g < playerHandlers.Length; g++)
+            {
+                if (i == g) continue;
+
+                elo += playerHandlers[i].PlayerElo.Value;
+            }
+            elo /= (playerHandlers.Length - 1.0f);
+
+            playerHandlers[i].EndGameClientRPC(playerHandlers[i].Playerhealth.Value < 0, elo);
+        }
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -321,6 +354,7 @@ public class GameManager : NetworkBehaviour
             }
         }
     }
+
 #endregion
 
 #region Show/Hide

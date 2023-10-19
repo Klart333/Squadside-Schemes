@@ -47,7 +47,7 @@ MonoBehaviour:
       Data: 
   Name: Megalodon
   Cost: 5
-  Portrait: {fileID: 21300000, guid: 9e3249c7c1b67b44490492164b599c4d, type: 3}
+  Portrait: {fileID: 21300000, guid: 0fca4f2defd389c4fa9febf0b5ad8632, type: 3}
   UnitPrefab: {fileID: 7164925307922513241, guid: 070fff408b04729429873390b4257d33,
     type: 3}
   Traits:

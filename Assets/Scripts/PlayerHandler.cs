@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
+using Steamworks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,6 +45,8 @@ public class PlayerHandler : NetworkBehaviour
     public PlayerUI PlayerUI { get; private set; }
 
     public NetworkVariable<int> Playerhealth = new NetworkVariable<int>(writePerm: NetworkVariableWritePermission.Owner);
+    public NetworkVariable<int> PlayerElo = new NetworkVariable<int>(writePerm: NetworkVariableWritePermission.Owner);
+    public NetworkVariable<ulong> PlayerSteamID = new NetworkVariable<ulong>(writePerm: NetworkVariableWritePermission.Owner);
 
     public bool CanInteract => PlayerUI.TimerDisplay.Percent < 0.95f;
 
@@ -66,6 +69,9 @@ public class PlayerHandler : NetworkBehaviour
 
             return;
         }
+
+        PlayerSteamID.Value = SteamUser.GetSteamID().m_SteamID;
+        PlayerElo.Value = PlayerRankManager.Instance.GetElo();
 
         ServerRpcParams serverRpcParams = new ServerRpcParams() { Receive = new ServerRpcReceiveParams() { SenderClientId = this.OwnerClientId } };
         SpawnBoardSystemServerRPC(serverRpcParams);
@@ -195,7 +201,7 @@ public class PlayerHandler : NetworkBehaviour
         Debug.Log("StartPVEBattleClientRPC");
 
         mobUnitsIndex = Mathf.Clamp(mobUnitsIndex, 0, GameManager.Instance.PVEData.MobData.Count - 1);
-        this.BattleSystem.StartBattle(GameManager.Instance.PVEData.MobData[mobUnitsIndex], true, 1000); // 1000 to always go first
+        this.BattleSystem.StartBattle(GameManager.Instance.PVEData.GetMobData(mobUnitsIndex), true, 1000); // 1000 to always go first
     }
 
 
@@ -299,14 +305,14 @@ public class PlayerHandler : NetworkBehaviour
 
 
     [ClientRpc]
-    public void SetupUIHealthClientRPC(int playerCount, ClientRpcParams param)
+    public void SetupUIHealthClientRPC(int playerCount, ulong[] steamIds, ClientRpcParams param)
     {
         if (!IsOwner)
         {
             return;
         }
 
-        PlayerUI.SetupPlayerHealths(playerCount);
+        PlayerUI.SetupPlayerHealths(playerCount, steamIds);
     }
 
     [ClientRpc]
@@ -322,4 +328,23 @@ public class PlayerHandler : NetworkBehaviour
         }
     }
 
+    [ClientRpc]
+    public void EndGameClientRPC(bool lost, float opponentElo)
+    {
+        if (!IsOwner)
+        {
+            return;
+        }
+
+        PlayerUI.EndGame(lost);
+
+        if (lost)
+        {
+            PlayerRankManager.Instance.LoseGame(opponentElo);
+        }
+        else
+        {
+            PlayerRankManager.Instance.WinGame(opponentElo);
+        }
+    }
 }

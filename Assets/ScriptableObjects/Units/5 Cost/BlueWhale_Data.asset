@@ -47,7 +47,7 @@ MonoBehaviour:
       Data: 
   Name: BlueWhale
   Cost: 5
-  Portrait: {fileID: 21300000, guid: a9a7e7bf8a424b444b1d451765cd1119, type: 3}
+  Portrait: {fileID: 21300000, guid: 93bd2c3fbd9f6534d8f701f5e0a80150, type: 3}
   UnitPrefab: {fileID: 6207702574503263936, guid: c166a8b3390c114499cabcfa42bec054,
     type: 3}
   Traits:

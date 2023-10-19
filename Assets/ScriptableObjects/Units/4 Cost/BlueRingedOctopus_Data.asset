@@ -47,8 +47,8 @@ MonoBehaviour:
       Data: 
   Name: Blue Ringed Octopus
   Cost: 4
-  Portrait: {fileID: 21300000, guid: 210c21367fa16564da7665997660f669, type: 3}
-  UnitPrefab: {fileID: 6392577128364367077, guid: 671783135a150b342a6240042afab9e5,
+  Portrait: {fileID: 21300000, guid: b8bb1f3e276b0e443950dc47dd1d421c, type: 3}
+  UnitPrefab: {fileID: 4085076382712923789, guid: 2eb1fdd48f9a8dd41b9c7f8b19cdafc2,
     type: 3}
   Traits:
   - {fileID: 11400000, guid: daaa4765294a86f4aaf99b0355aabf43, type: 2}

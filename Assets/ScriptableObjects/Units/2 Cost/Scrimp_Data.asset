@@ -50,7 +50,7 @@ MonoBehaviour:
       Data: 
   Name: Scrimp
   Cost: 2
-  Portrait: {fileID: 21300000, guid: 90dc243aa8b862a4a922333e87d23841, type: 3}
+  Portrait: {fileID: 21300000, guid: e33f246edb3d1ad478d79b24851db44b, type: 3}
   UnitPrefab: {fileID: 9045250628370818585, guid: 3659214657fbd024aaf6c79893950095,
     type: 3}
   Traits:

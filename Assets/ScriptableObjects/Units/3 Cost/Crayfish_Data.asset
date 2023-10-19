@@ -50,7 +50,7 @@ MonoBehaviour:
       Data: 
   Name: Crayfish
   Cost: 3
-  Portrait: {fileID: 21300000, guid: 15cfa6efb1ce2c644bd89e6104c89583, type: 3}
+  Portrait: {fileID: 21300000, guid: f9b26e9f98a054543b0a7427e4bf1d99, type: 3}
   UnitPrefab: {fileID: 3699937979566777750, guid: 2521bfa43baf48f4abddfa34bc520b1e,
     type: 3}
   Traits:

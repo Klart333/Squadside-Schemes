@@ -47,7 +47,7 @@ MonoBehaviour:
       Data: 
   Name: Robert
   Cost: 2
-  Portrait: {fileID: 21300000, guid: 5182c128a9943aa458ebaee32f38506e, type: 3}
+  Portrait: {fileID: 21300000, guid: 10bbd2679ab693f4bbad087dedda4147, type: 3}
   UnitPrefab: {fileID: 6361589049243546908, guid: b79aaf5d0d0508145bf41399ea205526,
     type: 3}
   Traits:

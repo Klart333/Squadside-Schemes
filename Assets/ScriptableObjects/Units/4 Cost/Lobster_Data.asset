@@ -50,7 +50,7 @@ MonoBehaviour:
       Data: 
   Name: Lobster
   Cost: 4
-  Portrait: {fileID: 21300000, guid: fd0b21d90701c0e4e9c02bb8707c7b62, type: 3}
+  Portrait: {fileID: 21300000, guid: 33bc5497583f25944b28db96e8cbf7ac, type: 3}
   UnitPrefab: {fileID: 5719555425427776558, guid: fb323822dade3294bac67731ac130a59,
     type: 3}
   Traits:

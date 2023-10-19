@@ -1,6 +1,4 @@
 using Sirenix.OdinInspector;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,23 +19,46 @@ public class UIPlayerHealth : MonoBehaviour
     [SerializeField]
     private Image deadPlayer;
 
+    private User user;
+
     private int startingHealth = 0;
 
     public int CurrentHealth { get; private set; }
 
-    public void Setup(Sprite playerProfileSprite, int startingHealth)
+    public void Setup(User steamUser, int startingHealth)
     {
+        this.user = steamUser;
+
         this.startingHealth = startingHealth;
 
         healthText.text = startingHealth.ToString();
         healthFillImage.fillAmount = 1.0f;
 
-        if (playerProfileSprite)
+        if (steamUser != null)
         {
-            playerProfile.sprite = playerProfileSprite;
+            if (steamUser.SteamAvatarImage != null)
+            {
+                SetAvatar(steamUser.SteamAvatarImage);
+            }
+            else
+            {
+                steamUser.OnAvatarLoaded += SteamUser_OnAvatarLoaded;
+            }
         }
 
         CurrentHealth = startingHealth;
+    }
+
+    private void SteamUser_OnAvatarLoaded()
+    {
+        SetAvatar(user.SteamAvatarImage);
+    }
+
+    private void SetAvatar(Texture2D texture)
+    {
+        Rect rect = new Rect(0, 0, texture.width, texture.height);
+        Sprite sprite = Sprite.Create(texture, rect, new Vector2(rect.width / 2, rect.height / 2));
+        playerProfile.sprite = sprite;
     }
 
     public void UpdateHealth(int health)

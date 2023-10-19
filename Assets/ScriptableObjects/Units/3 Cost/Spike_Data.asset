@@ -47,7 +47,7 @@ MonoBehaviour:
       Data: 
   Name: Spike
   Cost: 3
-  Portrait: {fileID: 21300000, guid: fd1360f2588d9724ebb291a006d5c9bd, type: 3}
+  Portrait: {fileID: 21300000, guid: 00636335022a9f144b66b62ac852c311, type: 3}
   UnitPrefab: {fileID: 3540365434470255901, guid: c666d61277fb110489db8fceafc7093e,
     type: 3}
   Traits:

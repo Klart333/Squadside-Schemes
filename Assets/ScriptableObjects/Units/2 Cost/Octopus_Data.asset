@@ -47,7 +47,7 @@ MonoBehaviour:
       Data: 
   Name: Octopus
   Cost: 2
-  Portrait: {fileID: 21300000, guid: 20a06208ed82bbb45829c6a28162c3d5, type: 3}
+  Portrait: {fileID: 21300000, guid: d84924fcdeafc854eb77417565f1ce3f, type: 3}
   UnitPrefab: {fileID: 7816531659673889042, guid: ffd645bafb8ace64297f1dc2befe8b03,
     type: 3}
   Traits:

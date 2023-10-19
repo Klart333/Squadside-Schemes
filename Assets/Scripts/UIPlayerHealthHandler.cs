@@ -14,14 +14,14 @@ public class UIPlayerHealthHandler : MonoBehaviour
 
     public int PlayerCount => playerHealths.Length;
 
-    public void Setup(int playerAmount, Sprite[] playerSprites)
+    public void Setup(int playerAmount, List<User> steamUsers)
     {
         playerHealths = new UIPlayerHealth[playerAmount];
         for (int i = 0; i < playerAmount; i++)
         {
             playerHealths[i] = (Instantiate(playerHealthPrefab, transform));
 
-            playerHealths[i].Setup(playerSprites[i], playerUI.PlayerHandler.HealthSystem.StartingHealth);
+            playerHealths[i].Setup(steamUsers[i], playerUI.PlayerHandler.HealthSystem.StartingHealth);
         }
 
         sortedPlayerHealths = new List<UIPlayerHealth>(playerHealths);

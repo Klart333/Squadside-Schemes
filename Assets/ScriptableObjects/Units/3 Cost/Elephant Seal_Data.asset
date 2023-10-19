@@ -35,7 +35,7 @@ MonoBehaviour:
       Data: 
   Name: Elephant Seal
   Cost: 3
-  Portrait: {fileID: 21300000, guid: 45a277d6889c5284aa482923a1bdf979, type: 3}
+  Portrait: {fileID: 21300000, guid: 7e1b1dbf971e22b419c39376a57dda5e, type: 3}
   UnitPrefab: {fileID: 4225393096918208952, guid: 346a042c105f47d4dad2b8b417491f28,
     type: 3}
   Traits:

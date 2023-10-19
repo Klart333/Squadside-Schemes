@@ -47,7 +47,7 @@ MonoBehaviour:
       Data: 
   Name: Bullsharky
   Cost: 2
-  Portrait: {fileID: 21300000, guid: 5182c128a9943aa458ebaee32f38506e, type: 3}
+  Portrait: {fileID: 21300000, guid: dac046c67c1ed5b45803051c54332b73, type: 3}
   UnitPrefab: {fileID: 8625248869411758246, guid: ef2126d8bbf50fa48b8e3f4a995d7a45,
     type: 3}
   Traits:

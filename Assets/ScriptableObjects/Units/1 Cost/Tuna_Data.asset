@@ -47,7 +47,7 @@ MonoBehaviour:
       Data: 
   Name: Tuna
   Cost: 1
-  Portrait: {fileID: 21300000, guid: 9499ec71ae22fc1409cc505b1b4b53bc, type: 3}
+  Portrait: {fileID: 21300000, guid: 17b1b8f6b4afe1f418784a5063403469, type: 3}
   UnitPrefab: {fileID: 4488630426771260223, guid: 86f98ccfee7c10c47b70c2fadd37f713,
     type: 3}
   Traits:
