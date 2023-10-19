@@ -48,7 +48,7 @@ MonoBehaviour:
   Name: Whale Shark
   Cost: 1
   Portrait: {fileID: 21300000, guid: a78f10ca3cee8be4eb978a44cdf6abb8, type: 3}
-  UnitPrefab: {fileID: 6259017082384998434, guid: 4e9919d39ff264e46aa6a2a311544d64,
+  UnitPrefab: {fileID: 1152278819486641632, guid: 4e9919d39ff264e46aa6a2a311544d64,
     type: 3}
   Traits:
   - {fileID: 11400000, guid: ac700306e8c2d824b96e8671e12d86a1, type: 2}

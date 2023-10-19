@@ -48,7 +48,7 @@ MonoBehaviour:
   Name: Blobfish
   Cost: 4
   Portrait: {fileID: 21300000, guid: d6d55d24194749e43bc002ca01cfb85a, type: 3}
-  UnitPrefab: {fileID: 6523740033697915855, guid: 8480517ad8122024da1188778a22b066,
+  UnitPrefab: {fileID: 263798522477997581, guid: 8480517ad8122024da1188778a22b066,
     type: 3}
   Traits:
   - {fileID: 11400000, guid: 6d05d7d0b4970b6418f3957faef3618b, type: 2}

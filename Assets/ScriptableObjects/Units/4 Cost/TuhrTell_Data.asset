@@ -48,7 +48,7 @@ MonoBehaviour:
   Name: Tuhr Tell
   Cost: 4
   Portrait: {fileID: 21300000, guid: 0d34f665a5e89ef4a9701bb7addc0c08, type: 3}
-  UnitPrefab: {fileID: 5572278758548353635, guid: 3069231c058802c438ba43cb984e04cb,
+  UnitPrefab: {fileID: 1474224800278216609, guid: 3069231c058802c438ba43cb984e04cb,
     type: 3}
   Traits:
   - {fileID: 11400000, guid: b91259f7a90a3b849b97b59c73be965c, type: 2}

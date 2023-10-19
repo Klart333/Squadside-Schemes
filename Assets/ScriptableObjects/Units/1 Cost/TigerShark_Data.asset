@@ -48,7 +48,7 @@ MonoBehaviour:
   Name: Tiger Shark
   Cost: 1
   Portrait: {fileID: 21300000, guid: 87009255ed55b7b41a661d68e726c8d1, type: 3}
-  UnitPrefab: {fileID: 1282089305952894614, guid: 834bf2cc2cde0c044a367e828e085177,
+  UnitPrefab: {fileID: 5254342638646850388, guid: 834bf2cc2cde0c044a367e828e085177,
     type: 3}
   Traits:
   - {fileID: 11400000, guid: 5f8b653801f4b834aa92dac02cce1a02, type: 2}

@@ -222,7 +222,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   Name: Shellfish
-  Icon: {fileID: 21300000, guid: 54e09c3a6b16b71478823e74a58b7a6e, type: 3}
+  Icon: {fileID: 21300000, guid: 4dc6c5962691b4f49b1d329aa5170e90, type: 3}
   Description: 'Certain shellfish equip items at the start of combat.
 
 

@@ -145,8 +145,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Name
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 65e79caa45626574b9de55ef6e778744, type: 2}
-  m_sharedMaterial: {fileID: -6222089031372615877, guid: 65e79caa45626574b9de55ef6e778744,
+  m_fontAsset: {fileID: 11400000, guid: 82508709684e2db49a533ff051331b83, type: 2}
+  m_sharedMaterial: {fileID: 2811876513598191075, guid: 82508709684e2db49a533ff051331b83,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -171,7 +171,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 173.1
+  m_fontSize: 149.8
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -434,8 +434,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: '#99'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 65e79caa45626574b9de55ef6e778744, type: 2}
-  m_sharedMaterial: {fileID: -6222089031372615877, guid: 65e79caa45626574b9de55ef6e778744,
+  m_fontAsset: {fileID: 11400000, guid: 82508709684e2db49a533ff051331b83, type: 2}
+  m_sharedMaterial: {fileID: 2811876513598191075, guid: 82508709684e2db49a533ff051331b83,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -460,7 +460,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 34.1
+  m_fontSize: 40
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -570,8 +570,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 300
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 65e79caa45626574b9de55ef6e778744, type: 2}
-  m_sharedMaterial: {fileID: -6222089031372615877, guid: 65e79caa45626574b9de55ef6e778744,
+  m_fontAsset: {fileID: 11400000, guid: 82508709684e2db49a533ff051331b83, type: 2}
+  m_sharedMaterial: {fileID: 2811876513598191075, guid: 82508709684e2db49a533ff051331b83,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -596,7 +596,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 173.1
+  m_fontSize: 149.8
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

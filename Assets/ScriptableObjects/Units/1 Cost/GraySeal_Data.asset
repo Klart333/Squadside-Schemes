@@ -36,7 +36,7 @@ MonoBehaviour:
   Name: Grey Seal
   Cost: 1
   Portrait: {fileID: 21300000, guid: a62938b9c0b198042811905dd6281e52, type: 3}
-  UnitPrefab: {fileID: 3485484975421768611, guid: c85e3d47065854240bf8de4d8aab8013,
+  UnitPrefab: {fileID: 7601838378507832929, guid: c85e3d47065854240bf8de4d8aab8013,
     type: 3}
   Traits:
   - {fileID: 11400000, guid: 304ff022426cf48499592fcef4b63d60, type: 2}

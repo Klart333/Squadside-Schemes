@@ -163,6 +163,7 @@ public class SteamLeaderboard
             UnityEngine.Debug.Log("uploading score(" + score + ") to steam leaderboard(" + LeaderboardName + ")");
             SteamAPICall_t steamAPICall = SteamUserStats.UploadLeaderboardScore(currentLeaderboard, LeaderboardMethod, score, null, 0);
             uploadResult.Set(steamAPICall, OnLeaderboardUploadResult);
+
         }
     }
 

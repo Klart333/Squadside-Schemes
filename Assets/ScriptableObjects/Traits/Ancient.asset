@@ -323,7 +323,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   Name: Ancient
-  Icon: {fileID: 21300000, guid: 53bf32616d70db24e9adebb6616a534c, type: 3}
+  Icon: {fileID: 21300000, guid: 3155b0713c884bb468f8d8fcb8c076c5, type: 3}
   Description: 'Ancient fish become invulnerable when falling below 50% health.
 
 

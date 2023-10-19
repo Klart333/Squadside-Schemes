@@ -512,7 +512,7 @@ namespace Effects
         [HideIf(nameof(AllUnits))]
         public Trait RestrictToTrait;
 
-        private Dictionary<Unit, ItemData> ItemDictionary;
+        private Dictionary<Unit, List<ItemData>> ItemDictionary;
 
         public void Perform(Unit unit)
         {
@@ -531,6 +531,16 @@ namespace Effects
                 }
             }
 
+            if (ItemDictionary == null)
+            {
+                ItemDictionary = new Dictionary<Unit, List<ItemData>>();
+            }
+
+            if (!ItemDictionary.ContainsKey(unit))
+            {
+                ItemDictionary.Add(unit, new List<ItemData>());
+            }
+           
             for (int i = 0; i < ModifierValue; i++)
             {
                 ItemData randomItemData = GameManager.Instance.ItemDataUtility.GetRandomItem(true);
@@ -539,12 +549,7 @@ namespace Effects
                     break;
                 }
 
-                if (ItemDictionary == null)
-                {
-                    ItemDictionary = new Dictionary<Unit, ItemData>();
-                }
-
-                ItemDictionary.Add(unit, randomItemData);
+                ItemDictionary[unit].Add(randomItemData);
             }
         }
 
@@ -557,7 +562,10 @@ namespace Effects
 
             if (ItemDictionary.ContainsKey(unit))
             {
-                unit.RemoveItem(ItemDictionary[unit]);
+                for (int i = 0; i < ItemDictionary[unit].Count; i++)
+                {
+                    unit.RemoveItem(ItemDictionary[unit][i]);
+                }
 
                 ItemDictionary.Remove(unit);
             }

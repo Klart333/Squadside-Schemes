@@ -48,7 +48,7 @@ MonoBehaviour:
   Name: Grey Whale
   Cost: 1
   Portrait: {fileID: 21300000, guid: 0655dda3719ea9645945f279b183890f, type: 3}
-  UnitPrefab: {fileID: 256148470465530948, guid: c6e9a29c418f76349b1384d300883dd9,
+  UnitPrefab: {fileID: 6534665927202849158, guid: c6e9a29c418f76349b1384d300883dd9,
     type: 3}
   Traits:
   - {fileID: 11400000, guid: ac700306e8c2d824b96e8671e12d86a1, type: 2}

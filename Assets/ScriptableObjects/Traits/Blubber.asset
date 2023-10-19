@@ -376,7 +376,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   Name: Blubber
-  Icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  Icon: {fileID: 21300000, guid: 3c051cf57d2b6e348accb1803a32add8, type: 3}
   Description: "Blubber guys have thick armor, and magic resistance. \n\n(3) 40 Armor,
     40 MR\n\n(5) 100 Armor, 100 MR\n\n(7) 300 Armor, 300 MR"
   Exclusive: 0

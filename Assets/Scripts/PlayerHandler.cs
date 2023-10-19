@@ -200,7 +200,6 @@ public class PlayerHandler : NetworkBehaviour
 
         Debug.Log("StartPVEBattleClientRPC");
 
-        mobUnitsIndex = Mathf.Clamp(mobUnitsIndex, 0, GameManager.Instance.PVEData.MobData.Count - 1);
         this.BattleSystem.StartBattle(GameManager.Instance.PVEData.GetMobData(mobUnitsIndex), true, 1000); // 1000 to always go first
     }
 

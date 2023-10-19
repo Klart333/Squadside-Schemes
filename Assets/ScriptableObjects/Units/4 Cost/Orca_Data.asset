@@ -48,7 +48,7 @@ MonoBehaviour:
   Name: Orca
   Cost: 4
   Portrait: {fileID: 21300000, guid: dff409c977d2b7a468a135cfa2335e32, type: 3}
-  UnitPrefab: {fileID: 6392577128364367077, guid: 671783135a150b342a6240042afab9e5,
+  UnitPrefab: {fileID: 114620392390005031, guid: 671783135a150b342a6240042afab9e5,
     type: 3}
   Traits:
   - {fileID: 11400000, guid: ac700306e8c2d824b96e8671e12d86a1, type: 2}

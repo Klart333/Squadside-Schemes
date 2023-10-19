@@ -48,7 +48,7 @@ MonoBehaviour:
   Name: Shim
   Cost: 2
   Portrait: {fileID: 21300000, guid: 36acef52b4b33c547a1dbfc2222920fd, type: 3}
-  UnitPrefab: {fileID: 5733210652514848601, guid: 02bf5a046792b5a4888a1cfe61ed9721,
+  UnitPrefab: {fileID: 1635296027785282203, guid: 02bf5a046792b5a4888a1cfe61ed9721,
     type: 3}
   Traits:
   - {fileID: 11400000, guid: 6d05d7d0b4970b6418f3957faef3618b, type: 2}

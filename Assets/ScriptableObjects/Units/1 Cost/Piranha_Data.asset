@@ -48,7 +48,7 @@ MonoBehaviour:
   Name: Piranha
   Cost: 1
   Portrait: {fileID: 21300000, guid: 128eb4da0e7073542913372805350baf, type: 3}
-  UnitPrefab: {fileID: 4265185150753153414, guid: be2c90f7b9d40624883e23cd45854f3e,
+  UnitPrefab: {fileID: 7066485293086698564, guid: be2c90f7b9d40624883e23cd45854f3e,
     type: 3}
   Traits:
   - {fileID: 11400000, guid: f22f9cc25640ccd4d805ead6cc0cfca7, type: 2}

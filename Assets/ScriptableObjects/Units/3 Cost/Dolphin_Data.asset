@@ -48,7 +48,7 @@ MonoBehaviour:
   Name: Dolphin
   Cost: 3
   Portrait: {fileID: 21300000, guid: b46c74cb2a89dfe47bd2d192d6843b0a, type: 3}
-  UnitPrefab: {fileID: 8564697677503956780, guid: 1ba1d1b4dc274a34b81ad05e4ac28dfd,
+  UnitPrefab: {fileID: 3457113649441753838, guid: 1ba1d1b4dc274a34b81ad05e4ac28dfd,
     type: 3}
   Traits:
   - {fileID: 11400000, guid: ac700306e8c2d824b96e8671e12d86a1, type: 2}

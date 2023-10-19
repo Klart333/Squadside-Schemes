@@ -36,7 +36,7 @@ MonoBehaviour:
   Name: Harbor Seal
   Cost: 3
   Portrait: {fileID: 21300000, guid: ed7e1343a53a4b748b608359f601eca4, type: 3}
-  UnitPrefab: {fileID: 8021208824128159135, guid: eb4288d08e279284194139f46a46ec6e,
+  UnitPrefab: {fileID: 3922854394948677725, guid: eb4288d08e279284194139f46a46ec6e,
     type: 3}
   Traits:
   - {fileID: 11400000, guid: 304ff022426cf48499592fcef4b63d60, type: 2}

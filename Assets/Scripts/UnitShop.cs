@@ -94,7 +94,7 @@ public class UnitShop : MonoBehaviour
             traitTexts[i].gameObject.SetActive(true);
             traitTexts[i].text = unitData.Traits[i].Name;
 
-            traitIcons[i].gameObject.SetActive(true);
+            traitIcons[i].transform.parent.gameObject.SetActive(true);
             traitIcons[i].sprite = unitData.Traits[i].Icon;
         }
 
@@ -110,7 +110,7 @@ public class UnitShop : MonoBehaviour
 
         for (int i = 0; i < traitIcons.Length; i++)
         {
-            traitIcons[i].gameObject.SetActive(false);
+            traitIcons[i].transform.parent.gameObject.SetActive(false);
         }
     }
 

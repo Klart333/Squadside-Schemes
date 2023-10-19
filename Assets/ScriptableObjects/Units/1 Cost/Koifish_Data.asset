@@ -48,7 +48,7 @@ MonoBehaviour:
   Name: Koi fish
   Cost: 1
   Portrait: {fileID: 21300000, guid: 0edd034e3e5b503459f3fb5863a20e89, type: 3}
-  UnitPrefab: {fileID: 1685302719366930307, guid: 0e0894e58bce61848b421d9ff3d094c2,
+  UnitPrefab: {fileID: 5639259075335180865, guid: 0e0894e58bce61848b421d9ff3d094c2,
     type: 3}
   Traits:
   - {fileID: 11400000, guid: dec7b73c22845f142bc86fc3116bca44, type: 2}

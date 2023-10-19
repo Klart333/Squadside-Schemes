@@ -45,7 +45,7 @@ MonoBehaviour:
   Name: Joel
   Cost: 4
   Portrait: {fileID: 21300000, guid: c8fa199dcb79cf04cac56f9f85f46f4f, type: 3}
-  UnitPrefab: {fileID: 2485307700054114549, guid: 83b9be841d21f0d408fa7ee91bc659b5,
+  UnitPrefab: {fileID: 8889084817817799991, guid: 83b9be841d21f0d408fa7ee91bc659b5,
     type: 3}
   Traits:
   - {fileID: 11400000, guid: 8be750625a615574793970d378d54b35, type: 2}

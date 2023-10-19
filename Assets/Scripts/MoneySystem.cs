@@ -11,7 +11,7 @@ public class MoneySystem : MonoBehaviour
 
     public PlayerHandler PlayerHandler { get; set; }
 
-    public int Money { get; private set; } = 50;
+    public int Money { get; private set; } = 20;
     public int MaxInterest { get; set; } = 5;
 
     public int WinStreak { get; set; }

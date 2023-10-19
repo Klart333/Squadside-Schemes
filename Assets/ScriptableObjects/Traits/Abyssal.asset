@@ -322,7 +322,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   Name: Abyssal
-  Icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  Icon: {fileID: 21300000, guid: 84ddc771a28ede64681856ce681a7129, type: 3}
   Description: 'Abyssal fish deal splash damage to fish around their target
 
 

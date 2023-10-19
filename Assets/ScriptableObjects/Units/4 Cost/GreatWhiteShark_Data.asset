@@ -48,7 +48,7 @@ MonoBehaviour:
   Name: GreatWhiteShark
   Cost: 4
   Portrait: {fileID: 21300000, guid: 3942b9ab8469fcc428630802fc55291b, type: 3}
-  UnitPrefab: {fileID: 4133693457786109377, guid: 50b2c8399b12d754991276e6cd626a17,
+  UnitPrefab: {fileID: 6952464809886461955, guid: 50b2c8399b12d754991276e6cd626a17,
     type: 3}
   Traits:
   - {fileID: 11400000, guid: 5f8b653801f4b834aa92dac02cce1a02, type: 2}

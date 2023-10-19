@@ -417,7 +417,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   Name: Octopus
-  Icon: {fileID: 21300000, guid: 9499ec71ae22fc1409cc505b1b4b53bc, type: 3}
+  Icon: {fileID: 21300000, guid: fa9a66daf83ef42419fe0042b320eac1, type: 3}
   Description: 'Octopies get extra AP.
 
 

@@ -130,7 +130,7 @@ MonoBehaviour:
       Data: 8|TraitEffects, Assembly-CSharp
     - Name: UnitCount
       Entry: 3
-      Data: 2
+      Data: 3
     - Name: ColorIndex
       Entry: 3
       Data: 3
@@ -227,7 +227,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   Name: Wicked
-  Icon: {fileID: 21300000, guid: 54e09c3a6b16b71478823e74a58b7a6e, type: 3}
+  Icon: {fileID: 21300000, guid: 8618c97c88aef394d9378c4cda828366, type: 3}
   Description: 'Wicked fish receive bonuses to random stats.
 
 

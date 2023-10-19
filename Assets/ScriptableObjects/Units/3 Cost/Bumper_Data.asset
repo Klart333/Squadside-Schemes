@@ -48,7 +48,7 @@ MonoBehaviour:
   Name: Bumper
   Cost: 3
   Portrait: {fileID: 21300000, guid: 02733e73ac3a38a4b802f65fa631aabd, type: 3}
-  UnitPrefab: {fileID: 8925741696517488834, guid: e063b902ce3cad6449ef1642526a371a,
+  UnitPrefab: {fileID: 2521826042135219456, guid: e063b902ce3cad6449ef1642526a371a,
     type: 3}
   Traits:
   - {fileID: 11400000, guid: b91259f7a90a3b849b97b59c73be965c, type: 2}

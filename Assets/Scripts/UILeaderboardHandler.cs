@@ -1,11 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UILeaderboardHandler : MonoBehaviour
 {
+    [SerializeField]
+    private TextMeshProUGUI rankText;
+
     [SerializeField]
     private UIPlayerScore playerScorePrefab;
 
@@ -20,6 +24,8 @@ public class UILeaderboardHandler : MonoBehaviour
     private void Start()
     {
         layoutGroup = GetComponent<VerticalLayoutGroup>();
+
+        rankText.text = string.Format("Your elo: {0}", PlayerRankManager.Instance.GetElo());
 
         LoadLeaderboard();
     }

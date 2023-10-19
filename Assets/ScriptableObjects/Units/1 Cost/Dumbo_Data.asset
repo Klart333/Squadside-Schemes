@@ -48,7 +48,7 @@ MonoBehaviour:
   Name: Dumbo
   Cost: 1
   Portrait: {fileID: 21300000, guid: b373a98b304d92e45800d65890f95a2a, type: 3}
-  UnitPrefab: {fileID: 298356879516272091, guid: d18e2503622915e48926269d0dd585b0,
+  UnitPrefab: {fileID: 6701975977376958489, guid: d18e2503622915e48926269d0dd585b0,
     type: 3}
   Traits:
   - {fileID: 11400000, guid: daaa4765294a86f4aaf99b0355aabf43, type: 2}

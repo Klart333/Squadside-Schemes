@@ -48,7 +48,7 @@ MonoBehaviour:
   Name: "B\xF6kling"
   Cost: 1
   Portrait: {fileID: 21300000, guid: 1c5fa5b3160a0f74985e16c12d964efa, type: 3}
-  UnitPrefab: {fileID: 6161747569345852046, guid: 61903ed28be1890478e433d00a44c34e,
+  UnitPrefab: {fileID: 910612645002985292, guid: 61903ed28be1890478e433d00a44c34e,
     type: 3}
   Traits:
   - {fileID: 11400000, guid: 8be750625a615574793970d378d54b35, type: 2}

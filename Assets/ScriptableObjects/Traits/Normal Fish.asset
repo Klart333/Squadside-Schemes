@@ -466,7 +466,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   Name: Normal Fish
-  Icon: {fileID: 21300000, guid: 9199f84f18430634db109aecd6f7dabf, type: 3}
+  Icon: {fileID: 21300000, guid: b0f10273b64173346af27f873d02e69d, type: 3}
   Description: "Normal fish get bonus Armor & MR when inside their stim. All normal
     fish within a distance give each other defense. \n\n(2) 10 Armor & MR, 1 tile
     distance\n(4) 20 Armor & MR, 2\n(6) 30 Armor & MR, 3\n(8) 50 Armor & MR, 5"

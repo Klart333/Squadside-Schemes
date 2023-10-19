@@ -302,7 +302,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   Name: Rapid
-  Icon: {fileID: 21300000, guid: 3526f92d678244141966b8a0b0ad8f99, type: 3}
+  Icon: {fileID: 21300000, guid: 837aadf27bed5d44d8f99167d4fc3b8b, type: 3}
   Description: '50% Movement speed
 
 

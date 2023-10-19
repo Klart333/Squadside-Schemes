@@ -46,7 +46,7 @@ MonoBehaviour:
   Name: Lionfish
   Cost: 3
   Portrait: {fileID: 21300000, guid: b1d9fc159ddf0a74c96f39efcb73b45b, type: 3}
-  UnitPrefab: {fileID: 8542943183207165933, guid: 7cdef08f91b017c49b02ebe7faaba594,
+  UnitPrefab: {fileID: 3436079616751936047, guid: 7cdef08f91b017c49b02ebe7faaba594,
     type: 3}
   Traits:
   - {fileID: 11400000, guid: b1ed91b54a314f242a07f5a35d56b7ae, type: 2}

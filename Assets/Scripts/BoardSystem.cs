@@ -8,6 +8,8 @@ using System;
 public class BoardSystem : NetworkBehaviour
 {
     public event Action<List<Unit>> OnBoardedUnitsChanged;
+    public event Action<Unit> OnUnitPickup;
+    public event Action<Unit> OnUnitPlace;
 
     public const float TileScale = 1f;
     public const int BoardX = 7;
@@ -42,7 +44,7 @@ public class BoardSystem : NetworkBehaviour
 
             foreach (var tile in boardTiles)
             {
-                if (tile.CurrentUnit)
+                if (tile.CurrentUnit && !tile.CurrentUnit.IsEnemyUnit)
                 {
                     units.Add(tile.CurrentUnit);
                 }
@@ -195,6 +197,16 @@ public class BoardSystem : NetworkBehaviour
         {
             Vector3 pos = hit.point;
             Tile tile = GetClosestTile(pos);
+            if (tile == null)
+            {
+                if (highlightedNet != null)
+                {
+                    highlightedNet.ResetNet();
+                    highlightedNet = null;
+                }
+                return;
+            }
+
             Net net;
             if (tile.Index.y <= -1)
             {
@@ -239,15 +251,22 @@ public class BoardSystem : NetworkBehaviour
     public void PlacingUnit(Unit unit)
     {
         ToggleNet(true);
+
+        OnUnitPickup?.Invoke(unit);
     }
 
     public void PlaceUnit(Unit unit)
     {
         ToggleNet(false);
 
+        OnUnitPlace?.Invoke(unit);
+
         Tile tile = GetClosestTile(unit.transform.position);
 
-        PlaceUnitOnTile(unit, tile);
+        if (tile != null)
+        {
+            PlaceUnitOnTile(unit, tile);
+        }
     }
 
     public void PlaceUnitOnTile(Unit unit, Tile tile)
@@ -298,6 +317,11 @@ public class BoardSystem : NetworkBehaviour
 
         if (position.z < -0.5f)
         {
+            if (position.z < -2.0f)
+            {
+                return null; // Selling unit
+            }
+
             return GetClosestBenchTile(position);
         }
         else
@@ -498,7 +522,7 @@ public class BoardSystem : NetworkBehaviour
                 return null;
             }
 
-            units[i].CurrentTile = null;
+            units[i].CurrentTile.CurrentUnit = null;
             this.Units.Remove(units[i]);
 
             GameManager.Instance.DestroyServerRPC(units[i].GetComponent<NetworkObject>().NetworkObjectId);
@@ -600,6 +624,19 @@ public class BoardSystem : NetworkBehaviour
         }
 
         return units;
+    }
+
+    public void SellUnit(Unit unit)
+    {
+        unit.CurrentTile.CurrentUnit = null;
+        Units.Remove(unit);
+
+        print("Selling unit: " + unit);
+        GameManager.Instance.DestroyServerRPC(unit.GetComponent<NetworkObject>().NetworkObjectId);
+
+        int money = Mathf.FloorToInt(unit.UnitData.Cost * Mathf.Pow(3, unit.StarLevel));
+        if (unit.UnitData.Cost > 1 && unit.StarLevel > 0) money--;
+        PlayerHandler.MoneySystem.AddMoney(money);
     }
 
     #endregion

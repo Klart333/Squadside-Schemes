@@ -19,17 +19,17 @@ public class UIEndGameHandler : MonoBehaviour
     [TextArea]
     private string loseText = "ya lost";
 
-    public void EndGame(bool won)
+    public void EndGame(bool lost)
     {
         gameObject.SetActive(true);
 
-        if (won)
+        if (lost)
         {
-            resultText.text = winText;
+            resultText.text = loseText;
         }
         else
         {
-            resultText.text = loseText;
+            resultText.text = winText;
         }
     }
 

@@ -18,8 +18,8 @@ MonoBehaviour:
     ReferencedUnityObjects:
     - {fileID: 11400000, guid: 69937f968446a234ab1f24e50481e080, type: 2}
     - {fileID: 11400000, guid: d788fde891a00914d850ed775456d54a, type: 2}
-    - {fileID: 11400000, guid: 86d9577bddffde641b097eef2de7b679, type: 2}
     - {fileID: 11400000, guid: 985914f29c8f0e540802af9d78330513, type: 2}
+    - {fileID: 11400000, guid: 86d9577bddffde641b097eef2de7b679, type: 2}
     - {fileID: 11400000, guid: 5faaba8eafbaf1349ab37f41e68958ef, type: 2}
     - {fileID: 11400000, guid: 50358e30387e635428096d5f59b98b36, type: 2}
     - {fileID: 11400000, guid: 44f5ac87e2f73994fb9c3c221ea3d222, type: 2}
@@ -147,10 +147,10 @@ MonoBehaviour:
         mscorlib
     - Name: Item1
       Entry: 10
-      Data: 3
+      Data: 2
     - Name: Item2
       Entry: 10
-      Data: 3
+      Data: 2
     - Name: 
       Entry: 8
       Data: 
@@ -169,7 +169,7 @@ MonoBehaviour:
         mscorlib
     - Name: Item1
       Entry: 10
-      Data: 3
+      Data: 2
     - Name: Item2
       Entry: 10
       Data: 4
@@ -191,7 +191,7 @@ MonoBehaviour:
         mscorlib
     - Name: Item1
       Entry: 10
-      Data: 3
+      Data: 2
     - Name: Item2
       Entry: 10
       Data: 6

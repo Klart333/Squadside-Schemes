@@ -237,7 +237,7 @@ MonoBehaviour:
       Data: 17|TraitEffects, Assembly-CSharp
     - Name: UnitCount
       Entry: 3
-      Data: 2
+      Data: 4
     - Name: ColorIndex
       Entry: 3
       Data: 3
@@ -340,7 +340,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   Name: Married
-  Icon: {fileID: 21300000, guid: 54e09c3a6b16b71478823e74a58b7a6e, type: 3}
+  Icon: {fileID: 21300000, guid: f8f0f86b92f3540469aa8c44de578507, type: 3}
   Description: 'Married fish deal damage over time when dealing AP damage and reflect
     a percentage of damage taken.
 

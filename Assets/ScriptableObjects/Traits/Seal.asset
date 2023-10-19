@@ -299,7 +299,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   Name: Seal
-  Icon: {fileID: 21300000, guid: 3ffec913ffb00e141951fb0521819b83, type: 3}
+  Icon: {fileID: 21300000, guid: 1afc87a4dc9908d46974bd5afc7d5095, type: 3}
   Description: 'Seals give support their allies, when boarded all allies gain additional
     healing and mana. Seals gain half the additional mana on each attack.
 

@@ -391,7 +391,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   Name: Shark
-  Icon: {fileID: 21300000, guid: ce6bc8f95b984a74a9a3f9695bbae75e, type: 3}
+  Icon: {fileID: 21300000, guid: a3b8c3d58e0d74b4ca656479507a23eb, type: 3}
   Description: "Sharks get bonus attack damage. They get additional AD on every attack.
     \n\n(3) 10 AD, 5 On hit\n\n(5) 30 AD, 10 On hit\n\n(7) 60 AD, 30 On hit"
   Exclusive: 0

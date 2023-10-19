@@ -39,7 +39,7 @@ MonoBehaviour:
   Name: Snake
   Cost: 3
   Portrait: {fileID: 21300000, guid: 941af0d669baaef44913ce1147ccd746, type: 3}
-  UnitPrefab: {fileID: 1653724872097852746, guid: 7a025758eb3fc684eaaf076f1e2f564f,
+  UnitPrefab: {fileID: 5751940765731463304, guid: 7a025758eb3fc684eaaf076f1e2f564f,
     type: 3}
   Traits:
   - {fileID: 11400000, guid: 97ebf51781655014999b089365928b1c, type: 2}

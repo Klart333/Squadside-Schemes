@@ -11,6 +11,12 @@ public class PVEData : SerializedScriptableObject
     [OdinSerialize]
     public List<List<MobNetworkData>> MobData = new List<List<MobNetworkData>>();
 
+    public int GetCount(int index)
+    {
+        index = Mathf.Clamp(index, 0, MobData.Count - 1);
+        return MobData[index].Count;
+    }
+
     public List<UnitNetworkData> GetMobData(int index)
     {
         index = Mathf.Clamp(index, 0, MobData.Count - 1);

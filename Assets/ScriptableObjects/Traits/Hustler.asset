@@ -209,7 +209,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   Name: Hustler
-  Icon: {fileID: 21300000, guid: f1b656def91b8354285183992d460571, type: 3}
+  Icon: {fileID: 21300000, guid: 223059d60a1fbd048a3ab05413c84bbf, type: 3}
   Description: 'Hustlers give you gold on each kill they get. They also double your
     lose streak.
 

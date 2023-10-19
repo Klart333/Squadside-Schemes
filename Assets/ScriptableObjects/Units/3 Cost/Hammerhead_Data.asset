@@ -48,7 +48,7 @@ MonoBehaviour:
   Name: Hammerhead
   Cost: 3
   Portrait: {fileID: 21300000, guid: c831f03e51c9b344e90187d66b0a1739, type: 3}
-  UnitPrefab: {fileID: 3617203803218258846, guid: c37a4e47d7f56a64ea7f392d777d247e,
+  UnitPrefab: {fileID: 7715556857910781532, guid: c37a4e47d7f56a64ea7f392d777d247e,
     type: 3}
   Traits:
   - {fileID: 11400000, guid: 5f8b653801f4b834aa92dac02cce1a02, type: 2}

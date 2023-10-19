@@ -215,7 +215,7 @@ public class GameManager : NetworkBehaviour
         battlePairings = new ServerBattleData[playerHandlers.Length];
         int battleIndex = 0;
         int pveIndex = Mathf.Min(PVEData.MobData.Count, Mathf.FloorToInt(roundCount / 2.0f));
-        int mobCount = PVEData.MobData[pveIndex].Count;
+        int mobCount = PVEData.GetCount(pveIndex);
 
         for (int i = 0; i < playerHandlers.Length; i += 1)
         {

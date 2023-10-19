@@ -22,32 +22,17 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes:
     - Name: StaticEffect
-      Entry: 7
-      Data: 0|Effects.IncreaseStatEffect, Assembly-CSharp
-    - Name: ModifierValue
-      Entry: 4
-      Data: -30
-    - Name: ModifierType
-      Entry: 3
-      Data: 0
-    - Name: StatType
-      Entry: 3
-      Data: 5
-    - Name: CanIncrease
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
+      Entry: 6
       Data: 
     - Name: TraitBreakpoints
       Entry: 7
-      Data: 1|TraitEffects[], Assembly-CSharp
+      Data: 0|TraitEffects[], Assembly-CSharp
     - Name: 
       Entry: 12
       Data: 2
     - Name: 
       Entry: 7
-      Data: 2|TraitEffects, Assembly-CSharp
+      Data: 1|TraitEffects, Assembly-CSharp
     - Name: UnitCount
       Entry: 3
       Data: 3
@@ -56,14 +41,14 @@ MonoBehaviour:
       Data: 2
     - Name: OnBoardEffects
       Entry: 7
-      Data: 3|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+      Data: 2|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 7
-      Data: 4|Effects.IncreaseStatEffect, Assembly-CSharp
+      Data: 3|Effects.IncreaseStatEffect, Assembly-CSharp
     - Name: ModifierValue
       Entry: 4
       Data: 2500
@@ -87,7 +72,7 @@ MonoBehaviour:
       Data: 
     - Name: OnAttackEffects
       Entry: 7
-      Data: 5|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+      Data: 4|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
@@ -100,7 +85,7 @@ MonoBehaviour:
       Data: 
     - Name: OnDoneDamageEffects
       Entry: 7
-      Data: 6|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+      Data: 5|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
@@ -113,7 +98,7 @@ MonoBehaviour:
       Data: 
     - Name: OnKillEffects
       Entry: 7
-      Data: 7|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+      Data: 6|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
@@ -126,7 +111,7 @@ MonoBehaviour:
       Data: 
     - Name: OnTakeDamageEffects
       Entry: 7
-      Data: 8|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+      Data: 7|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
@@ -142,7 +127,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 9|TraitEffects, Assembly-CSharp
+      Data: 8|TraitEffects, Assembly-CSharp
     - Name: UnitCount
       Entry: 3
       Data: 6
@@ -151,14 +136,14 @@ MonoBehaviour:
       Data: 3
     - Name: OnBoardEffects
       Entry: 7
-      Data: 10|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+      Data: 9|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 7
-      Data: 11|Effects.IncreaseStatEffect, Assembly-CSharp
+      Data: 10|Effects.IncreaseStatEffect, Assembly-CSharp
     - Name: ModifierValue
       Entry: 4
       Data: 10000
@@ -182,7 +167,7 @@ MonoBehaviour:
       Data: 
     - Name: OnAttackEffects
       Entry: 7
-      Data: 12|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+      Data: 11|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
@@ -195,7 +180,7 @@ MonoBehaviour:
       Data: 
     - Name: OnDoneDamageEffects
       Entry: 7
-      Data: 13|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+      Data: 12|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
@@ -208,7 +193,7 @@ MonoBehaviour:
       Data: 
     - Name: OnKillEffects
       Entry: 7
-      Data: 14|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+      Data: 13|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
@@ -221,7 +206,7 @@ MonoBehaviour:
       Data: 
     - Name: OnTakeDamageEffects
       Entry: 7
-      Data: 15|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
+      Data: 14|System.Collections.Generic.List`1[[Effects.IEffect, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
@@ -242,7 +227,15 @@ MonoBehaviour:
       Entry: 8
       Data: 
   Name: Whale
-  Icon: {fileID: 21300000, guid: 3526f92d678244141966b8a0b0ad8f99, type: 3}
-  Description: "Whales have 30 lower max mana. \nWhales also gain additional health,
-    crazy ikr\n\n(3) 2500 HP\n\n(6) 10000 HP"
+  Icon: {fileID: 21300000, guid: 21f6d91ff276ef2478b3836023e22aa4, type: 3}
+  Description: 'Whales gain additional max health. Yes it''s entirely different from
+    bruiser. Let me explain... the whales get like... a loot of heath. 2500 that''s
+    a big number for just 3 whales. Maybe a bit unbalanced... nah surely not.
+
+
+    (3)
+    2500 HP
+
+
+    (6) 10000 HP'
   Exclusive: 0

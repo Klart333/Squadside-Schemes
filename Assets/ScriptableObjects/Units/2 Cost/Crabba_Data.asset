@@ -51,7 +51,7 @@ MonoBehaviour:
   Name: Crabba
   Cost: 2
   Portrait: {fileID: 21300000, guid: 24ce01479f763044ebc3917221f0f472, type: 3}
-  UnitPrefab: {fileID: 9028165221139918241, guid: 344cd86542eb8f445a5cde2df3fafe4e,
+  UnitPrefab: {fileID: 2624391094184009827, guid: 344cd86542eb8f445a5cde2df3fafe4e,
     type: 3}
   Traits:
   - {fileID: 11400000, guid: 0870cbbfecf24ce42a3522e97a3b1642, type: 2}

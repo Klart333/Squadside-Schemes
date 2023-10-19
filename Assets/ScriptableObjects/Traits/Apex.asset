@@ -168,7 +168,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   Name: Apex
-  Icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  Icon: {fileID: 21300000, guid: 431035e65c10f5c45b8221f20917e071, type: 3}
   Description: 'Apex fish get bonus health, ability power and healing. You can only
     have one Apex.
 

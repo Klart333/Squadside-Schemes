@@ -59,9 +59,13 @@ MonoBehaviour:
     type: 3}
   lootSystemPrefab: {fileID: -4383785757030744743, guid: 3327e3a599f586c429fa53ed580698de,
     type: 3}
-  playerUIPrefab: {fileID: 5102325301669173587, guid: 9e57023851386404bb3f8a11368e1209,
+  playerUIPrefab: {fileID: 5672607789627696004, guid: 9e57023851386404bb3f8a11368e1209,
     type: 3}
   Playerhealth:
+    m_InternalValue: 0
+  PlayerElo:
+    m_InternalValue: 0
+  PlayerSteamID:
     m_InternalValue: 0
 --- !u!114 &-6403148850557579559
 MonoBehaviour:

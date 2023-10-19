@@ -48,7 +48,7 @@ MonoBehaviour:
   Name: Krok
   Cost: 2
   Portrait: {fileID: 21300000, guid: 95c31e6385147f04ca6160df0ec59927, type: 3}
-  UnitPrefab: {fileID: 3221194357080652659, guid: 1047f0c48d059fb4c8b4d29efd23949d,
+  UnitPrefab: {fileID: 8471889475932599985, guid: 1047f0c48d059fb4c8b4d29efd23949d,
     type: 3}
   Traits:
   - {fileID: 11400000, guid: 267e49667b6e19142a480eebacddaf24, type: 2}

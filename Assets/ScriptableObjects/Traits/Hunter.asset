@@ -527,7 +527,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   Name: Hunter
-  Icon: {fileID: 21300000, guid: b888a69fde865c94d9f142e0116b9737, type: 3}
+  Icon: {fileID: 21300000, guid: b6bfa0f839665124387978de6bb966f7, type: 3}
   Description: 'Hunters have 15% built-in healing on damage. They also get additional
     crit chance.
 
