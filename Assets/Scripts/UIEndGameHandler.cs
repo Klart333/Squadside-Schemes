@@ -19,6 +19,18 @@ public class UIEndGameHandler : MonoBehaviour
     [TextArea]
     private string loseText = "ya lost";
 
+    private bool loading = false;
+
+    private void Start()
+    {
+        NetworkManager.Singleton.OnClientDisconnectCallback += Singleton_OnClientDisconnectCallback;
+    }
+
+    private void OnDisable()
+    {
+        NetworkManager.Singleton.OnClientDisconnectCallback -= Singleton_OnClientDisconnectCallback;
+    }
+
     public void EndGame(bool lost)
     {
         gameObject.SetActive(true);
@@ -33,10 +45,19 @@ public class UIEndGameHandler : MonoBehaviour
         }
     }
 
+    private void Singleton_OnClientDisconnectCallback(ulong obj)
+    {
+        NetworkManager.Singleton.Shutdown();
+        SceneManager.LoadScene(0); 
+    }
+
     public void LoadMenu()
     {
-        SceneManager.LoadScene(0);
+        if (loading) return;
 
-        NetworkManager.Singleton.DisconnectClient(playerUI.PlayerHandler.OwnerClientId);
+        loading = true;
+
+        GameManager.Instance.DisconnectServerRPC(playerUI.PlayerHandler.OwnerClientId);
+
     }
 }

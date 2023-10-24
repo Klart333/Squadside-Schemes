@@ -870,5 +870,46 @@ namespace Effects
     }
 
     #endregion
+
+    #region Add Trait
+
+    public class AddTraitEffect : IEffect
+    {
+        public float ModifierValue { get; set; }
+
+        [TitleGroup("Trait")]
+        public Trait traitToAdd;
+
+        private Dictionary<Unit, Modifier> ModifierDictionary;
+
+        public void Perform(Unit unit)
+        {
+            if (ModifierDictionary == null)
+            {
+                ModifierDictionary = new Dictionary<Unit, Modifier>();
+            }
+
+            if (!ModifierDictionary.ContainsKey(unit))
+            {
+                int index = GameManager.Instance.TraitUtility.GetIndex(traitToAdd);
+                unit.UnitStats.AddTrait(index);
+            }
+        }
+
+        public void Revert(Unit unit)
+        {
+            if (ModifierDictionary == null || !ModifierDictionary.ContainsKey(unit))
+            {
+                return;
+            }
+
+            int index = GameManager.Instance.TraitUtility.GetIndex(traitToAdd);
+            unit.UnitStats.RemoveTrait(index);
+
+            ModifierDictionary.Remove(unit);
+        }
+    }
+
+    #endregion
 }
 

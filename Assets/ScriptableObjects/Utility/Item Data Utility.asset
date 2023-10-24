@@ -30,6 +30,12 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 4e318c188ba7b504e8479dbad4ceba57, type: 2}
     - {fileID: 11400000, guid: f550d39d56b35154fa2bfdfe278efc5c, type: 2}
     - {fileID: 11400000, guid: 6428c48ba55c3a240afd5e584b994838, type: 2}
+    - {fileID: 11400000, guid: bd5676b7a805eaf45a658fd08d10d4c1, type: 2}
+    - {fileID: 11400000, guid: ba9933bebc75100439b510bc5ca59513, type: 2}
+    - {fileID: 11400000, guid: 6ac44d4c7abb9274a9d6292e6826c284, type: 2}
+    - {fileID: 11400000, guid: 5cbfd74873b8fd1489686b8ecc27d812, type: 2}
+    - {fileID: 11400000, guid: 79ac2329faff9644cbf2e9a7e2ee6d01, type: 2}
+    - {fileID: 11400000, guid: e4ddf1b2fb950af40b93bcb63955f1e9, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -49,7 +55,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 10
+      Data: 15
     - Name: 
       Entry: 7
       Data: 
@@ -271,6 +277,116 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: System.ValueTuple`2[[ItemData, Assembly-CSharp],[ItemData, Assembly-CSharp]],
+        mscorlib
+    - Name: Item1
+      Entry: 10
+      Data: 14
+    - Name: Item2
+      Entry: 10
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 10
+      Data: 15
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: System.ValueTuple`2[[ItemData, Assembly-CSharp],[ItemData, Assembly-CSharp]],
+        mscorlib
+    - Name: Item1
+      Entry: 10
+      Data: 14
+    - Name: Item2
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 10
+      Data: 16
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: System.ValueTuple`2[[ItemData, Assembly-CSharp],[ItemData, Assembly-CSharp]],
+        mscorlib
+    - Name: Item1
+      Entry: 10
+      Data: 14
+    - Name: Item2
+      Entry: 10
+      Data: 6
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 10
+      Data: 17
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: System.ValueTuple`2[[ItemData, Assembly-CSharp],[ItemData, Assembly-CSharp]],
+        mscorlib
+    - Name: Item1
+      Entry: 10
+      Data: 14
+    - Name: Item2
+      Entry: 10
+      Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 10
+      Data: 18
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: System.ValueTuple`2[[ItemData, Assembly-CSharp],[ItemData, Assembly-CSharp]],
+        mscorlib
+    - Name: Item1
+      Entry: 10
+      Data: 14
+    - Name: Item2
+      Entry: 10
+      Data: 14
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 10
+      Data: 19
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 13
       Data: 
     - Name: 
@@ -291,8 +407,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0b282edabceef4a4cbad7d4149700422, type: 2}
   - {fileID: 11400000, guid: d788fde891a00914d850ed775456d54a, type: 2}
   - {fileID: 11400000, guid: 44f5ac87e2f73994fb9c3c221ea3d222, type: 2}
+  - {fileID: 11400000, guid: bd5676b7a805eaf45a658fd08d10d4c1, type: 2}
+  - {fileID: 11400000, guid: 5cbfd74873b8fd1489686b8ecc27d812, type: 2}
+  - {fileID: 11400000, guid: e4ddf1b2fb950af40b93bcb63955f1e9, type: 2}
+  - {fileID: 11400000, guid: 6ac44d4c7abb9274a9d6292e6826c284, type: 2}
+  - {fileID: 11400000, guid: 79ac2329faff9644cbf2e9a7e2ee6d01, type: 2}
+  - {fileID: 11400000, guid: ba9933bebc75100439b510bc5ca59513, type: 2}
   AllComponent:
   - {fileID: 11400000, guid: 985914f29c8f0e540802af9d78330513, type: 2}
   - {fileID: 11400000, guid: 69937f968446a234ab1f24e50481e080, type: 2}
   - {fileID: 11400000, guid: 44f5ac87e2f73994fb9c3c221ea3d222, type: 2}
   - {fileID: 11400000, guid: 5faaba8eafbaf1349ab37f41e68958ef, type: 2}
+  - {fileID: 11400000, guid: bd5676b7a805eaf45a658fd08d10d4c1, type: 2}

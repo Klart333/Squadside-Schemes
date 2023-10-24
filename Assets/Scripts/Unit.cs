@@ -450,6 +450,11 @@ public class Unit : NetworkBehaviour, IInteractable
 
         UnitItems.ApplyItem(item, index);
 
+        if (IsOnBoard && item.name.Contains("Emblem"))
+        {
+            PlayerHandler.BoardSystem.UpdateBoardUnits();
+        }
+
         return true;
     }
 

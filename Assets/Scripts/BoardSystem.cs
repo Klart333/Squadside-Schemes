@@ -639,5 +639,10 @@ public class BoardSystem : NetworkBehaviour
         PlayerHandler.MoneySystem.AddMoney(money);
     }
 
+    public void UpdateBoardUnits()
+    {
+        OnBoardedUnitsChanged?.Invoke(UnitsOnBoard);
+    }
+
     #endregion
 }

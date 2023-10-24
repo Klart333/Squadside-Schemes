@@ -11,11 +11,12 @@ public class UITimerDisplay : MonoBehaviour
     private Image SliderFill;
 
     private bool going = false;
-    private float total = 0;
+    private float roundLength = 0;
 
     private float timer = 0;
+    private bool isCreepRound = true;
 
-    public float Percent => !going ? 1.0f : (total - timer) / total;
+    public float Percent => !going ? 1.0f : (roundLength - timer) / roundLength;
 
     private void Update()
     {
@@ -26,17 +27,24 @@ public class UITimerDisplay : MonoBehaviour
 
         timer += Time.deltaTime;
 
-        float percent = (total - (timer + 1.0f)) / total;
+        float percent = (roundLength - (timer + 1.5f)) / roundLength;
         percent = Mathf.Clamp01(percent);
 
         SliderFill.fillAmount = percent;
-        timerText.text = Mathf.RoundToInt(percent * total).ToString();
+        if (percent * roundLength <= 0)
+        {
+            timerText.text = "Loading boards...";
+        }
+        else
+        {
+            timerText.text = Mathf.RoundToInt(percent * roundLength).ToString();
+        }
     }
 
     public void StartTimer(float roundLength)
     {
         going = true;
-        total = roundLength;
+        this.roundLength = roundLength;
         timer = 0;
     }
 
@@ -45,6 +53,16 @@ public class UITimerDisplay : MonoBehaviour
         going = false;
 
         SliderFill.fillAmount = 0;
-        timerText.text = "Battle Time!";
+
+        if (isCreepRound)
+        {
+            timerText.text = "Mob Time!";
+        }
+        else
+        {
+            timerText.text = "Battle Time!";
+        }
+
+        isCreepRound = !isCreepRound;
     }
 }

@@ -36,11 +36,21 @@ public class UnitStats
 
     public void AddTrait(int traitIndex)
     {
+        if (Traits.Contains(traitIndex))
+        {
+            return;
+        }
+
         Traits.Add(traitIndex);
     }
 
     public void RemoveTrait(int traitIndex)
     {
+        if (!Traits.Contains(traitIndex))
+        {
+            return;
+        }
+
         Traits.Remove(traitIndex);
     }
 

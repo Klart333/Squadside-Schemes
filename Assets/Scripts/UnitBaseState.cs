@@ -1,10 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
-using Mono.CSharp;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
-using static UnityEngine.UI.CanvasScaler;
 
 public abstract class UnitBaseState
 {

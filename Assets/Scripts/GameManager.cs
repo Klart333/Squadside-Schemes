@@ -11,7 +11,7 @@ public class GameManager : NetworkBehaviour
 {
     public event Action<BoardSystem, BoardSystem, int> StartBattle;
 
-    public const float RoundLength = 20;
+    public const float RoundLength = 30;
 
     [Title("PVE")]
     public PVEData PVEData;
@@ -112,7 +112,7 @@ public class GameManager : NetworkBehaviour
         {
             roundTimer += Time.deltaTime;
 
-            if (roundTimer >= RoundLength)
+            if (roundTimer >= RoundLength + 1)
             {
                 for (int i = 0; i < playerHandlers.Length; i++)
                 {
@@ -392,7 +392,13 @@ public class GameManager : NetworkBehaviour
             playerHandlers[i].ToggleUnitVisibilityClientRPC(unitID, value, param);
         }
     }
-#endregion
+
+    [ServerRpc(RequireOwnership = false)]
+    public void DisconnectServerRPC(ulong ownerClientId)
+    {
+        NetworkManager.Singleton.DisconnectClient(ownerClientId);
+    }
+    #endregion
 }
 
 public struct ServerBattleData

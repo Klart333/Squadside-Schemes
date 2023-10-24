@@ -137,6 +137,7 @@ public class UnitHealth : MonoBehaviour
         }
 
         currentHealth += amount;
+        currentHealth = Mathf.Clamp(currentHealth, 0, unit.UnitStats.MaxHealth.Value);
 
         healthBar.UpdateHealthBar(currentHealth);
     }
