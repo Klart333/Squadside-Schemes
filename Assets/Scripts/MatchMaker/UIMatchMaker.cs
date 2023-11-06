@@ -19,7 +19,7 @@ public class UIMatchMaker : MonoBehaviour
 
     private CreateTicketResponse createTicketResponse;
     private float pollTickerTimer;
-    private float pollTickerTImerMax = 1.1f;
+    private float pollTickerTimerMax = 1.1f;
 
     private void Awake()
     {
@@ -40,7 +40,7 @@ public class UIMatchMaker : MonoBehaviour
             if (pollTickerTimer <= 0)
             {
                 PollMatchmakerTicket();
-                pollTickerTimer = pollTickerTImerMax;
+                pollTickerTimer = pollTickerTimerMax;
             }
         }
     }
@@ -51,10 +51,10 @@ public class UIMatchMaker : MonoBehaviour
 
         createTicketResponse = await MatchmakerService.Instance.CreateTicketAsync(new List<Player>
         {
-            new Player(AuthenticationService.Instance.PlayerId, new MatchmakingPlayerData { Skill = 10 })
+            new Player(AuthenticationService.Instance.PlayerId, new MatchmakingPlayerData { Skill = PlayerRankManager.Instance.GetRank() })
         }, new CreateTicketOptions { QueueName = DEFAULT_QUEUE });
 
-        pollTickerTimer = pollTickerTImerMax;
+        pollTickerTimer = pollTickerTimerMax;
     }
 
     private async void PollMatchmakerTicket()
@@ -79,17 +79,12 @@ public class UIMatchMaker : MonoBehaviour
             {
                 case MultiplayAssignment.StatusOptions.Timeout:
                     Debug.Log("Multiplay Timeout!");
-                    createTicketResponse = null;
-                    lookingForMatchTransform.gameObject.SetActive(false);
-                    GetComponent<Button>().interactable = true;
+                    ResetButton();
                     break;
 
                 case MultiplayAssignment.StatusOptions.Failed:
                     Debug.LogError("Failed to create Multiplay server. Error: " + multiplayAssignment.Message);
-
-                    createTicketResponse = null;
-                    lookingForMatchTransform.gameObject.SetActive(false);
-                    GetComponent<Button>().interactable = true;
+                    ResetButton();
                     break;
 
                 case MultiplayAssignment.StatusOptions.InProgress:
@@ -117,6 +112,22 @@ public class UIMatchMaker : MonoBehaviour
         }
     }
 
+    public async void CancelSearch()
+    {
+        pollTickerTimer = 0;
+
+        await MatchmakerService.Instance.DeleteTicketAsync(createTicketResponse.Id);
+        Debug.Log("Disconnected!");
+
+        ResetButton();
+    }
+
+    private void ResetButton()
+    {
+        createTicketResponse = null;
+        lookingForMatchTransform.gameObject.SetActive(false);
+        GetComponent<Button>().interactable = true;
+    }
 
     [Serializable]
     public struct MatchmakingPlayerData

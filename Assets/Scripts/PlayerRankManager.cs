@@ -10,7 +10,7 @@ public class PlayerRankManager : Singleton<PlayerRankManager>
 
     private PlayerRank[] downloadedPlayerRanks;
 
-    private int playerElo = 100;
+    private int playerElo = 800;
 
     private bool downloading = false;
 
@@ -39,6 +39,16 @@ public class PlayerRankManager : Singleton<PlayerRankManager>
         SaveRank();
     }
 
+    public int GetRank()
+    {
+        if (playerElo == 800)
+        {
+            LoadRank();
+        }
+
+        return playerElo;
+    }
+
     private void SaveRank()
     {
         using (var writer = new BinaryWriter(File.Open(rankSavePath, FileMode.OpenOrCreate)))
@@ -55,7 +65,7 @@ public class PlayerRankManager : Singleton<PlayerRankManager>
             return;
         }
 
-        using (var reader = new BinaryReader(File.Open(rankSavePath, FileMode.Open))) 
+        using (var reader = new BinaryReader(File.Open(rankSavePath, FileMode.Open)))
         {
             int rank = reader.ReadInt32();
             playerElo = rank;
@@ -95,7 +105,7 @@ public class PlayerRankManager : Singleton<PlayerRankManager>
 
     private void Update()
     {
-        leaderboard.UpdateCallbacks();  
+        leaderboard.UpdateCallbacks();
     }
 
     public void UpdateScore(int score)
@@ -126,7 +136,7 @@ public class PlayerRankManager : Singleton<PlayerRankManager>
 
     public int GetElo()
     {
-        return playerElo;
+        return GetRank();
     }
     #endregion
 }
@@ -195,8 +205,8 @@ public class SteamLeaderboard
         {
             SteamUserStats.GetDownloadedLeaderboardEntry(pCallback.m_hSteamLeaderboardEntries, i, out LeaderboardEntry_t entry, null, 0);
 
-            ranks[i] = new PlayerRank 
-            { 
+            ranks[i] = new PlayerRank
+            {
                 Elo = entry.m_nScore,
                 User = new User(entry.m_steamIDUser)
             };
@@ -242,7 +252,7 @@ public class User
         AvatarID = -1;
         SteamID = id;
         SteamUsername = SteamFriends.GetFriendPersonaName(id);
-        
+
         if (SteamUsername == "" || SteamUsername == "[unknown]")
         {
             LoadName();

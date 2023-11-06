@@ -45,3 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Hustler: {fileID: 11400000, guid: 97ebf51781655014999b089365928b1c, type: 2}
+  coinPrefab: {fileID: 2742744507050367865, guid: 68c1c80523f348c44a7d7f99bb1bef43,
+    type: 3}

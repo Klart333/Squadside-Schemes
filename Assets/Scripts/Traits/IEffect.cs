@@ -43,10 +43,10 @@ namespace Effects
 
             if (!ModifierDictionary.ContainsKey(unit))
             {
-                ModifierDictionary.Add(unit, new Modifier 
-                { 
-                    Type = ModifierType, 
-                    Value = ModifierValue 
+                ModifierDictionary.Add(unit, new Modifier
+                {
+                    Type = ModifierType,
+                    Value = ModifierValue
                 });
 
                 unit.UnitStats.ModifyStat(StatType, ModifierDictionary[unit]);
@@ -392,7 +392,7 @@ namespace Effects
             for (int i = 0; i < ticks; i++)
             {
                 await UniTask.Delay(TimeSpan.FromSeconds(tickRate));
-                
+
                 if (dotInstance.UnitTarget == null) return;
 
                 dotInstance.UnitTarget.TakeDamage(dotInstance, out DamageInstance damageDone);
@@ -540,7 +540,7 @@ namespace Effects
             {
                 ItemDictionary.Add(unit, new List<ItemData>());
             }
-           
+
             for (int i = 0; i < ModifierValue; i++)
             {
                 ItemData randomItemData = GameManager.Instance.ItemDataUtility.GetRandomItem(true);
@@ -675,7 +675,7 @@ namespace Effects
             if (!ModifierDictionary.ContainsKey(unit))
             {
                 ModifierDictionary.Add(unit, new List<(StatType, Modifier)>());
-                
+
                 for (int i = 0; i < StatAmount; i++)
                 {
                     int statTypeIndex = UnityEngine.Random.Range(0, Enum.GetValues(typeof(StatType)).Length);
@@ -797,12 +797,17 @@ namespace Effects
 
         public void Perform(Unit unit)
         {
-            unit.PlayerHandler.MoneySystem.AddMoney(Mathf.FloorToInt(ModifierValue));    
+            if (unit.IsEnemyUnit)
+            {
+                return;
+            }
+
+            unit.PlayerHandler.MoneySystem.SpawnMoney(Mathf.FloorToInt(ModifierValue), unit.transform.position);
         }
 
         public void Revert(Unit unit)
         {
-            
+
         }
     }
 

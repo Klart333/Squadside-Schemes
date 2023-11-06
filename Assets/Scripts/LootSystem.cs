@@ -12,6 +12,12 @@ public class LootSystem : MonoBehaviour
     [SerializeField]
     private float lootProbability;
 
+    [SerializeField]
+    private float moneyProbability;
+
+    [SerializeField]
+    private Vector2 moneyAmountRange;
+
     [Title("Items")]
     [SerializeField]
     private Item itemPrefab;
@@ -131,9 +137,20 @@ public class LootSystem : MonoBehaviour
             return;
         }
 
-        LootOrb orb = Instantiate(lootOrbPrefab, pos + Vector3.up, Quaternion.identity);
-        orb.LootItemData = GameManager.Instance.ItemDataUtility.GetRandomItem();
-        orb.LootSystem = this;
+        LootOrb orb = lootOrbPrefab.GetAtPosAndRot<LootOrb>(pos + Vector3.up, Quaternion.identity);
+
+        float moneyRandValue = Random.value;
+        if (moneyRandValue < moneyProbability)
+        {
+            int moneyAmount = Mathf.RoundToInt(Random.Range(moneyAmountRange.x, moneyAmountRange.y));
+            orb.MoneyAmount = moneyAmount;
+            orb.MoneySystem = PlayerHandler.MoneySystem;
+        }
+        else
+        {
+            orb.LootItemData = GameManager.Instance.ItemDataUtility.GetRandomItem();
+            orb.LootSystem = this;
+        }
     }
 
     public void SpawnItem(ItemData itemData)

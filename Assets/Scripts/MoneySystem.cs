@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,9 @@ public class MoneySystem : MonoBehaviour
 
     [SerializeField]
     private Trait Hustler;
+
+    [SerializeField]
+    private Coin coinPrefab;
 
     public PlayerHandler PlayerHandler { get; set; }
 
@@ -84,5 +88,21 @@ public class MoneySystem : MonoBehaviour
         int interest = Mathf.FloorToInt(Money / 10.0f);
 
         return Mathf.Min(interest, MaxInterest);
+    }
+
+    public async void SpawnMoney(int moneyAmount, Vector3 position)
+    {
+        for (int i = 0; i < moneyAmount; i++)
+        {
+            Vector3 rand = UnityEngine.Random.insideUnitSphere * 2;
+            Vector3 randomPos = position + rand;
+            randomPos.y = 0.1f;
+
+            Coin coin = coinPrefab.GetAtPosAndRot<Coin>(position, Quaternion.identity);
+            coin.MoneySystem = this;
+            coin.AnimateToPosition(randomPos);
+
+            await UniTask.Delay(100);
+        }
     }
 }

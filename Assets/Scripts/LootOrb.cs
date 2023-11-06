@@ -1,11 +1,15 @@
+using System;
 using UnityEngine;
 
-public class LootOrb : MonoBehaviour, IInteractable
+public class LootOrb : PooledMonoBehaviour, IInteractable
 {
     private MeshRenderer meshRenderer;
 
     public LootSystem LootSystem { get; set; }
     public ItemData LootItemData { get; set; }
+    public MoneySystem MoneySystem { get; set; }
+
+    public int MoneyAmount { get; set; }
     public bool IsOwner => true;
     public bool IsInteractable => true;
 
@@ -38,10 +42,26 @@ public class LootOrb : MonoBehaviour, IInteractable
 
     public bool Pickup()
     {
-        LootSystem.SpawnItem(LootItemData);
+        if (LootSystem)
+        {
+            LootSystem.SpawnItem(LootItemData);
+        }
+        else if (MoneySystem)
+        {
+            MoneySystem.SpawnMoney(MoneyAmount, transform.position);
+        }
 
-        Destroy(gameObject);
+        Reset();
+        gameObject.SetActive(false);
         return true;
+    }
+
+    private void Reset()
+    {
+        LootSystem = null;
+        MoneySystem = null;
+        LootItemData = null;
+        MoneyAmount = 0;
     }
 
     public void Place()

@@ -153,6 +153,8 @@ MonoBehaviour:
   lootOrbPrefab: {fileID: -2655833049352631077, guid: 94d2406836b8bc44dbd9a6c42298673f,
     type: 3}
   lootProbability: 1
+  moneyProbability: 0.5
+  moneyAmountRange: {x: 4, y: 6}
   itemPrefab: {fileID: 7628892996684445430, guid: f7a571ed30f0ea944be1716a7e9c8abe,
     type: 3}
   netPrefab: {fileID: 4809942174636400791, guid: 48004ac2f1c7a8847b3cceac4ee800b5,
