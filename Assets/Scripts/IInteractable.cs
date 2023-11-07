@@ -11,7 +11,12 @@ public interface IInteractable
     /// <summary>
     /// 
     /// </summary>
-    /// <returns>If it's a click</returns>
+    /// <returns>If pickup succeded</returns>
     public bool Pickup();
-    public void Place();
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns>If placing succeded</returns>
+    public bool Place();
 }

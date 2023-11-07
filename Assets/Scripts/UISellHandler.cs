@@ -49,8 +49,6 @@ public class UISellHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     private void BoardSystem_OnUnitPlace(Unit unit)
     {
-        print("SELL UNIT!!");
-
         background.gameObject.SetActive(false);
 
         if (mouseOver)

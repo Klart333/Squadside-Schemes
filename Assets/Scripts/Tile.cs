@@ -10,4 +10,5 @@ public class Tile
 
     public bool Walkable => CurrentUnit == null && !UnitLeaving;
     public bool UnitLeaving = false;
+    public bool IsBench => Index.y <= -1;
 }

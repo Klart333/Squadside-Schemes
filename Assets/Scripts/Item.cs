@@ -9,7 +9,7 @@ public class Item : MonoBehaviour, IInteractable
 
     private MeshRenderer meshRenderer;
 
-    public bool IsInteractable => PlayerHandler.CanInteract;
+    public bool IsInteractable => true;
     public bool IsOwner => true;
 
     public ItemTile CurrentTile { get; set; }
@@ -63,12 +63,14 @@ public class Item : MonoBehaviour, IInteractable
     {
         PlayerHandler.LootSystem.PlacingItem(this);
 
-        return false;
+        return true;
     }
 
-    public void Place()
+    public bool Place()
     {
         PlayerHandler.LootSystem.PlaceItem(this);
+
+        return true; // The item is always placed down
     }
 
     #endregion

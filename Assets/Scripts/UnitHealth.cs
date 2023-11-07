@@ -12,6 +12,13 @@ public class UnitHealth : MonoBehaviour
     [SerializeField]
     private UIDamageNumber damageNumber;
 
+    [Title("Particles")]
+    [SerializeField]
+    private PooledMonoBehaviour hitParticle;
+
+    [SerializeField]
+    private PooledMonoBehaviour deathParticle;
+
     private Unit unit;
 
     private float currentHealth;
@@ -84,9 +91,13 @@ public class UnitHealth : MonoBehaviour
 
         if (currentHealth <= 0)
         {
+            deathParticle.GetAtPosAndRot<PooledMonoBehaviour>(transform.position + Vector3.up * 1, Quaternion.identity);
+
             unit.LocalDeath();
             return true;
         }
+
+        hitParticle.GetAtPosAndRot<PooledMonoBehaviour>(transform.position + Vector3.up * 0.5f, Quaternion.identity);
 
         return false;
     }
@@ -110,7 +121,7 @@ public class UnitHealth : MonoBehaviour
 
         // Spawn damage numbers
         HandleDamageNumbers(damageInstance, critMult > 1);
-        
+
         return damageInstance;
     }
 

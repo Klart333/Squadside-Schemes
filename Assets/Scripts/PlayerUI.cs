@@ -64,4 +64,9 @@ public class PlayerUI : MonoBehaviour
     {
         endGamePanel.EndGame(lost);
     }
+
+    public void Overtime()
+    {
+        timerDisplay.ShowOvertime();
+    }
 }

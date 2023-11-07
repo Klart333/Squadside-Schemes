@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Unity.Netcode;
 
 public class Battle
@@ -119,5 +120,18 @@ public class Battle
         }
 
         return EnemyUnits;
+    }
+
+    public void Overtime()
+    {
+        for (int i = 0; i < AlliedUnits.Count; i++)
+        {
+            AlliedUnits[i].BattleController.ActivateOvertime();
+        }
+
+        for (int i = 0; i < EnemyUnits.Count; i++)
+        {
+            EnemyUnits[i].BattleController.ActivateOvertime();
+        }
     }
 }

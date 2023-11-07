@@ -53,12 +53,12 @@ public class Coin : PooledMonoBehaviour, IInteractable
         }
 
         gameObject.SetActive(false);
-        return true;
+        return false;
     }
 
-    public void Place()
+    public bool Place()
     {
-
+        return false;
     }
 
     public async void AnimateToPosition(Vector3 targetPos)

@@ -53,7 +53,7 @@ public class BattleSystem : MonoBehaviour
                 Debug.LogError("Unit is null");
                 continue;
             }
-            
+
             Unit unit = PlayerHandler.BoardSystem.SpawnUnitLocal(unitNetworkData, true);
             await UniTask.WaitUntil(() => unit.IsInitialized);
 
@@ -116,5 +116,17 @@ public class BattleSystem : MonoBehaviour
         }
 
         battle = null;
+    }
+
+    public bool Overtime()
+    {
+        if (battle == null)
+        {
+            return false;
+        }
+
+        battle.Overtime();
+
+        return true;
     }
 }

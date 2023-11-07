@@ -1,9 +1,7 @@
 using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
 using Steamworks;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -48,7 +46,7 @@ public class PlayerHandler : NetworkBehaviour
     public NetworkVariable<int> PlayerElo = new NetworkVariable<int>(writePerm: NetworkVariableWritePermission.Owner);
     public NetworkVariable<ulong> PlayerSteamID = new NetworkVariable<ulong>(writePerm: NetworkVariableWritePermission.Owner);
 
-    public bool CanInteract => PlayerUI.TimerDisplay.Percent < 0.95f;
+    public bool InteractionRestricted => PlayerUI.TimerDisplay.Percent > 0.95f;
 
     private void Start()
     {
@@ -344,6 +342,20 @@ public class PlayerHandler : NetworkBehaviour
         else
         {
             PlayerRankManager.Instance.WinGame(opponentElo);
+        }
+    }
+
+    [ClientRpc]
+    public void StartOvertimeClientRPC()
+    {
+        if (!IsOwner)
+        {
+            return;
+        }
+
+        if (BattleSystem.Overtime())
+        {
+            PlayerUI.Overtime();
         }
     }
 }

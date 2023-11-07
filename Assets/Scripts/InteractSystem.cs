@@ -46,10 +46,7 @@ public class InteractSystem : MonoBehaviour
         {
             if (holding)
             {
-                if (PlayerHandler.CanInteract)
-                {
-                    Place();
-                }
+                Place();
             }
             else
             {
@@ -60,21 +57,23 @@ public class InteractSystem : MonoBehaviour
 
     private void Place()
     {
-        holding = false;
+        if (CurrentInteractable == null) return;
 
-        CurrentInteractable?.Place();
+        if (CurrentInteractable.Place())
+        {
+            holding = false;
+        }
     }
 
     private void Pickup()
     {
-        if (CurrentInteractable == null)
-        {
-            return;
-        }
-
-        holding = true;
+        if (CurrentInteractable == null) return;
 
         if (CurrentInteractable.Pickup())
+        {
+            holding = true;
+        }
+        else
         {
             currentInteractable = null;
             holding = false;

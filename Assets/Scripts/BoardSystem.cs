@@ -36,6 +36,10 @@ public class BoardSystem : NetworkBehaviour
     [SerializeField]
     private Net benchNetPrefab;
 
+    [Title("Particles")]
+    [SerializeField]
+    private PooledMonoBehaviour placeParticle;
+
     public List<Unit> UnitsOnBoard
     {
         get
@@ -208,7 +212,7 @@ public class BoardSystem : NetworkBehaviour
             }
 
             Net net;
-            if (tile.Index.y <= -1)
+            if (tile.IsBench)
             {
                 net = benchNets[tile.Index.x];
             }
@@ -259,9 +263,9 @@ public class BoardSystem : NetworkBehaviour
     {
         ToggleNet(false);
 
-        OnUnitPlace?.Invoke(unit);
-
         Tile tile = GetClosestTile(unit.transform.position);
+
+        OnUnitPlace?.Invoke(unit);
 
         if (tile != null)
         {
@@ -269,16 +273,16 @@ public class BoardSystem : NetworkBehaviour
         }
     }
 
-    public void PlaceUnitOnTile(Unit unit, Tile tile)
+    public bool PlaceUnitOnTile(Unit unit, Tile targetTile)
     {
-        if (!unit) return;
+        if (!unit) return false;
 
         List<Unit> units = UnitsOnBoard;
 
-        if (!units.Contains(unit) && tile.CurrentUnit == null && tile.Index.y >= 0 && units.Count >= PlayerHandler.LevelSystem.CurrentLevel) // Check if board is full
+        if (!targetTile.IsBench && (PlayerHandler.InteractionRestricted || (targetTile.CurrentUnit == null && !units.Contains(unit) && units.Count >= PlayerHandler.LevelSystem.CurrentLevel))) // Check if board is full
         {
             unit.transform.position = unit.CurrentTile.WorldPosition;
-            return;
+            return false;
         }
 
         if (unit.CurrentTile != null)
@@ -286,29 +290,31 @@ public class BoardSystem : NetworkBehaviour
             unit.CurrentTile.CurrentUnit = null;
         }
 
-        if (tile.CurrentUnit != null)
+        if (targetTile.CurrentUnit != null)
         {
-            PlaceUnitOnTile(tile.CurrentUnit, unit.CurrentTile);
+            PlaceUnitOnTile(targetTile.CurrentUnit, unit.CurrentTile);
         }
 
-        unit.transform.position = tile.WorldPosition;
+        unit.transform.position = targetTile.WorldPosition;
 
-        unit.CurrentTile = tile;
-        tile.CurrentUnit = unit;
+        unit.CurrentTile = targetTile;
+        targetTile.CurrentUnit = unit;
 
-        if (!unit.IsOnBoard || tile.Index.y < 0) // Basically dont call the event if we're just moving units on the board around
+        if ((!unit.IsOnBoard && !targetTile.IsBench) || (unit.IsOnBoard && targetTile.IsBench)) // Basically dont call the event if we're just moving units on the board around
         {
             OnBoardedUnitsChanged?.Invoke(UnitsOnBoard);
         }
 
-        if (tile.Index.y >= 0)
+        if (targetTile.IsBench)
         {
-            unit.OnPlacedOnBoard(); // A little weird to be under the event, but the traits update on the event so its needed
+            unit.OnPlacedOnBench(); // A little weird to be under the event, but the traits update on the event so its needed
         }
         else
         {
-            unit.OnPlacedOnBench();
+            unit.OnPlacedOnBoard();
         }
+
+        return true;
     }
 
     public Tile GetClosestTile(Vector3 position)
@@ -408,6 +414,7 @@ public class BoardSystem : NetworkBehaviour
         }
 
         Vector3 pos = benchTiles[index].WorldPosition;
+        placeParticle.GetAtPosAndRot<PooledMonoBehaviour>(pos + Vector3.up * 0.5f, Quaternion.identity);
 
         ServerRpcParams serverRpcParams = new ServerRpcParams() { Receive = new ServerRpcReceiveParams() { SenderClientId = this.OwnerClientId } };
         SpawnUnitServerRPC(unitData, pos, serverRpcParams);
@@ -465,7 +472,7 @@ public class BoardSystem : NetworkBehaviour
 
         while (upgradeQueue.TryDequeue(out Unit unitToUpgrade))
         {
-            while (!PlayerHandler.CanInteract)
+            while (PlayerHandler.InteractionRestricted)
             {
                 await UniTask.Yield();
             }
@@ -545,7 +552,7 @@ public class BoardSystem : NetworkBehaviour
         }
 
         List<Unit> units = UnitsOnBoard;
-        
+
         int max = Mathf.Max(UnitsOnBoardNetwork.Count, units.Count);
         for (int i = 0; i < max; i++)
         {
@@ -630,6 +637,11 @@ public class BoardSystem : NetworkBehaviour
     {
         unit.CurrentTile.CurrentUnit = null;
         Units.Remove(unit);
+
+        for (int i = 0; i < unit.ItemCount; i++)
+        {
+            PlayerHandler.LootSystem.SpawnItem(unit.ItemSlots[i]);
+        }
 
         print("Selling unit: " + unit);
         GameManager.Instance.DestroyServerRPC(unit.GetComponent<NetworkObject>().NetworkObjectId);

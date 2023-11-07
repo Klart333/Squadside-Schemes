@@ -1285,6 +1285,9 @@ MonoBehaviour:
   healthBar: {fileID: 8171594000204595439}
   damageNumber: {fileID: 7055558406360889645, guid: ddcd7d3112b11984a86d02f65d6d4431,
     type: 3}
+  hitParticle: {fileID: 542933246792631625, guid: 1e219d0b241c7ca4598f92e2a9ff4a42,
+    type: 3}
+  deathParticle: {fileID: 0}
 --- !u!114 &877433340396712295
 MonoBehaviour:
   m_ObjectHideFlags: 0

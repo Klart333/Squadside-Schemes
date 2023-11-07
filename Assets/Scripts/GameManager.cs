@@ -29,6 +29,10 @@ public class GameManager : NetworkBehaviour
     private int roundCount = 1;
     private bool inPlanningPhase = false;
 
+    private bool inBattlePhase = false;
+    private bool inOvertime = false;
+    private float inBattleTimer = 0;
+
     public int RoundCount => roundCount;
     public bool IsPVERound => RoundCount % 2 != 0;
 
@@ -111,6 +115,8 @@ public class GameManager : NetworkBehaviour
         if (inPlanningPhase)
         {
             roundTimer += Time.deltaTime;
+            inBattleTimer = 0;
+            inOvertime = false;
 
             if (roundTimer >= RoundLength + 1)
             {
@@ -133,6 +139,31 @@ public class GameManager : NetworkBehaviour
                 }
             }
         }
+
+        if (inBattlePhase)
+        {
+            inBattleTimer += Time.deltaTime;
+
+            if (!inOvertime && inBattleTimer > 20)
+            {
+                inOvertime = true;
+
+                for (int i = 0; i < playerHandlers.Length; i++)
+                {
+                    playerHandlers[i].StartOvertimeClientRPC();
+                }
+            }
+
+            if (inBattleTimer > 30)
+            {
+                inBattleTimer = 0;
+
+                for (int i = 0; i < battlePairings.Length; i++)
+                {
+                    battlePairings[i].BattleDraw = !battlePairings[i].BattleSettled;
+                }
+            }
+        }
     }
 
     private void StartNewRound()
@@ -148,7 +179,7 @@ public class GameManager : NetworkBehaviour
         roundTimer = 0;
     }
 
-#region Battle
+    #region Battle
     private void UpdateClientsBoard()
     {
         Debug.Log("UpdateClientsBoard");
@@ -238,6 +269,8 @@ public class GameManager : NetworkBehaviour
     {
         Debug.Log("EvaluateBattleResults");
 
+        inBattlePhase = true;
+
         int amountDone = 0;
         while (amountDone < battlePairings.Length)
         {
@@ -248,7 +281,7 @@ public class GameManager : NetworkBehaviour
                     continue;
                 }
 
-                if (!battlePairings[i].Player1Reported || !battlePairings[i].Player2Reported)
+                if (!battlePairings[i].BattleDraw && (!battlePairings[i].Player1Reported || !battlePairings[i].Player2Reported))
                 {
                     continue;
                 }
@@ -261,7 +294,8 @@ public class GameManager : NetworkBehaviour
                 int unitCount = battlePairings[i].Player1Id == winner ? battlePairings[i].Player1UnitCount : battlePairings[i].Player2UnitCount;
                 int damage = 4 + unitCount * 2;
 
-                Debug.Log("The winner is " + winner + ", and the loser is " + loser);
+                if (battlePairings[i].BattleDraw) Debug.Log("Battle is a draw!");
+                else Debug.Log("The winner is " + winner + ", and the loser is " + loser);
 
                 // Take damage, and gain one gold
                 ClientRpcParams winnerParam = new ClientRpcParams { Send = new ClientRpcSendParams { TargetClientIds = new[] { winner } } };
@@ -271,6 +305,12 @@ public class GameManager : NetworkBehaviour
                 {
                     if (winner != 99 && playerHandlers[g].OwnerClientId == winner)
                     {
+                        if (battlePairings[i].BattleDraw)
+                        {
+                            playerHandlers[g].LoseBattleClientRPC(damage, IsPVERound, winnerParam);
+                            continue;
+                        }
+
                         playerHandlers[g].WinBattleClientRPC(IsPVERound, winnerParam);
                     }
                     else if (loser != 99 && playerHandlers[g].OwnerClientId == loser)
@@ -286,6 +326,8 @@ public class GameManager : NetworkBehaviour
                 await UniTask.Delay(TimeSpan.FromSeconds(1));
             }
         }
+
+        inBattlePhase = false;
 
         await Task.Delay(2000);
 
@@ -303,7 +345,7 @@ public class GameManager : NetworkBehaviour
                 EndGame();
                 return;
             }
-            
+
         }
 
         // Start new round
@@ -355,9 +397,9 @@ public class GameManager : NetworkBehaviour
         }
     }
 
-#endregion
+    #endregion
 
-#region Show/Hide
+    #region Show/Hide
 
     [ServerRpc(RequireOwnership = false)]
     public void DestroyServerRPC(ulong objectId)
@@ -416,9 +458,15 @@ public struct ServerBattleData
     public int Player2UnitCount;
 
     public bool BattleSettled;
+    public bool BattleDraw;
 
     public ulong EvaluateWinner()
     {
+        if (BattleDraw)
+        {
+            return Player1Id; // Won't be used anyway
+        }
+
         if (Player1Won && !Player2Won)
         {
             return Player1Id;

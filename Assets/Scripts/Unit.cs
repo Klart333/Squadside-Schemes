@@ -52,7 +52,12 @@ public class Unit : NetworkBehaviour, IInteractable
     {
         get
         {
-            return !PlayerHandler.BattleSystem.IsInBattle && interactable;
+            if (IsOnBoard && PlayerHandler.InteractionRestricted)
+            {
+                return false;
+            }
+
+            return interactable;
         }
 
         set
@@ -225,12 +230,14 @@ public class Unit : NetworkBehaviour, IInteractable
     public bool Pickup()
     {
         PlayerHandler.BoardSystem.PlacingUnit(this);
-        return false;
+        return true;
     }
 
-    public void Place()
+    public bool Place()
     {
         PlayerHandler.BoardSystem.PlaceUnit(this);
+
+        return true;
     }
 
     #endregion
@@ -382,7 +389,7 @@ public class Unit : NetworkBehaviour, IInteractable
         OnAttack?.Invoke();
 
         UnitStats.Mana.AddModifier(10);
-        
+
         foreach (Trait trait in cachedTraits.Keys)
         {
             trait.OnAttack(this, cachedTraits[trait]);

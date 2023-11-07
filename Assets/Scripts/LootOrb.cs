@@ -53,7 +53,8 @@ public class LootOrb : PooledMonoBehaviour, IInteractable
 
         Reset();
         gameObject.SetActive(false);
-        return true;
+
+        return false;
     }
 
     private void Reset()
@@ -64,9 +65,9 @@ public class LootOrb : PooledMonoBehaviour, IInteractable
         MoneyAmount = 0;
     }
 
-    public void Place()
+    public bool Place()
     {
-
+        return false;
     }
 
     #endregion

@@ -55,6 +55,10 @@ MonoBehaviour:
     type: 3}
   benchNetPrefab: {fileID: 6707369141012082898, guid: 9cec982916a6555429dc336fc4501b33,
     type: 3}
+  placeParticle: {fileID: 8457827647892541578, guid: 8f595e06d1fcb004d8c4e23185c0fd07,
+    type: 3}
+  HasUpdatedUnitsOnBoard:
+    m_InternalValue: 0
 --- !u!114 &3311292421826518240
 MonoBehaviour:
   m_ObjectHideFlags: 0

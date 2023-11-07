@@ -74,4 +74,12 @@ public class UnitBattleController
 
         return Mathf.RoundToInt(Vector3.Distance(tile.WorldPosition, Unit.CurrentTile.WorldPosition) / BoardSystem.TileScale);
     }
+
+    public void ActivateOvertime()
+    {
+        Unit.UnitStats.AttackSpeed.AddModifier(new Modifier { Type = Modifier.ModifierType.Additive, Value = 5 - Unit.UnitStats.AttackSpeed.Value });
+        Unit.UnitStats.AbilityPower.AddModifier(new Modifier { Type = Modifier.ModifierType.Multiplicative, Value = 3 });
+
+        // The only units to be overtimed should only be temporary, so there's no need to remove the effect hopefully
+    }
 }

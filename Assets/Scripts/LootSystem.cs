@@ -177,7 +177,12 @@ public class LootSystem : MonoBehaviour
         ToggleNet(true);
     }
 
-    public void PlaceItem(Item item)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns>If the item was placed on a Unit</returns>
+    public bool PlaceItem(Item item)
     {
         ToggleNet(false);
 
@@ -186,39 +191,40 @@ public class LootSystem : MonoBehaviour
         {
             currentHighlightedUnit.EndInteract();
 
-            if (!currentHighlightedUnit.ApplyItem(item.ItemData))
+            if ((currentHighlightedUnit.IsOnBoard && PlayerHandler.InteractionRestricted) || !currentHighlightedUnit.ApplyItem(item.ItemData)) // Check if placing an item is allowed
             {
                 SetItemToTile(item, item.CurrentTile);
                 currentHighlightedUnit = null;
-                return;
+                return false;
             }
 
             currentHighlightedUnit = null;
             item.CurrentTile.CurrentItem = null;
 
             Destroy(item.gameObject);
-            return;
+            return true;
         }
 
         // If not
-        ItemTile closestTIle = tiles[nets.IndexOf(highlightedNet)];
+        ItemTile closestTile = tiles[nets.IndexOf(highlightedNet)];
 
-        if (Vector3.Distance(closestTIle.WorldPosition, item.transform.position) > 3)
+        if (Vector3.Distance(closestTile.WorldPosition, item.transform.position) > 3)
         {
             SetItemToTile(item, item.CurrentTile);
-            return;
+            return false;
         }
 
-        if (closestTIle.CurrentItem != null)
+        if (closestTile.CurrentItem != null)
         {
-            SetItemToTile(closestTIle.CurrentItem, item.CurrentTile);
+            SetItemToTile(closestTile.CurrentItem, item.CurrentTile);
         }
         else
         {
             item.CurrentTile.CurrentItem = null;
         }
 
-        SetItemToTile(item, closestTIle);
+        SetItemToTile(item, closestTile);
+        return false;
     }
 
     private void SetItemToTile(Item item, ItemTile tile)
