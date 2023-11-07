@@ -6831,6 +6831,8 @@ MonoBehaviour:
   healthBar: {fileID: 0}
   damageNumber: {fileID: 7055558406360889645, guid: ddcd7d3112b11984a86d02f65d6d4431,
     type: 3}
+  hitParticle: {fileID: 0}
+  deathParticle: {fileID: 0}
 --- !u!1 &526281153003483219
 GameObject:
   m_ObjectHideFlags: 0
@@ -7884,6 +7886,8 @@ MonoBehaviour:
   healthBar: {fileID: 0}
   damageNumber: {fileID: 7055558406360889645, guid: ddcd7d3112b11984a86d02f65d6d4431,
     type: 3}
+  hitParticle: {fileID: 0}
+  deathParticle: {fileID: 0}
 --- !u!23 &1162463732620849104
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -9375,6 +9379,8 @@ MonoBehaviour:
   healthBar: {fileID: 0}
   damageNumber: {fileID: 7055558406360889645, guid: ddcd7d3112b11984a86d02f65d6d4431,
     type: 3}
+  hitParticle: {fileID: 0}
+  deathParticle: {fileID: 0}
 --- !u!1 &2208395184189356782
 GameObject:
   m_ObjectHideFlags: 0
@@ -10094,6 +10100,8 @@ MonoBehaviour:
   healthBar: {fileID: 620960353133011495}
   damageNumber: {fileID: 7055558406360889645, guid: ddcd7d3112b11984a86d02f65d6d4431,
     type: 3}
+  hitParticle: {fileID: 0}
+  deathParticle: {fileID: 0}
 --- !u!114 &2934065408517632255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10354,6 +10362,8 @@ MonoBehaviour:
   healthBar: {fileID: 0}
   damageNumber: {fileID: 7055558406360889645, guid: ddcd7d3112b11984a86d02f65d6d4431,
     type: 3}
+  hitParticle: {fileID: 0}
+  deathParticle: {fileID: 0}
 --- !u!33 &3158909886137379505
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -11104,6 +11114,8 @@ MonoBehaviour:
   healthBar: {fileID: 0}
   damageNumber: {fileID: 7055558406360889645, guid: ddcd7d3112b11984a86d02f65d6d4431,
     type: 3}
+  hitParticle: {fileID: 0}
+  deathParticle: {fileID: 0}
 --- !u!95 &3859193089370046768
 Animator:
   serializedVersion: 5
@@ -12068,6 +12080,8 @@ MonoBehaviour:
   healthBar: {fileID: 0}
   damageNumber: {fileID: 7055558406360889645, guid: ddcd7d3112b11984a86d02f65d6d4431,
     type: 3}
+  hitParticle: {fileID: 0}
+  deathParticle: {fileID: 0}
 --- !u!23 &4525648709951583788
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -15094,6 +15108,8 @@ MonoBehaviour:
   healthBar: {fileID: 0}
   damageNumber: {fileID: 7055558406360889645, guid: ddcd7d3112b11984a86d02f65d6d4431,
     type: 3}
+  hitParticle: {fileID: 0}
+  deathParticle: {fileID: 0}
 --- !u!4 &6782980017290830637
 Transform:
   m_ObjectHideFlags: 0
@@ -15167,6 +15183,8 @@ MonoBehaviour:
   healthBar: {fileID: 8159432675465618758}
   damageNumber: {fileID: 7055558406360889645, guid: ddcd7d3112b11984a86d02f65d6d4431,
     type: 3}
+  hitParticle: {fileID: 0}
+  deathParticle: {fileID: 0}
 --- !u!114 &6816474044912628705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17098,6 +17116,8 @@ MonoBehaviour:
   healthBar: {fileID: 0}
   damageNumber: {fileID: 7055558406360889645, guid: ddcd7d3112b11984a86d02f65d6d4431,
     type: 3}
+  hitParticle: {fileID: 0}
+  deathParticle: {fileID: 0}
 --- !u!224 &8214083650485351321
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18047,6 +18067,8 @@ MonoBehaviour:
   healthBar: {fileID: 0}
   damageNumber: {fileID: 7055558406360889645, guid: ddcd7d3112b11984a86d02f65d6d4431,
     type: 3}
+  hitParticle: {fileID: 0}
+  deathParticle: {fileID: 0}
 --- !u!114 &8865741809653099817
 MonoBehaviour:
   m_ObjectHideFlags: 0

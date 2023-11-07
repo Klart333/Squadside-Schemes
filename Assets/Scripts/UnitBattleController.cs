@@ -62,7 +62,8 @@ public class UnitBattleController
 
     public void SortEnemiesByDistance(ref List<Unit> enemies)
     {
-        enemies.Sort((x, y) => GetDistance(x.CurrentTile).CompareTo(GetDistance(y.CurrentTile)));
+        // Magnitude is there to add determinism to the sorting, so that if two distances are the same it will still prefer one. 
+        enemies.Sort((x, y) => (GetDistance(x.CurrentTile) + x.CurrentTile.Index.magnitude * 0.01f).CompareTo(GetDistance(y.CurrentTile) + y.CurrentTile.Index.magnitude * 0.01f));
     }
 
     public int GetDistance(Tile tile)
