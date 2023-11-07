@@ -1,6 +1,7 @@
 ﻿using Effects;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
+using UnityEngine;
 
 public interface IUltimateAttack
 {
@@ -64,6 +65,8 @@ public class TeamHeal : IUltimateAttack
         for (int i = 0; i < battle.AlliedUnits.Count; i++)
         {
             battle.AlliedUnits[i].UnitHealth.AddHealth(health);
+
+            ParticleManager.Instance.LeavesParticle.GetAtPosAndRot<PooledMonoBehaviour>(battle.AlliedUnits[i].transform.position, Quaternion.identity);
         }
 
         return false;

@@ -38,6 +38,10 @@ public class TraitHexagonUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     [SerializeField]
     private Color[] breakpointColors;
 
+    [Title("The Flexible Background")]
+    [SerializeField]
+    private UIFlexibleBackground flexibleBackground;
+
     private Trait currentTrait;
 
     public void Setup(Trait trait, int unitCount)
@@ -71,16 +75,19 @@ public class TraitHexagonUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
             }
         }
 
+
         hexagonFillBackground.color = breakpointColors[Mathf.Min(breakpointColors.Length - 1, activatedIndex)];
 
         if (activatedIndex == 0)
         {
+
             ShowUnActive(trait, unitCount);
             return;
         }
 
         // Active
         ToggleElements(true);
+        flexibleBackground.ResizeToTrait(trait, true);
 
         unitCountText.text = unitCount.ToString();
 
@@ -118,6 +125,7 @@ public class TraitHexagonUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     private void ShowUnActive(Trait trait, int unitCount)
     {
         ToggleElements(false);
+        flexibleBackground.ResizeToTrait(trait, false);
 
         traitIcon.color = Color.black;
         traitBreakpointsText.text = string.Format("{0}/{1}", unitCount, trait.TraitBreakpoints[0].UnitCount);

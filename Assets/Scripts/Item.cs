@@ -1,3 +1,4 @@
+using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ public class Item : MonoBehaviour, IInteractable
     private ItemData defaultItemData;
 
     private MeshRenderer meshRenderer;
+    private Vector3 startScale;
 
     public bool IsInteractable => true;
     public bool IsOwner => true;
@@ -23,6 +25,7 @@ public class Item : MonoBehaviour, IInteractable
             ItemData = defaultItemData;
         }
 
+        startScale = transform.localScale;
         meshRenderer = GetComponentInChildren<MeshRenderer>();
     }
 
@@ -47,6 +50,7 @@ public class Item : MonoBehaviour, IInteractable
         }
 
         meshRenderer.gameObject.layer = LayerMask.NameToLayer("Highlight");
+        transform.DOScale(startScale.x * 1.1f, 1).SetEase(Ease.OutCirc);
     }
 
     public void EndInteract()
@@ -57,6 +61,9 @@ public class Item : MonoBehaviour, IInteractable
         }
 
         meshRenderer.gameObject.layer = LayerMask.NameToLayer("Item");
+
+        transform.DOKill();
+        transform.DOScale(startScale.x, 0.75f).SetEase(Ease.OutCirc);
     }
 
     public bool Pickup()

@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -16,6 +17,8 @@ public class Coin : PooledMonoBehaviour, IInteractable
 
     private MeshRenderer meshRenderer;
 
+    private Vector3 startScale;
+
     public MoneySystem MoneySystem { get; set; }
     public bool IsOwner => true;
     public bool IsInteractable => true;
@@ -23,6 +26,7 @@ public class Coin : PooledMonoBehaviour, IInteractable
     private void Start()
     {
         meshRenderer = GetComponentInChildren<MeshRenderer>();
+        startScale = transform.localScale;
     }
 
     public void StartInteract()
@@ -33,6 +37,7 @@ public class Coin : PooledMonoBehaviour, IInteractable
         }
 
         meshRenderer.gameObject.layer = LayerMask.NameToLayer("Highlight");
+        transform.DOScale(startScale.x * 1.2f, 1).SetEase(Ease.OutCirc);
     }
 
     public void EndInteract()
@@ -43,6 +48,9 @@ public class Coin : PooledMonoBehaviour, IInteractable
         }
 
         meshRenderer.gameObject.layer = LayerMask.NameToLayer("Item");
+
+        transform.DOKill();
+        transform.DOScale(startScale.x, 0.75f).SetEase(Ease.OutCirc);
     }
 
     public bool Pickup()

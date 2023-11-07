@@ -59,7 +59,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8ec306d5a4586647a02bb3aef351eab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 1
+  time: 1.5
   shouldDestroy: 0
 --- !u!1 &4966575648009007483
 GameObject:

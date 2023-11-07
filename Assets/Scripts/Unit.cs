@@ -5,6 +5,7 @@ using Unity.Netcode;
 using UnityEngine;
 using System.Linq;
 using System;
+using DG.Tweening;
 
 public class Unit : NetworkBehaviour, IInteractable
 {
@@ -127,11 +128,8 @@ public class Unit : NetworkBehaviour, IInteractable
         unitHealth = GetComponent<UnitHealth>();
         unitItems = GetComponent<UnitItems>();
 
-        if (unitMana)
-        {
-            UnitStats.Mana.OnValueChanged += UpdateManaBar;
-            UnitStats.Mana.AddModifier(new Modifier { Value = UnitData.Mana, Type = Modifier.ModifierType.Additive });
-        }
+        UnitStats.Mana.OnValueChanged += UpdateManaBar;
+        UnitStats.Mana.AddModifier(new Modifier { Value = UnitData.Mana, Type = Modifier.ModifierType.Additive });
 
         if (IsOwner)
         {
@@ -215,6 +213,8 @@ public class Unit : NetworkBehaviour, IInteractable
         }
 
         meshRenderer.gameObject.layer = LayerMask.NameToLayer("Highlight");
+
+        UnitAnimator.Grow();
     }
 
     public void EndInteract()
@@ -225,6 +225,8 @@ public class Unit : NetworkBehaviour, IInteractable
         }
 
         meshRenderer.gameObject.layer = LayerMask.NameToLayer("Unit");
+
+        UnitAnimator.ShrinkToNormal();
     }
 
     public bool Pickup()
@@ -260,11 +262,12 @@ public class Unit : NetworkBehaviour, IInteractable
     {
         await UniTask.WaitUntil(() => UnitStats != null).TimeoutWithoutException(TimeSpan.FromSeconds(1));
 
-        transform.localScale *= 1.2f;
+        transform.localScale *= 1.3f;
+        UnitAnimator.IncreaseStartScale(1.3f);
         StarLevel++;
 
         UnitStats.AttackDamage.BaseValue *= 1.6f;
-        UnitStats.MaxHealth.BaseValue *= 1.6f;
+        UnitStats.MaxHealth.BaseValue *= 1.8f;
     }
 
     #endregion

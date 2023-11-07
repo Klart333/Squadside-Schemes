@@ -55,6 +55,11 @@ namespace Effects
             {
                 ModifierDictionary[unit].Value += ModifierValue;
             }
+
+            if (StatType == StatType.MaxHealth)
+            {
+                ParticleManager.Instance.LeavesParticle.GetAtPosAndRot<PooledMonoBehaviour>(unit.transform.position, Quaternion.identity);
+            }
         }
 
         public void Revert(Unit unit)
@@ -396,6 +401,8 @@ namespace Effects
                 if (dotInstance.UnitTarget == null) return;
 
                 dotInstance.UnitTarget.TakeDamage(dotInstance, out DamageInstance damageDone);
+                ParticleManager.Instance.PoisonParticle.GetAtPosAndRot<PooledMonoBehaviour>(dotInstance.UnitTarget.transform.position, Quaternion.identity);
+
                 if (!damageDone.SpecialEffectSet.Contains(EffectKey))
                 {
                     damageDone.SpecialEffectSet.Add(EffectKey);
@@ -477,6 +484,8 @@ namespace Effects
 
                 splashInstance.UnitTarget = splashableUnits[i];
                 splashInstance.UnitTarget.TakeDamage(splashInstance, out DamageInstance damageDone);
+                ParticleManager.Instance.SplashParticle.GetAtPosAndRot<PooledMonoBehaviour>(splashInstance.UnitTarget.transform.position, Quaternion.identity);
+
                 if (!damageDone.SpecialEffectSet.Contains(EffectKey))
                 {
                     damageDone.SpecialEffectSet.Add(EffectKey);
@@ -549,6 +558,7 @@ namespace Effects
                     break;
                 }
 
+                ParticleManager.Instance.CircleParticle.GetAtPosAndRot<PooledMonoBehaviour>(unit.transform.position, Quaternion.identity);
                 ItemDictionary[unit].Add(randomItemData);
             }
         }

@@ -538,6 +538,8 @@ public class BoardSystem : NetworkBehaviour
         Unit starred = units[0];
         starred.IsInteractable = true;
 
+        ParticleManager.Instance.LightParticle.GetAtPosAndRot<PooledMonoBehaviour>(starred.transform.position + Vector3.up, Quaternion.identity);
+
         starred.UpgradeStarLevelServerRPC();
         OnBoardedUnitsChanged?.Invoke(UnitsOnBoard);
         return starred;

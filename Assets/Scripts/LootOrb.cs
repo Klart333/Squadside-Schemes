@@ -1,9 +1,12 @@
+using DG.Tweening;
 using System;
 using UnityEngine;
 
 public class LootOrb : PooledMonoBehaviour, IInteractable
 {
     private MeshRenderer meshRenderer;
+
+    private Vector3 startScale;
 
     public LootSystem LootSystem { get; set; }
     public ItemData LootItemData { get; set; }
@@ -16,6 +19,7 @@ public class LootOrb : PooledMonoBehaviour, IInteractable
     private void Start()
     {
         meshRenderer = GetComponentInChildren<MeshRenderer>();
+        startScale = transform.localScale;
     }
 
     #region Interact
@@ -28,6 +32,8 @@ public class LootOrb : PooledMonoBehaviour, IInteractable
         }
 
         meshRenderer.gameObject.layer = LayerMask.NameToLayer("Highlight");
+
+        transform.DOScale(startScale.x * 1.2f, 1).SetEase(Ease.OutCirc);
     }
 
     public void EndInteract()
@@ -38,6 +44,9 @@ public class LootOrb : PooledMonoBehaviour, IInteractable
         }
 
         meshRenderer.gameObject.layer = LayerMask.NameToLayer("Item");
+
+        transform.DOKill();
+        transform.DOScale(startScale.x, 0.75f).SetEase(Ease.OutCirc);
     }
 
     public bool Pickup()
