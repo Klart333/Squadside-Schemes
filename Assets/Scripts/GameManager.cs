@@ -322,7 +322,7 @@ public class GameManager : NetworkBehaviour
 
             if (amountDone < battlePairings.Length)
             {
-                Debug.Log("Server Waiting for client battle report");
+                //Debug.Log("Server Waiting for client battle report");
                 await UniTask.Delay(TimeSpan.FromSeconds(1));
             }
         }

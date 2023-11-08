@@ -4,6 +4,7 @@ using Sirenix.OdinInspector;
 using Unity.Netcode;
 using Cysharp.Threading.Tasks;
 using System;
+using static UnityEngine.UI.CanvasScaler;
 
 public class BoardSystem : NetworkBehaviour
 {
@@ -78,6 +79,7 @@ public class BoardSystem : NetworkBehaviour
     public Tile[,] Tiles => boardTiles;
 
     public PlayerHandler PlayerHandler { get; set; }
+    public List<Unit> AllUnits => Units;
 
     [Button]
     [PropertyOrder(-99)]
@@ -396,6 +398,39 @@ public class BoardSystem : NetworkBehaviour
         return unit;
     }
 
+    public bool SneakSpawnUnit(UnitData unitData) // Only for units that will be upgraded atm
+    {
+        Vector2Int? index = null;
+        for (int x = 0; x < boardTiles.GetLength(0); x++)
+        {
+            for (int y = 0; y < boardTiles.GetLength(1); y++)
+            {
+                if (boardTiles[x, y].CurrentUnit == null)
+                {
+                    index = new Vector2Int(x, y);
+                    break;
+                }
+            }
+        }
+
+        if (!index.HasValue)
+        {
+            return false;
+        }
+
+        Vector3 pos = boardTiles[index.Value.x, index.Value.y].WorldPosition;
+        placeParticle.GetAtPosAndRot<PooledMonoBehaviour>(pos + Vector3.up * 0.5f, Quaternion.identity);
+
+        Unit unit = Instantiate(unitData.UnitPrefab, pos, Quaternion.identity);
+        unit.IsInteractable = false;
+
+        Units.Add(unit);
+
+        CheckForUpgrade(unit);
+        return true;
+    }
+
+
     public bool SpawnUnit(UnitData unitData)
     {
         int index = -1;
@@ -472,10 +507,10 @@ public class BoardSystem : NetworkBehaviour
 
         while (upgradeQueue.TryDequeue(out Unit unitToUpgrade))
         {
-            while (PlayerHandler.InteractionRestricted)
-            {
-                await UniTask.Yield();
-            }
+            //while (PlayerHandler.InteractionRestricted)
+            //{
+            //    await UniTask.Yield(); // Maybe i dont care ?
+            //}
 
             int starlevel = unitToUpgrade.StarLevel;
             int ID = unitToUpgrade.UnitData.GetInstanceID();
@@ -529,10 +564,17 @@ public class BoardSystem : NetworkBehaviour
                 return null;
             }
 
-            units[i].CurrentTile.CurrentUnit = null;
             this.Units.Remove(units[i]);
 
-            GameManager.Instance.DestroyServerRPC(units[i].GetComponent<NetworkObject>().NetworkObjectId);
+            if (units[i].CurrentTile != null)
+            {
+                units[i].CurrentTile.CurrentUnit = null;
+                GameManager.Instance.DestroyServerRPC(units[i].GetComponent<NetworkObject>().NetworkObjectId);
+            }
+            else
+            {
+                Destroy(units[i].gameObject);
+            }
         }
 
         Unit starred = units[0];

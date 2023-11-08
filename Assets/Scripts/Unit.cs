@@ -35,7 +35,7 @@ public class Unit : NetworkBehaviour, IInteractable
     public UnitManaBar UnitMana => unitMana;
     public UnitItems UnitItems => unitItems;
     public UnitData UnitData => unitData;
-    public int StarLevel { get; set; } = 0;
+    public int StarLevel { get; set; } = 0; // Starts at 0!
     public bool IsOnBoard { get; set; } = false;
     public bool IsInitialized { get; set; } = false;
     public bool IsEnemyUnit { get; set; } = false;

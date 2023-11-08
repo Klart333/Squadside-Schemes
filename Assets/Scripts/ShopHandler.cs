@@ -1,5 +1,7 @@
 using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ShopHandler : MonoBehaviour
@@ -10,11 +12,14 @@ public class ShopHandler : MonoBehaviour
 
     private UnitShop[] shops;
 
+    private UnitData[] unitDatas;
+
     private async void Start()
     {
         await UniTask.WaitUntil(() => GameManager.Instance != null);
 
         shops = GetComponentsInChildren<UnitShop>();
+        unitDatas = new UnitData[shops.Length];
 
         for (int i = 0; i < shops.Length; i++)
         {
@@ -28,10 +33,22 @@ public class ShopHandler : MonoBehaviour
     public void RefreshShop()
     {
         float[] currentOdds = playerUI.PlayerHandler.LevelSystem.CurrentOdds;
+        List<Unit> units = playerUI.PlayerHandler.BoardSystem.AllUnits;
+
+        for (int i = 0; i < unitDatas.Length; i++)
+        {
+            unitDatas[i] = GameManager.Instance.UnitDataUtility.GetUnit(currentOdds);
+        }
+
         for (int i = 0; i < shops.Length; i++)
         {
-            UnitData unitData = GameManager.Instance.UnitDataUtility.GetUnit(currentOdds);
-            shops[i].Setup(unitData);
+            shops[i].Setup(unitDatas[i], units, unitDatas, i);
         }
+    }
+
+    public void ForceBuyUnitShop(int index)
+    {
+        shops[index].ForceBuy();
+
     }
 }

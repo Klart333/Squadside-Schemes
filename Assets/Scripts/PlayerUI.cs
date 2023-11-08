@@ -23,7 +23,16 @@ public class PlayerUI : MonoBehaviour
     [SerializeField]
     private UIEndGameHandler endGamePanel;
 
+    private Canvas canvas;
+
     public UITimerDisplay TimerDisplay => timerDisplay;
+
+    private void Start()
+    {
+        //canvas = GetComponent<Canvas>();
+        //canvas.worldCamera = Camera.main;
+        //canvas.planeDistance = 1;
+    }
 
     public void StartRound()
     {
@@ -68,5 +77,10 @@ public class PlayerUI : MonoBehaviour
     public void Overtime()
     {
         timerDisplay.ShowOvertime();
+    }
+
+    public void ForceBuyUnitShop(int index)
+    {
+        shopHandler.ForceBuyUnitShop(index);
     }
 }

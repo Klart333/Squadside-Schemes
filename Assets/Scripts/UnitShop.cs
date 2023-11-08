@@ -1,4 +1,5 @@
 using Sirenix.OdinInspector;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -30,11 +31,24 @@ public class UnitShop : MonoBehaviour
     [SerializeField]
     private Color[] costColors;
 
+    [Title("Highlight")]
+    [SerializeField]
+    private GameObject simpleHighlight;
+
+    [SerializeField]
+    private GameObject bigHighlight;
+
+    [SerializeField]
+    private GameObject[] stars;
+
     private UnitData currentUnitData;
     private Button button;
 
     private Color transparent;
+
     private bool bought = false;
+    private bool canForceBuyUnit = false;
+    private int alsoForceBuyOtherShopAtIndex = -1;
 
     public PlayerUI PlayerUI { get; set; }
 
@@ -67,12 +81,12 @@ public class UnitShop : MonoBehaviour
         button.enabled = PlayerUI.PlayerHandler.MoneySystem.HasEnough(currentUnitData.Cost);
     }
 
-    public void Setup(UnitData unitData)
+    public void Setup(UnitData unitData, List<Unit> unitsOnBoard, UnitData[] otherShopData, int shopIndex)
     {
         bought = false;
 
         background.color = costColors[unitData.Cost - 1];
-        for (int i = 0; i < background.transform.childCount; i++)
+        for (int i = 0; i < background.transform.childCount - 2; i++)
         {
             background.transform.GetChild(i).gameObject.SetActive(true);
         }
@@ -99,6 +113,81 @@ public class UnitShop : MonoBehaviour
         }
 
         CheckHasEnough();
+
+        HandleHighlight(unitData, unitsOnBoard, otherShopData, shopIndex);
+    }
+
+    private void HandleHighlight(UnitData unit, List<Unit> unitsOnBoard, UnitData[] otherShopData, int shopIndex)
+    {
+        canForceBuyUnit = false;
+        alsoForceBuyOtherShopAtIndex = -1;
+
+        int[] counts = new int[6];
+        bool highlighted = false;
+        for (int i = 0; i < unitsOnBoard.Count; i++)
+        {
+            if (unitsOnBoard[i].UnitData.Name == unit.Name)
+            {
+                highlighted = true;
+                counts[unitsOnBoard[i].StarLevel]++;
+            }
+        }
+
+        if (!highlighted)
+        {
+            simpleHighlight.SetActive(false);
+            bigHighlight.SetActive(false);
+            return;
+        }
+
+        int starLevel = 0;
+        for (int i = 0; i < counts.Length; i++)
+        {
+            if (counts[i] >= 2)
+            {
+                starLevel++;
+                canForceBuyUnit = true;
+                continue;
+            }
+            else if (i == 0 && counts[i] == 1)
+            {
+                for (int g = 0; g < otherShopData.Length; g++)
+                {
+                    if (g == shopIndex)
+                    {
+                        continue;
+                    }
+
+                    if (otherShopData[g].Name == unit.Name)
+                    {
+                        canForceBuyUnit = true;
+                        starLevel++;
+                        alsoForceBuyOtherShopAtIndex = g;
+                        break;
+                    }
+                }
+
+                if (alsoForceBuyOtherShopAtIndex != -1)
+                {
+                    continue;
+                }
+            }
+
+            break;
+        }
+
+        simpleHighlight.SetActive(starLevel == 0);
+        bigHighlight.SetActive(starLevel > 0);
+        for (int i = 0; i < stars.Length; i++)
+        {
+            if (starLevel == 0)
+            {
+                stars[i].SetActive(false);
+                continue;
+            }
+
+            stars[i].SetActive(i < starLevel + 1);
+        }
     }
 
     private void DisableTraits()
@@ -123,11 +212,37 @@ public class UnitShop : MonoBehaviour
 
         if (!PlayerUI.PlayerHandler.BoardSystem.SpawnUnit(currentUnitData))
         {
-            return;
+            if (!canForceBuyUnit)
+            {
+                return;
+
+            }
+
+            if (!PlayerUI.PlayerHandler.BoardSystem.SneakSpawnUnit(currentUnitData))
+            {
+                return;
+            }
+
+            if (alsoForceBuyOtherShopAtIndex != -1)
+            {
+                PlayerUI.ForceBuyUnitShop(alsoForceBuyOtherShopAtIndex);
+            }
         }
 
         PlayerUI.PlayerHandler.MoneySystem.RemoveMoney(currentUnitData.Cost);
 
+        bought = true;
+        SetEmpty();
+    }
+
+    public void ForceBuy()
+    {
+        if (!PlayerUI.PlayerHandler.BoardSystem.SneakSpawnUnit(currentUnitData))
+        {
+            return;
+        }
+
+        PlayerUI.PlayerHandler.MoneySystem.RemoveMoney(currentUnitData.Cost);
         bought = true;
         SetEmpty();
     }
@@ -144,5 +259,8 @@ public class UnitShop : MonoBehaviour
 
         nameText.text = "";
         costText.text = "";
+
+        canForceBuyUnit = false;
+        alsoForceBuyOtherShopAtIndex = -1;
     }
 }
