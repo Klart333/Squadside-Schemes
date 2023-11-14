@@ -14,7 +14,7 @@ public class UIHealthBar : MonoBehaviour
     [SerializeField]
     private Image fill;
 
-    private int healthPerSegment = 333;
+    private int healthPerSegment = 300;
 
     private int maxHealth = 0;
 
@@ -26,6 +26,7 @@ public class UIHealthBar : MonoBehaviour
         }
 
         this.maxHealth = maxHealth;
+        print("Setting max health to: " + maxHealth);
 
         int segments = Mathf.FloorToInt(maxHealth / (float)healthPerSegment);
         float percentOnLast = (maxHealth - segments * healthPerSegment) / (float)healthPerSegment;

@@ -19,19 +19,40 @@ public class PlayerUI : MonoBehaviour
     [SerializeField]
     private UIPlayerHealthHandler playerHealthHandler;
 
+    [Title("Unit Inspector")]
+    [SerializeField]
+    private UIUnitInspector inspectorPanel;
+
     [Title("End Game")]
     [SerializeField]
     private UIEndGameHandler endGamePanel;
 
-    private Canvas canvas;
+    private Camera cam;
 
     public UITimerDisplay TimerDisplay => timerDisplay;
 
     private void Start()
     {
-        //canvas = GetComponent<Canvas>();
-        //canvas.worldCamera = Camera.main;
-        //canvas.planeDistance = 1;
+        cam = Camera.main;
+
+        if (InputManager.Instance?.Inspect != null)
+        {
+            InputManager.Instance.Inspect.performed += Inspect_performed;
+        }
+    }
+
+    private void Inspect_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, 100))
+        {
+            if (hit.collider.gameObject.TryGetComponent(out Unit unit))
+            {
+                inspectorPanel.gameObject.SetActive(true);
+                inspectorPanel.DisplayUnit(unit);
+            }
+        }
     }
 
     public void StartRound()

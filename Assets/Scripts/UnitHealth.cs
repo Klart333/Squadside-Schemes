@@ -68,6 +68,11 @@ public class UnitHealth : MonoBehaviour
     public void UpdateMaxHealth()
     {
         healthBar.SetMaxHealth((int)unit.UnitStats.MaxHealth.Value);
+
+        if (!unit.IsEnemyUnit && !unit.PlayerHandler.BattleSystem.IsInBattle)
+        {
+            MaxCurrentHealth();
+        }
     }
 
     /// <summary>

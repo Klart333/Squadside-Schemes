@@ -19,6 +19,9 @@ public class UIPlayerHealth : MonoBehaviour
     [SerializeField]
     private Image deadPlayer;
 
+    [SerializeField]
+    private TextMeshProUGUI playerNameText;
+
     private User user;
 
     private int startingHealth = 0;
@@ -38,6 +41,8 @@ public class UIPlayerHealth : MonoBehaviour
         {
             if (steamUser.SteamAvatarImage != null)
             {
+                SetAvatar(user.SteamAvatarImage);
+
                 SetAvatar(steamUser.SteamAvatarImage);
             }
             else
@@ -51,6 +56,8 @@ public class UIPlayerHealth : MonoBehaviour
 
     private void SteamUser_OnAvatarLoaded()
     {
+        playerNameText.text = user.SteamUsername;
+
         SetAvatar(user.SteamAvatarImage);
     }
 

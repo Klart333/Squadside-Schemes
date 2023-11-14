@@ -25,8 +25,20 @@ public class UIRollButton : MonoBehaviour
         button = GetComponent<Button>();
 
         playerUI.PlayerHandler.MoneySystem.OnAmountChanged += CheckHasEnough;
+        if (InputManager.Instance?.Roll != null)
+        {
+            InputManager.Instance.Roll.performed += Roll_performed;
+        }
 
         CheckHasEnough();
+    }
+
+    private void Roll_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        if (playerUI.PlayerHandler.MoneySystem.HasEnough(costToRoll))
+        {
+            Roll();
+        }
     }
 
     private void OnDisable()

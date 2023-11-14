@@ -28,6 +28,11 @@ public class UIEndGameHandler : MonoBehaviour
 
     private void OnDisable()
     {
+        if (NetworkManager.Singleton == null)
+        {
+            return;
+        }
+
         NetworkManager.Singleton.OnClientDisconnectCallback -= Singleton_OnClientDisconnectCallback;
     }
 
@@ -48,7 +53,7 @@ public class UIEndGameHandler : MonoBehaviour
     private void Singleton_OnClientDisconnectCallback(ulong obj)
     {
         NetworkManager.Singleton.Shutdown();
-        SceneManager.LoadScene(0); 
+        SceneManager.LoadScene(0);
     }
 
     public void LoadMenu()

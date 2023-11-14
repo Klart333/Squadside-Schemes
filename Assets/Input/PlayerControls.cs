@@ -71,6 +71,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Inspect"",
+                    ""type"": ""Button"",
+                    ""id"": ""e8afca88-e2a4-4cf9-92f3-4210067011c3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -313,6 +322,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""BuyXP"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d8c866e2-7107-4a24-9351-9943aba20090"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Inspect"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -905,6 +925,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
         m_Player_Roll = m_Player.FindAction("Roll", throwIfNotFound: true);
         m_Player_BuyXP = m_Player.FindAction("BuyXP", throwIfNotFound: true);
+        m_Player_Inspect = m_Player.FindAction("Inspect", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -983,6 +1004,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Fire;
     private readonly InputAction m_Player_Roll;
     private readonly InputAction m_Player_BuyXP;
+    private readonly InputAction m_Player_Inspect;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -992,6 +1014,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
         public InputAction @Roll => m_Wrapper.m_Player_Roll;
         public InputAction @BuyXP => m_Wrapper.m_Player_BuyXP;
+        public InputAction @Inspect => m_Wrapper.m_Player_Inspect;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1016,6 +1039,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @BuyXP.started += instance.OnBuyXP;
             @BuyXP.performed += instance.OnBuyXP;
             @BuyXP.canceled += instance.OnBuyXP;
+            @Inspect.started += instance.OnInspect;
+            @Inspect.performed += instance.OnInspect;
+            @Inspect.canceled += instance.OnInspect;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1035,6 +1061,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @BuyXP.started -= instance.OnBuyXP;
             @BuyXP.performed -= instance.OnBuyXP;
             @BuyXP.canceled -= instance.OnBuyXP;
+            @Inspect.started -= instance.OnInspect;
+            @Inspect.performed -= instance.OnInspect;
+            @Inspect.canceled -= instance.OnInspect;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1222,6 +1251,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnFire(InputAction.CallbackContext context);
         void OnRoll(InputAction.CallbackContext context);
         void OnBuyXP(InputAction.CallbackContext context);
+        void OnInspect(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

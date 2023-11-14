@@ -1,6 +1,4 @@
 using Sirenix.OdinInspector;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -28,7 +26,20 @@ public class UILevelButton : MonoBehaviour
         playerUI.PlayerHandler.MoneySystem.OnAmountChanged += CheckHasEnough;
         playerUI.PlayerHandler.LevelSystem.OnLevelUp += SetLevelText;
 
+        if (InputManager.Instance?.BuyXP != null)
+        {
+            InputManager.Instance.BuyXP.performed += BuyXP_performed;
+        }
+
         CheckHasEnough();
+    }
+
+    private void BuyXP_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        if (playerUI.PlayerHandler.MoneySystem.HasEnough(costToBuyXP))
+        {
+            BuyXP();
+        }
     }
 
     private void OnDisable()

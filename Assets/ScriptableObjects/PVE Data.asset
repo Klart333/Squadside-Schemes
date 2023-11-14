@@ -73,7 +73,7 @@ MonoBehaviour:
       Data: 0
     - Name: StarLevel
       Entry: 3
-      Data: 1
+      Data: 0
     - Name: ItemSlots
       Entry: 7
       Data: 2|ItemData[], Assembly-CSharp
@@ -131,7 +131,7 @@ MonoBehaviour:
       Data: 1
     - Name: StarLevel
       Entry: 3
-      Data: 1
+      Data: 0
     - Name: ItemSlots
       Entry: 7
       Data: 4|ItemData[], Assembly-CSharp

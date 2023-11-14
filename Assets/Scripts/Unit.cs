@@ -266,7 +266,7 @@ public class Unit : NetworkBehaviour, IInteractable
         UnitAnimator.IncreaseStartScale(1.3f);
         StarLevel++;
 
-        UnitStats.AttackDamage.BaseValue *= 1.6f;
+        UnitStats.AttackDamage.BaseValue *= 1.8f;
         UnitStats.MaxHealth.BaseValue *= 1.8f;
     }
 

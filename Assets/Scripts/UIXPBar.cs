@@ -51,7 +51,7 @@ public class UIXPBar : MonoBehaviour
 
         int total = playerUI.PlayerHandler.LevelSystem.xpThresholds[playerUI.PlayerHandler.LevelSystem.CurrentLevel - 1];
 
-        currentXPText.text = string.Format("<color=lightblue>{0}</color>/{1}", playerUI.PlayerHandler.LevelSystem.CurrentXP, total);
+        currentXPText.text = string.Format("<color=#ADD8E6>{0}</color>/{1}", playerUI.PlayerHandler.LevelSystem.CurrentXP, total);
 
         int xp = playerUI.PlayerHandler.LevelSystem.CurrentXP;
         if (smalBar > 0)
