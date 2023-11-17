@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Tile
@@ -10,5 +8,7 @@ public class Tile
 
     public bool Walkable => CurrentUnit == null && !UnitLeaving;
     public bool UnitLeaving = false;
+
     public bool IsBench => Index.y <= -1;
+    public int LongIndex => Index.x + Index.y * BoardSystem.BoardX;
 }

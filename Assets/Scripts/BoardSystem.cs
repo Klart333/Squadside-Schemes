@@ -584,6 +584,9 @@ public class BoardSystem : NetworkBehaviour
 
         starred.UpgradeStarLevelServerRPC();
         OnBoardedUnitsChanged?.Invoke(UnitsOnBoard);
+
+        AudioManager.Instance.PlayerStarSFX();
+
         return starred;
     }
 

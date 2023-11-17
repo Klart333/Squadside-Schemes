@@ -77,19 +77,6 @@ public class PlayerUI : MonoBehaviour
         playerHealthHandler.Setup(playerCount, users);
     }
 
-    public void UpdatePlayerHealth(int clientOwnerID, int health)
-    {
-        playerHealthHandler.UpdateHealth(clientOwnerID, health);
-    }
-
-    public void UpdateAllPlayerHealth(int[] healths)
-    {
-        for (int i = 0; i < playerHealthHandler.PlayerCount; i++)
-        {
-            playerHealthHandler.UpdateHealth(i, healths[i]);
-        }
-    }
-
     public void EndGame(bool lost)
     {
         endGamePanel.EndGame(lost);

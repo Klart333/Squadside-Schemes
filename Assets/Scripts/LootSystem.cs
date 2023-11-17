@@ -13,6 +13,9 @@ public class LootSystem : MonoBehaviour
     private float lootProbability;
 
     [SerializeField]
+    private float emblemProbablity;
+
+    [SerializeField]
     private float moneyProbability;
 
     [SerializeField]
@@ -148,7 +151,16 @@ public class LootSystem : MonoBehaviour
         }
         else
         {
-            orb.LootItemData = GameManager.Instance.ItemDataUtility.GetRandomItem();
+            float itemValue = Random.value;
+            if (itemValue < emblemProbablity)
+            {
+                orb.LootItemData = GameManager.Instance.ItemDataUtility.GetRandomEmblem();
+            }
+            else
+            {
+                orb.LootItemData = GameManager.Instance.ItemDataUtility.GetRandomItem();
+            }
+
             orb.LootSystem = this;
         }
     }

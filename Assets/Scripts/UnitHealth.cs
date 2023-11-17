@@ -69,7 +69,7 @@ public class UnitHealth : MonoBehaviour
     {
         healthBar.SetMaxHealth((int)unit.UnitStats.MaxHealth.Value);
 
-        if (!unit.IsEnemyUnit && !unit.PlayerHandler.BattleSystem.IsInBattle)
+        if (unit.PlayerHandler != null && unit.PlayerHandler.BattleSystem != null && !unit.PlayerHandler.BattleSystem.IsInBattle)
         {
             MaxCurrentHealth();
         }
@@ -109,7 +109,7 @@ public class UnitHealth : MonoBehaviour
 
     private DamageInstance EvaluateDamage(DamageInstance damageInstance)
     {
-        float critMult = Random.value < damageInstance.CritChance ? damageInstance.CritMultiplier : 1;
+        float critMult = damageInstance.CritMultiplier;
         damageInstance.AttackDamage *= critMult;
         damageInstance.AbilityDamage *= critMult;
         damageInstance.TrueDamage *= critMult;
@@ -167,7 +167,6 @@ public class DamageInstance
     public float AttackDamage;
     public float AbilityDamage;
     public float TrueDamage;
-    public float CritChance;
     public float CritMultiplier;
 
     private HashSet<int> specialEffectSet;
@@ -189,6 +188,10 @@ public class DamageInstance
         }
     }
 
+    /// <summary>
+    /// Does not apply crit
+    /// </summary>
+    /// <returns></returns>
     public float GetTotal()
     {
         return AttackDamage + AbilityDamage + TrueDamage;

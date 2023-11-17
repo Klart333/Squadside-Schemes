@@ -320,8 +320,7 @@ namespace Effects
                 UnitTarget = damageToReflect.UnitTarget,
 
                 AbilityDamage = damage,
-                CritChance = unit.UnitStats.CritChance.Value,
-                CritMultiplier = unit.UnitStats.CritMultiplier.Value,
+                CritMultiplier = unit.UnitStats.GetCritMultiplier(),
             };
 
             reflectInstance.SpecialEffectSet.Add(EffectKey);
@@ -332,6 +331,9 @@ namespace Effects
                 await UniTask.Delay(TimeSpan.FromSeconds(tickRate));
 
                 if (reflectInstance.UnitTarget == null) return;
+
+                ParticleManager.Instance.PoisonParticle.GetAtPosAndRot<PooledMonoBehaviour>(reflectInstance.UnitTarget.transform.position, Quaternion.identity);
+                AudioManager.Instance.PlaySoundEffect(AudioManager.Instance.ExtinguishFire);
 
                 reflectInstance.UnitTarget.TakeDamage(reflectInstance, out DamageInstance damageDone);
                 if (!damageDone.SpecialEffectSet.Contains(EffectKey))
@@ -386,8 +388,7 @@ namespace Effects
                 UnitTarget = damageToDOT.UnitTarget,
 
                 AbilityDamage = damage,
-                CritChance = unit.UnitStats.CritChance.Value,
-                CritMultiplier = unit.UnitStats.CritMultiplier.Value,
+                CritMultiplier = unit.UnitStats.GetCritMultiplier(),
                 SpecialEffectSet = damageToDOT.SpecialEffectSet,
             };
 
@@ -402,6 +403,7 @@ namespace Effects
 
                 dotInstance.UnitTarget.TakeDamage(dotInstance, out DamageInstance damageDone);
                 ParticleManager.Instance.PoisonParticle.GetAtPosAndRot<PooledMonoBehaviour>(dotInstance.UnitTarget.transform.position, Quaternion.identity);
+                AudioManager.Instance.PlaySoundEffect(AudioManager.Instance.ExtinguishFire);
 
                 if (!damageDone.SpecialEffectSet.Contains(EffectKey))
                 {
@@ -464,8 +466,7 @@ namespace Effects
                 UnitTarget = damageToSplash.UnitTarget,
 
                 AbilityDamage = damage,
-                CritChance = unit.UnitStats.CritChance.Value,
-                CritMultiplier = unit.UnitStats.CritMultiplier.Value,
+                CritMultiplier = unit.UnitStats.GetCritMultiplier(),
                 SpecialEffectSet = damageToSplash.SpecialEffectSet,
             };
 
@@ -475,6 +476,7 @@ namespace Effects
             List<Unit> splashableUnits = unit.PlayerHandler.BoardSystem.GetSurroundingUnits(damageToSplash.UnitTarget);
 
             Debug.Log("Splashing " + splashableUnits.Count + " units");
+            AudioManager.Instance.PlaySoundEffect(AudioManager.Instance.Splash);
             for (int i = 0; i < splashableUnits.Count; i++)
             {
                 if (splashableUnits[i] == unit)

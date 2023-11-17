@@ -11,10 +11,12 @@ public class ItemDataUtility : SerializedScriptableObject
 {
     public List<ItemData> AllItems = new List<ItemData>();
 
+    public List<ItemData> AllEmblems = new List<ItemData>();
+
     public List<ItemData> AllComponent = new List<ItemData>();
 
     [OdinSerialize, NonSerialized]
-    public Dictionary<(ItemData, ItemData), ItemData> ItemCombinationTable = new Dictionary<(ItemData, ItemData), ItemData> ();
+    public Dictionary<(ItemData, ItemData), ItemData> ItemCombinationTable = new Dictionary<(ItemData, ItemData), ItemData>();
 
     public ItemData GetRandomItem(bool canGetComplete = false)
     {
@@ -24,6 +26,11 @@ public class ItemDataUtility : SerializedScriptableObject
         }
 
         return AllComponent[Random.Range(0, AllComponent.Count)];
+    }
+
+    public ItemData GetRandomEmblem()
+    {
+        return AllEmblems[Random.Range(0, AllEmblems.Count)];
     }
 
     public int GetIndex(ItemData itemData)
@@ -51,7 +58,7 @@ public class ItemDataUtility : SerializedScriptableObject
     public ItemData CombineItems(ItemData component1, ItemData component2)
     {
         //Debug.Log("Combining: " + component1.name + " and " + component2.name);
-        if (ItemCombinationTable.TryGetValue((component1, component2), out ItemData value) )
+        if (ItemCombinationTable.TryGetValue((component1, component2), out ItemData value))
         {
             return value;
         }

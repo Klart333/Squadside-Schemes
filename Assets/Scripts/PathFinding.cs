@@ -64,11 +64,6 @@ public static class PathFinding
             current = walkedNodes[current];
         }
 
-        for (int i = 0; i < path.Count - 1; i++)
-        {
-            Debug.DrawRay(path[i].WorldPosition, (path[i + 1].WorldPosition - path[i].WorldPosition).normalized * 0.666f, Color.cyan, 20);
-        }
-
         return path;
     }
 
@@ -159,28 +154,6 @@ public static class PathFinding
         {
             return map[x, y] == targetTile || map[x, y].Walkable;
         }
-    }
-
-    private static Vector2Int FindClosest(Vector3 target, Tile[,] map)
-    {
-        float closestDistance = float.PositiveInfinity;
-        Vector2Int index = new Vector2Int();
-
-        for (int i = 0; i < map.GetLength(0); i++)
-        {
-            for (int g = 0; g < map.GetLength(1); g++)
-            {
-                float dist = Mathf.Abs(target.x - map[i, g].WorldPosition.x) + Mathf.Abs(target.z - map[i, g].WorldPosition.z);
-                if (dist < closestDistance)
-                {
-                    closestDistance = dist;
-                    index.x = i;
-                    index.y = g;
-                }
-            }
-        }
-
-        return index;
     }
 
     public static List<Vector2Int> GetNeighbours(Vector2Int index, Tile[,] map)

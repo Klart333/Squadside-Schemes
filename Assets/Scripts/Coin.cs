@@ -60,6 +60,7 @@ public class Coin : PooledMonoBehaviour, IInteractable
             MoneySystem.AddMoney(1);
         }
 
+        AudioManager.Instance.PlaySoundEffect(AudioManager.Instance.GoldSFX);
         gameObject.SetActive(false);
         return false;
     }

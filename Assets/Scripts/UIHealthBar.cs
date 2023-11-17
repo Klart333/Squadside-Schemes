@@ -26,7 +26,7 @@ public class UIHealthBar : MonoBehaviour
         }
 
         this.maxHealth = maxHealth;
-        print("Setting max health to: " + maxHealth);
+        //print("Setting max health to: " + maxHealth);
 
         int segments = Mathf.FloorToInt(maxHealth / (float)healthPerSegment);
         float percentOnLast = (maxHealth - segments * healthPerSegment) / (float)healthPerSegment;

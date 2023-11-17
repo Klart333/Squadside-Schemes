@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class PlayerRankManager : Singleton<PlayerRankManager>
 {
+    private const int K = 40;
+
     private SteamLeaderboard leaderboard;
 
     private PlayerRank[] downloadedPlayerRanks;
@@ -80,7 +82,10 @@ public class PlayerRankManager : Singleton<PlayerRankManager>
 
     public void WinGame(float opponentElo)
     {
-        playerElo += 100;
+        float diff = Mathf.Abs(opponentElo - playerElo);
+        float expected = 1.0f / (Mathf.Pow(10, diff / 400.0f) + 1);
+
+        playerElo += Mathf.RoundToInt(expected * K);
 
         SaveRank();
         UpdateScore(playerElo);
@@ -88,7 +93,10 @@ public class PlayerRankManager : Singleton<PlayerRankManager>
 
     public void LoseGame(float opponentElo)
     {
-        playerElo -= 10;
+        float diff = Mathf.Abs(opponentElo - playerElo);
+        float expected = 1.0f / (Mathf.Pow(10, diff / 400.0f) + 1);
+
+        playerElo -= Mathf.RoundToInt(expected * K);
 
         SaveRank();
         UpdateScore(playerElo);

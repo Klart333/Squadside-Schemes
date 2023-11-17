@@ -1,5 +1,4 @@
 using DG.Tweening;
-using System;
 using UnityEngine;
 
 public class LootOrb : PooledMonoBehaviour, IInteractable
@@ -60,6 +59,7 @@ public class LootOrb : PooledMonoBehaviour, IInteractable
             MoneySystem.SpawnMoney(MoneyAmount, transform.position);
         }
 
+        AudioManager.Instance.PlaySoundEffect(AudioManager.Instance.UIDeepClick);
         Reset();
         gameObject.SetActive(false);
 

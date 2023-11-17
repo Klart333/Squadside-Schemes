@@ -61,7 +61,7 @@ public class GameManager : NetworkBehaviour
 
         await UniTask.Delay(TimeSpan.FromSeconds(1)); // To allow the gamemanager to spawn, the startgame message was previously faster than the spawn message
 
-        playerHandlers = FindObjectsOfType<PlayerHandler>();
+        playerHandlers = FindObjectsByType<PlayerHandler>(FindObjectsSortMode.None);
 
         List<PlayerHandler> sorted = playerHandlers.ToList();
         sorted.Sort((x, y) => x.OwnerClientId.CompareTo(y.OwnerClientId));
@@ -75,35 +75,11 @@ public class GameManager : NetworkBehaviour
 
         for (int i = 0; i < playerHandlers.Length; i++)
         {
-            playerHandlers[i].Playerhealth.OnValueChanged += UpdateUIHealth;
-
             var param = new ClientRpcParams { Send = new ClientRpcSendParams { TargetClientIds = new ulong[] { playerHandlers[i].OwnerClientId } } };
             playerHandlers[i].SetupUIHealthClientRPC(playerHandlers.Length, steamIds, param);
         }
 
         StartNewRound();
-    }
-
-    public void UpdateUIHealth(int previousValue, int newValue)
-    {
-        Debug.Log("UpdateUIHealth");
-
-        int[] healts = new int[playerHandlers.Length];
-        for (int i = 0; i < playerHandlers.Length; i++)
-        {
-            healts[i] = playerHandlers[i].Playerhealth.Value;
-        }
-
-        for (int i = 0; i < playerHandlers.Length; i++)
-        {
-            if ((int)playerHandlers[i].OwnerClientId + 1 != i)
-            {
-                Debug.LogError("Oh noes!");
-            }
-
-            var param = new ClientRpcParams { Send = new ClientRpcSendParams { TargetClientIds = new ulong[] { playerHandlers[i].OwnerClientId } } };
-            playerHandlers[i].UpdateUIHealthClientRPC(healts, param);
-        }
     }
 
     private void Update()
@@ -292,7 +268,7 @@ public class GameManager : NetworkBehaviour
                 ulong winner = battlePairings[i].EvaluateWinner();
                 ulong loser = battlePairings[i].Player1Id == winner ? battlePairings[i].Player2Id : battlePairings[i].Player1Id;
                 int unitCount = battlePairings[i].Player1Id == winner ? battlePairings[i].Player1UnitCount : battlePairings[i].Player2UnitCount;
-                int damage = 4 + unitCount * 2;
+                int damage = Mathf.CeilToInt(roundCount / 2.0f) + unitCount * 2;
 
                 if (battlePairings[i].BattleDraw) Debug.Log("Battle is a draw!");
                 else Debug.Log("The winner is " + winner + ", and the loser is " + loser);

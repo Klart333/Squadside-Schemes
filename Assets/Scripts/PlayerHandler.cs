@@ -238,8 +238,6 @@ public class PlayerHandler : NetworkBehaviour
         HealthSystem.LoseHealth(damage);
 
         Debug.Log("Lost Battle! " + OwnerClientId);
-
-        //MoneySystem.AddMoney(-1000);
     }
 
     [ClientRpc]
@@ -288,18 +286,6 @@ public class PlayerHandler : NetworkBehaviour
     }
 
     #endregion
-
-    [ClientRpc]
-    public void UpdateUIHealthClientRPC(int[] playerHealths, ClientRpcParams param)
-    {
-        if (!IsOwner)
-        {
-            return;
-        }
-
-        PlayerUI.UpdateAllPlayerHealth(playerHealths);
-    }
-
 
     [ClientRpc]
     public void SetupUIHealthClientRPC(int playerCount, ulong[] steamIds, ClientRpcParams param)

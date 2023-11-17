@@ -1,6 +1,7 @@
 ﻿using Effects;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
+using System.Collections.Generic;
 using UnityEngine;
 
 public interface IUltimateAttack
@@ -36,8 +37,7 @@ public class BiteAttack : IUltimateAttack
 
             AttackDamage = attackDamage,
             AbilityDamage = abilityDamage,
-            CritChance = unit.UnitStats.CritChance.Value,
-            CritMultiplier = unit.UnitStats.CritMultiplier.Value,
+            CritMultiplier = unit.UnitStats.GetCritMultiplier(),
             TrueDamage = 0
         };
 
@@ -62,12 +62,16 @@ public class TeamHeal : IUltimateAttack
         damageDone = null;
 
         float health = Healing + AbilityScaling * unit.UnitStats.AbilityPower.Value;
-        for (int i = 0; i < battle.AlliedUnits.Count; i++)
-        {
-            battle.AlliedUnits[i].UnitHealth.AddHealth(health);
+        List<Unit> targets = unit.IsEnemyUnit ? battle.EnemyUnits : battle.AlliedUnits;
 
-            ParticleManager.Instance.LeavesParticle.GetAtPosAndRot<PooledMonoBehaviour>(battle.AlliedUnits[i].transform.position, Quaternion.identity);
+        for (int i = 0; i < targets.Count; i++)
+        {
+            targets[i].UnitHealth.AddHealth(health);
+
+            ParticleManager.Instance.LeavesParticle.GetAtPosAndRot<PooledMonoBehaviour>(targets[i].transform.position, Quaternion.identity);
         }
+
+        AudioManager.Instance.PlaySoundEffect(AudioManager.Instance.Crunch);
 
         return false;
     }

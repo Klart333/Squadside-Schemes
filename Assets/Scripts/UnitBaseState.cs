@@ -39,7 +39,7 @@ public class UnitMoveState : UnitBaseState
         {
             return;
         }
-        
+
         lastTimeStamp = Time.time;
 
         Tile targetTile = battle.GetEnemyUnits(Unit)[0].CurrentTile;
@@ -116,7 +116,7 @@ public class UnitAttackState : UnitBaseState
 
         await UniTask.Delay(TimeSpan.FromSeconds(1.0f / Unit.UnitStats.AttackSpeed.Value) * 0.8f);
 
-        if (Unit == null) 
+        if (Unit == null)
         {
             attacking = false;
             return;
@@ -138,8 +138,7 @@ public class UnitAttackState : UnitBaseState
             UnitTarget = enemies[0],
 
             AttackDamage = Unit.UnitStats.AttackDamage.Value,
-            CritChance = Unit.UnitStats.CritChance.Value,
-            CritMultiplier = Unit.UnitStats.CritMultiplier.Value,
+            CritMultiplier = Unit.UnitStats.GetCritMultiplier(),
             AbilityDamage = 0,
             TrueDamage = 0,
         };
@@ -203,6 +202,7 @@ public class UnitUltimateState : UnitBaseState
         List<Unit> enemies = battle.GetEnemyUnits(Unit);
 
         Unit.UnitAnimator.PlayUlt();
+        AudioManager.Instance.PlaySoundEffect(AudioManager.Instance.Whoosh);
 
         if (!Unit.UnitData.UltimateAttack.Perform(Unit, enemies[0], battle, out DamageInstance damageDone))
         {

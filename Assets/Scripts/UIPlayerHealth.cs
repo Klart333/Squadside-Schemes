@@ -1,4 +1,6 @@
+using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +13,9 @@ public class UIPlayerHealth : MonoBehaviour
 
     [SerializeField]
     private Image healthFillImage;
+
+    [SerializeField]
+    private TextMeshProUGUI lostHealthText;
 
     [Title("Player")]
     [SerializeField]
@@ -83,5 +88,15 @@ public class UIPlayerHealth : MonoBehaviour
         healthText.text = "0";
         healthFillImage.fillAmount = 0;
         deadPlayer.enabled = true;
+    }
+
+    public async void DisplayLostHealth(int damage)
+    {
+        lostHealthText.gameObject.SetActive(true);
+        lostHealthText.text = string.Format("-{0}", damage.ToString());
+
+        await UniTask.Delay(TimeSpan.FromSeconds(2));
+
+        lostHealthText.gameObject.SetActive(false);
     }
 }

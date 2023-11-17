@@ -34,6 +34,8 @@ public class UnitStats
     [TitleGroup("Movement")]
     public Stat MovementSpeed;
 
+    private int attackCount = 0;
+
     public void AddTrait(int traitIndex)
     {
         if (Traits.Contains(traitIndex))
@@ -156,6 +158,22 @@ public class UnitStats
             default:
                 break;
         }
+    }
+
+    public float GetCritMultiplier() // Deterministic Crit
+    {
+        if (CritChance.Value <= 0)
+        {
+            return 1;
+        }
+
+        if (++attackCount == Mathf.RoundToInt(1.0f / CritChance.Value))
+        {
+            attackCount = 0;
+            return CritMultiplier.Value;
+        }
+
+        return 1;
     }
 }
 

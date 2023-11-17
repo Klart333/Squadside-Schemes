@@ -61,6 +61,8 @@ public class MoneySystem : MonoBehaviour
         money += GetInterestGold();
 
         AddMoney(money);
+
+        AudioManager.Instance.PlaySoundEffect(AudioManager.Instance.GoldSFX);
     }
 
     private int GetStreakGold(int streak)

@@ -229,10 +229,7 @@ public class UnitShop : MonoBehaviour
             }
         }
 
-        PlayerUI.PlayerHandler.MoneySystem.RemoveMoney(currentUnitData.Cost);
-
-        bought = true;
-        SetEmpty();
+        ActuallyBuyUnit();
     }
 
     public void ForceBuy()
@@ -241,6 +238,14 @@ public class UnitShop : MonoBehaviour
         {
             return;
         }
+
+        ActuallyBuyUnit();
+    }
+
+    private void ActuallyBuyUnit()
+    {
+        int index = Mathf.FloorToInt((currentUnitData.Cost - 1) / 2.0f);
+        AudioManager.Instance.PlaySoundEffect(AudioManager.Instance.BuyUnitSFXs[index]);
 
         PlayerUI.PlayerHandler.MoneySystem.RemoveMoney(currentUnitData.Cost);
         bought = true;

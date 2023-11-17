@@ -28,7 +28,7 @@ public class UIDamageNumber : PooledMonoBehaviour
         string color = damageInstance.AbilityDamage > damageInstance.AttackDamage ? "blue" : "white";
         string bold = isCrit ? "<b>" : "";
 
-        text.text = string.Format("{0}<color={1}>{2}", bold, color, damage);
+        text.text = string.Format("{0}<color={1}>{2}{3}", bold, color, damage, isCrit ? "!!" : "");
 
         float value = Mathf.Lerp(1, 2, damage / maxDamage);
         transform.localScale = Vector3.one * value;
