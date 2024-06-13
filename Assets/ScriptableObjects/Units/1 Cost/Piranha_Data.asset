@@ -64,4 +64,4 @@ MonoBehaviour:
   MagicResist: 25
   BaseHealth: 600
   Omnivamp: 0
-  MovementSpeed: 1
+  MovementSpeed: 1.2

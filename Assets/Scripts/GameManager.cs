@@ -33,6 +33,9 @@ public class GameManager : NetworkBehaviour
     private bool inOvertime = false;
     private float inBattleTimer = 0;
 
+    private bool gameEnded = false;
+    private bool uploadedCounts = false;
+
     public int RoundCount => roundCount;
     public bool IsPVERound => RoundCount % 2 != 0;
 
@@ -51,6 +54,8 @@ public class GameManager : NetworkBehaviour
 
 #if DEDICATED_SERVER
         StartGame();
+
+        NetworkManager.Singleton.OnClientDisconnectCallback += Singleton_OnClientDisconnectCallback;
 #endif
 
     }
@@ -58,6 +63,8 @@ public class GameManager : NetworkBehaviour
     private async void StartGame()
     {
         Debug.Log("StartGame");
+
+        PlayerCountManager.Instance.OnJoinGame();
 
         await UniTask.Delay(TimeSpan.FromSeconds(1)); // To allow the gamemanager to spawn, the startgame message was previously faster than the spawn message
 
@@ -328,8 +335,17 @@ public class GameManager : NetworkBehaviour
         StartNewRound();
     }
 
-    private void EndGame()
+    private void EndGame(bool fromDisconnect = false)
     {
+        if (gameEnded)
+        {
+            return;
+        }
+
+        gameEnded = true;
+        PlayerCountManager.Instance.OnLeaveGame();
+        PlayerCountManager.Instance.Highscores.OnPlayerCountUpdated += () => { uploadedCounts = true; };
+
         for (int i = 0; i < playerHandlers.Length; i++)
         {
             // Get opponent elo
@@ -342,9 +358,20 @@ public class GameManager : NetworkBehaviour
             }
             elo /= (playerHandlers.Length - 1.0f);
 
-            playerHandlers[i].EndGameClientRPC(playerHandlers[i].Playerhealth.Value < 0, elo);
+            playerHandlers[i].EndGameClientRPC(!fromDisconnect && playerHandlers[i].Playerhealth.Value < 0, elo);
         }
     }
+
+    private async void Singleton_OnClientDisconnectCallback(ulong obj)
+    {
+        EndGame(true);
+
+        await UniTask.WaitUntil(() => uploadedCounts).TimeoutWithoutException(TimeSpan.FromSeconds(10));
+
+        NetworkManager.Singleton.Shutdown();
+        Application.Quit();
+    }
+
 
     [ServerRpc(RequireOwnership = false)]
     public void ReportBattleServerRPC(bool wonBattle, int unitCount, ServerRpcParams param)

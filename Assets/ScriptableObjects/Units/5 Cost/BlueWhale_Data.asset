@@ -53,7 +53,7 @@ MonoBehaviour:
   Traits:
   - {fileID: 11400000, guid: ac700306e8c2d824b96e8671e12d86a1, type: 2}
   - {fileID: 11400000, guid: 8aee8c1781b14224a9c18d8646f8f492, type: 2}
-  AttackDamage: 60
+  AttackDamage: 80
   AttackSpeed: 0.7
   AttackRange: 1
   AbilityPower: 100
@@ -65,4 +65,4 @@ MonoBehaviour:
   MagicResist: 50
   BaseHealth: 1500
   Omnivamp: 0
-  MovementSpeed: 1
+  MovementSpeed: 2.4

@@ -55,13 +55,13 @@ public class BattleSystem : MonoBehaviour
             }
 
             Unit unit = PlayerHandler.BoardSystem.SpawnUnitLocal(unitNetworkData, true);
+            unit.IsEnemyUnit = true;
             await UniTask.WaitUntil(() => unit.IsInitialized);
 
             if (unitNetworkData.ItemIndex0 != -1) unit.ApplyItem(GameManager.Instance.ItemDataUtility.Get(unitNetworkData.ItemIndex0));
             if (unitNetworkData.ItemIndex1 != -1) unit.ApplyItem(GameManager.Instance.ItemDataUtility.Get(unitNetworkData.ItemIndex1));
             if (unitNetworkData.ItemIndex2 != -1) unit.ApplyItem(GameManager.Instance.ItemDataUtility.Get(unitNetworkData.ItemIndex2));
 
-            unit.IsEnemyUnit = true;
             enemyUnits.Add(unit);
         }
 

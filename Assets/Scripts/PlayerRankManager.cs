@@ -154,7 +154,7 @@ public class SteamLeaderboard
     public event Action<PlayerRank[]> OnScoresDownloaded;
 
     private const string LeaderboardName = "Ranked";
-    private const ELeaderboardUploadScoreMethod LeaderboardMethod = ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodKeepBest;
+    private const ELeaderboardUploadScoreMethod LeaderboardMethod = ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodForceUpdate;
 
     private CallResult<LeaderboardFindResult_t> findResult = new CallResult<LeaderboardFindResult_t>();
     private CallResult<LeaderboardScoreUploaded_t> uploadResult = new CallResult<LeaderboardScoreUploaded_t>();
@@ -181,7 +181,6 @@ public class SteamLeaderboard
             UnityEngine.Debug.Log("uploading score(" + score + ") to steam leaderboard(" + LeaderboardName + ")");
             SteamAPICall_t steamAPICall = SteamUserStats.UploadLeaderboardScore(currentLeaderboard, LeaderboardMethod, score, null, 0);
             uploadResult.Set(steamAPICall, OnLeaderboardUploadResult);
-
         }
     }
 

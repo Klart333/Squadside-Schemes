@@ -51,6 +51,6 @@ MonoBehaviour:
   CritMultiplier: 2
   Armor: 30
   MagicResist: 25
-  BaseHealth: 500
+  BaseHealth: 900
   Omnivamp: 0
-  MovementSpeed: 1
+  MovementSpeed: 1.2

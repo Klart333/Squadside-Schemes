@@ -1,3 +1,5 @@
+using Cysharp.Threading.Tasks;
+using System;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine;
@@ -53,10 +55,19 @@ public class UIEndGameHandler : MonoBehaviour
     private void Singleton_OnClientDisconnectCallback(ulong obj)
     {
         NetworkManager.Singleton.Shutdown();
-        SceneManager.LoadScene(0);
+
+        if (Application.isPlaying)
+        {
+            Debug.Log("Returning to menu!");
+            SceneManager.LoadScene(0);
+        }
+        else
+        {
+            Debug.Log("I'm not alive?");
+        }
     }
 
-    public void LoadMenu()
+    public async void LoadMenu()
     {
         if (loading) return;
 
@@ -64,5 +75,7 @@ public class UIEndGameHandler : MonoBehaviour
 
         GameManager.Instance.DisconnectServerRPC(playerUI.PlayerHandler.OwnerClientId);
 
+        await UniTask.Delay(TimeSpan.FromSeconds(2));
+        SceneManager.LoadScene(0);
     }
 }

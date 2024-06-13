@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
@@ -44,10 +43,12 @@ public class UIMatchMaker : MonoBehaviour
             }
         }
     }
+
     public async void FindMatch()
     {
         Debug.Log("FindMatch");
         lookingForMatchTransform.gameObject.SetActive(true);
+        PlayerCountManager.Instance.OnJoinQueue();
 
         createTicketResponse = await MatchmakerService.Instance.CreateTicketAsync(new List<Player>
         {
@@ -80,11 +81,16 @@ public class UIMatchMaker : MonoBehaviour
                 case MultiplayAssignment.StatusOptions.Timeout:
                     Debug.Log("Multiplay Timeout!");
                     ResetButton();
+
+                    PlayerCountManager.Instance.OnLeaveQueue();
+
                     break;
 
                 case MultiplayAssignment.StatusOptions.Failed:
                     Debug.LogError("Failed to create Multiplay server. Error: " + multiplayAssignment.Message);
                     ResetButton();
+                    PlayerCountManager.Instance.OnLeaveQueue();
+
                     break;
 
                 case MultiplayAssignment.StatusOptions.InProgress:
@@ -104,7 +110,6 @@ public class UIMatchMaker : MonoBehaviour
                     NetworkManager.Singleton.StartClient();
 
                     SceneManager.LoadScene(1);
-
                     break;
                 default:
                     break;
@@ -118,6 +123,7 @@ public class UIMatchMaker : MonoBehaviour
 
         await MatchmakerService.Instance.DeleteTicketAsync(createTicketResponse.Id);
         Debug.Log("Disconnected!");
+        PlayerCountManager.Instance.OnLeaveQueue();
 
         ResetButton();
     }
@@ -127,6 +133,14 @@ public class UIMatchMaker : MonoBehaviour
         createTicketResponse = null;
         lookingForMatchTransform.gameObject.SetActive(false);
         GetComponent<Button>().interactable = true;
+    }
+
+    private void OnApplicationQuit()
+    {
+        if (pollTickerTimer > 0)
+        {
+            PlayerCountManager.Instance.OnLeaveQueue();
+        }
     }
 
     [Serializable]

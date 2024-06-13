@@ -14,6 +14,8 @@ public class UIHealthBar : MonoBehaviour
     [SerializeField]
     private Image fill;
 
+    public Color HealthColor { get; set; } = Color.white;
+
     private int healthPerSegment = 300;
 
     private int maxHealth = 0;
@@ -43,7 +45,8 @@ public class UIHealthBar : MonoBehaviour
         {
             for (int i = 0; i < (segments + 1) - childCount; i++)
             {
-                Instantiate(healthSegmentPrefab, segmentParent);
+                Image img = Instantiate(healthSegmentPrefab, segmentParent).GetComponent<Image>();
+                img.color = HealthColor;
             }
         }
 

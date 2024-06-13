@@ -61,6 +61,8 @@ public class UnitHealth : MonoBehaviour
 
         unit.UnitStats.MaxHealth.OnValueChanged += UpdateMaxHealth;
 
+        healthBar.HealthColor = unit.IsEnemyUnit ? Color.red : Color.green;
+
         UpdateMaxHealth();
         MaxCurrentHealth();
     }
